@@ -1,0 +1,10 @@
+[package]
+name = "audio_sample"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+i24 = "1.0.1"
+
+[dev-dependencies]
+approx_eq = "0.1.8"
