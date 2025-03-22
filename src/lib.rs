@@ -100,103 +100,16 @@
 //! Report them on the [Github Page](<https://www.github.com/jmg049/audio_sample>) and I will try and get to it as soon as I can :)
 //!
 
+use bytemuck::{Pod, Zeroable};
 use i24::i24;
-use std::{fmt::Debug, ops::Index};
-
-// A read-only reference to some data of type T: AudioSample, which is also needs to be iterable.
-pub struct Samples<'a, T: AudioSample> {
-    samples: &'a [T],
-}
-
-impl<'a, T: AudioSample> Samples<'a, T> {
-    pub const fn new(samples: &'a [T]) -> Self {
-        Self { samples }
-    }
-
-    pub const fn len(&'_ self) -> usize {
-        self.samples.len()
-    }
-
-    pub const fn is_empty(&'_ self) -> bool {
-        self.samples.is_empty()
-    }
-
-    /// Converts the struct into an owned
-    pub fn to_owned<S: AudioSample>(&'_ self) -> Vec<S>
-    where
-        T: ConvertTo<S>,
-    {
-        Vec::from(self.samples.convert_slice())
-    }
-
-    pub const fn iter(&'a self) -> SamplesIter<'a, T> {
-        SamplesIter {
-            idx: 0,
-            samples: self,
-        }
-    }
-}
-
-impl<'a, T: AudioSample> AsRef<[T]> for Samples<'a, T> {
-    fn as_ref(&self) -> &'a [T] {
-        self.samples
-    }
-}
-
-impl<T: AudioSample> Index<usize> for Samples<'_, T> {
-    type Output = T;
-
-    fn index(&self, index: usize) -> &Self::Output {
-        &self.samples[index]
-    }
-}
-
-pub struct SamplesIter<'a, T: AudioSample> {
-    idx: usize,
-    samples: &'a Samples<'a, T>,
-}
-
-impl<T: AudioSample> Iterator for SamplesIter<'_, T> {
-    type Item = T;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let current = self.samples[self.idx];
-
-        self.idx += 1;
-        if self.idx >= self.samples.len() {
-            return None;
-        }
-
-        Some(current)
-    }
-}
-
+use std::{
+    fmt::{Debug, Display},
+    ops::{Deref, DerefMut},
+};
+/// Marker trait used to signify a valid audio sample type.
 pub trait AudioSample:
-    Clone
-    + Copy
-    + ConvertTo<i16>
-    + ConvertTo<i24>
-    + ConvertTo<i32>
-    + ConvertTo<f32>
-    + ConvertTo<f64>
-    + Send
-    + Sync
-    + Debug
+    Clone + Copy + Debug + Display + Pod + Zeroable + PartialEq + PartialOrd + Send + Sync
 {
-}
-
-/// Trait for converting between audio sample types
-/// The type ``T`` must implement the ``AudioSample`` trait
-pub trait ConvertTo<T: AudioSample> {
-    fn convert_to(&self) -> T
-    where
-        Self: Sized + AudioSample;
-}
-
-/// Trait for converting between audio sample types in a slice
-/// The type ``T`` must implement the ``AudioSample`` trait
-pub trait ConvertSlice<T: AudioSample> {
-    fn convert_slice(&self) -> Box<[T]>;
 }
 
 impl AudioSample for i16 {}
@@ -205,115 +118,77 @@ impl AudioSample for i32 {}
 impl AudioSample for f32 {}
 impl AudioSample for f64 {}
 
-impl<T: AudioSample> ConvertSlice<T> for Box<[i16]>
+/// ConvertTo<To> expresses the ability of one [AudioSample] type to convert into another sample type (the “To” type).
+pub trait ConvertTo<To: AudioSample> {
+    fn convert_to(&self) -> To;
+}
+
+/// ConvertSlice expresses the ability to convert a slice of type [AudioSample] into a box of some
+/// other [AudioSample] ``To``.
+pub trait ConvertSlice<To: AudioSample> {
+    fn convert_slice(&self) -> Box<[To]>;
+}
+
+impl<From, To> ConvertSlice<To> for Box<[From]>
 where
-    i16: ConvertTo<T>,
+    From: AudioSample + ConvertTo<To>,
+    To: AudioSample,
 {
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+    fn convert_slice(&self) -> Box<[To]> {
+        self.iter().map(|sample| sample.convert_to()).collect()
     }
 }
 
-// Similar implementations for other types
-impl<T: AudioSample> ConvertSlice<T> for Box<[i24]>
-where
-    i24: ConvertTo<T>,
-{
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+pub struct Samples<T: AudioSample> {
+    samples: Box<[T]>,
+}
+
+impl<T: AudioSample> Deref for Samples<T> {
+    type Target = [T];
+    fn deref(&self) -> &Self::Target {
+        self.as_ref()
     }
 }
 
-impl<T: AudioSample> ConvertSlice<T> for Box<[i32]>
-where
-    i32: ConvertTo<T>,
-{
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+impl<T: AudioSample> DerefMut for Samples<T> {
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        self.as_mut()
     }
 }
 
-impl<T: AudioSample> ConvertSlice<T> for Box<[f32]>
-where
-    f32: ConvertTo<T>,
-{
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+impl<T: AudioSample> AsRef<[T]> for Samples<T> {
+    fn as_ref(&self) -> &[T] {
+        self.samples.as_ref()
     }
 }
 
-impl<T: AudioSample, S: AudioSample> ConvertSlice<T> for &'_ [S]
-where
-    S: ConvertTo<T>,
-{
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+impl<T: AudioSample> AsMut<[T]> for Samples<T> {
+    fn as_mut(&mut self) -> &mut [T] {
+        self.samples.as_mut()
     }
 }
 
-// Add an extension trait for efficient batch operations
-pub trait AudioBatchConversion<T: AudioSample> {
-    /// Perform an optimized batch conversion
-    fn convert_batch(&self) -> Vec<T>;
-}
-
-impl<T: AudioSample> ConvertSlice<T> for Box<[f64]>
-where
-    f64: ConvertTo<T>,
-{
-    fn convert_slice(&self) -> Box<[T]> {
-        self.iter()
-            .map(|sample| sample.convert_to())
-            .collect::<Vec<T>>()
-            .into_boxed_slice()
+impl<T: AudioSample> Samples<T> {
+    pub const fn new(samples: Box<[T]>) -> Self {
+        Self { samples }
     }
-}
 
-/// Trait that bundles all the audio conversion constraints
-pub trait AudioConversionCapable: AudioSample
-where
-    i16: ConvertTo<Self>,
-    i24: ConvertTo<Self>,
-    i32: ConvertTo<Self>,
-    f32: ConvertTo<Self>,
-    f64: ConvertTo<Self>,
-    Box<[i16]>: ConvertSlice<Self>,
-    Box<[i24]>: ConvertSlice<Self>,
-    Box<[i32]>: ConvertSlice<Self>,
-    Box<[f32]>: ConvertSlice<Self>,
-    Box<[f64]>: ConvertSlice<Self>,
-{
-}
+    pub fn len(&self) -> usize {
+        self.as_ref().len()
+    }
 
-// Blanket implementation for all types that satisfy the constraints
-impl<T: AudioSample> AudioConversionCapable for T
-where
-    i16: ConvertTo<T>,
-    i24: ConvertTo<T>,
-    i32: ConvertTo<T>,
-    f32: ConvertTo<T>,
-    f64: ConvertTo<T>,
-    Box<[i16]>: ConvertSlice<T>,
-    Box<[i24]>: ConvertSlice<T>,
-    Box<[i32]>: ConvertSlice<T>,
-    Box<[f32]>: ConvertSlice<T>,
-    Box<[f64]>: ConvertSlice<T>,
-{
+    pub fn is_empty(&self) -> bool {
+        self.as_ref().is_empty()
+    }
+
+    pub fn to_owned<S: AudioSample>(&self) -> Vec<S>
+    where
+        T: ConvertTo<S>,
+        Box<[T]>: ConvertSlice<S>,
+    {
+        // The boxed slice conversion is done by our blanket impl.
+        Vec::from(self.samples.convert_slice())
+    }
 }
 
 // i16 //
