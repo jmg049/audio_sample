@@ -1,0 +1,2006 @@
+Finished `bench` profile [optimized + debuginfo] target(s) in 18.11s
+Running unittests src/lib.rs (target/release/deps/audio_sample-549b97cf54b15f74)
+
+running 3 tests
+test conversion_tests::f32_to_i16 ... ignored
+test conversion_tests::i16_to_f32 ... ignored
+test conversion_tests::i16_to_f32_slice ... ignored
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running benches/conversion_benches.rs (target/release/deps/conversion_benches-91ed66e38a9ad698)
+Gnuplot not found, using plotters backend
+Benchmarking Samples conversion i16 to i24 - 1s - 8000Hz - 1ch/Samples conversion i16 to i24 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i16 to i24 - 1s - 8000Hz - 1ch/Samples conversion i16 to i24 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 1s - 8000Hz - 1ch/Samples conversion i16 to i24 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i24 - 1s - 8000Hz - 1ch/Samples conversion i16 to i24 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i16 to i24 - 1s - 8000Hz - 1ch/Samples conversion i16 to i24 - 1s - 8000Hz - 1ch
+                        time:   [189.23 ps 189.65 ps 190.10 ps]
+                        change: [-1.0596% -0.7925% -0.5325%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i16 to i24 - 1s - 16000Hz - 1ch/Samples conversion i16 to i24 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i16 to i24 - 1s - 16000Hz - 1ch/Samples conversion i16 to i24 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 1s - 16000Hz - 1ch/Samples conversion i16 to i24 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion i16 to i24 - 1s - 16000Hz - 1ch/Samples conversion i16 to i24 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i16 to i24 - 1s - 16000Hz - 1ch/Samples conversion i16 to i24 - 1s - 16000Hz - 1c...
+                        time:   [190.57 ps 190.93 ps 191.30 ps]
+                        change: [+0.1139% +0.2511% +0.3887%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 10 outliers among 100 measurements (10.00%)
+  1 (1.00%) low severe
+  4 (4.00%) low mild
+  2 (2.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion i16 to i24 - 1s - 44100Hz - 1ch/Samples conversion i16 to i24 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i16 to i24 - 1s - 44100Hz - 1ch/Samples conversion i16 to i24 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 1s - 44100Hz - 1ch/Samples conversion i16 to i24 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i24 - 1s - 44100Hz - 1ch/Samples conversion i16 to i24 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i16 to i24 - 1s - 44100Hz - 1ch/Samples conversion i16 to i24 - 1s - 44100Hz - 1c...
+                        time:   [188.62 ps 189.08 ps 189.61 ps]
+                        change: [+0.1082% +0.3942% +0.6834%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to i24 - 10s - 8000Hz - 1ch/Samples conversion i16 to i24 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to i24 - 10s - 8000Hz - 1ch/Samples conversion i16 to i24 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 10s - 8000Hz - 1ch/Samples conversion i16 to i24 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i24 - 10s - 8000Hz - 1ch/Samples conversion i16 to i24 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to i24 - 10s - 8000Hz - 1ch/Samples conversion i16 to i24 - 10s - 8000Hz - 1c...
+                        time:   [190.38 ps 190.68 ps 190.97 ps]
+                        change: [+0.0954% +0.2630% +0.4381%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 14 outliers among 100 measurements (14.00%)
+  2 (2.00%) low severe
+  7 (7.00%) low mild
+  4 (4.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to i24 - 10s - 16000Hz - 1ch/Samples conversion i16 to i24 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i16 to i24 - 10s - 16000Hz - 1ch/Samples conversion i16 to i24 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 10s - 16000Hz - 1ch/Samples conversion i16 to i24 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i24 - 10s - 16000Hz - 1ch/Samples conversion i16 to i24 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i16 to i24 - 10s - 16000Hz - 1ch/Samples conversion i16 to i24 - 10s - 16000Hz - ...
+                        time:   [188.84 ps 189.23 ps 189.66 ps]
+                        change: [-0.1534% +0.0220% +0.1907%] (p = 0.80 > 0.10)
+                        No change in performance detected.
+Found 16 outliers among 100 measurements (16.00%)
+  15 (15.00%) low mild
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to i24 - 10s - 44100Hz - 1ch/Samples conversion i16 to i24 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i16 to i24 - 10s - 44100Hz - 1ch/Samples conversion i16 to i24 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i24 - 10s - 44100Hz - 1ch/Samples conversion i16 to i24 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion i16 to i24 - 10s - 44100Hz - 1ch/Samples conversion i16 to i24 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i16 to i24 - 10s - 44100Hz - 1ch/Samples conversion i16 to i24 - 10s - 44100Hz - ...
+                        time:   [189.75 ps 190.07 ps 190.36 ps]
+                        change: [-1.0726% -0.6716% -0.3380%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to i24 - 60s - 8000Hz - 1ch/Samples conversion i16 to i24 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to i24 - 60s - 8000Hz - 1ch/Samples conversion i16 to i24 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i24 - 60s - 8000Hz - 1ch/Samples conversion i16 to i24 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to i24 - 60s - 8000Hz - 1ch/Samples conversion i16 to i24 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to i24 - 60s - 8000Hz - 1ch/Samples conversion i16 to i24 - 60s - 8000Hz - 1c...
+                        time:   [190.56 ps 190.84 ps 191.16 ps]
+                        change: [+0.6279% +0.7686% +0.9150%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 13 outliers among 100 measurements (13.00%)
+  1 (1.00%) low severe
+  8 (8.00%) low mild
+  2 (2.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion i16 to i24 - 60s - 16000Hz - 1ch/Samples conversion i16 to i24 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i16 to i24 - 60s - 16000Hz - 1ch/Samples conversion i16 to i24 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i24 - 60s - 16000Hz - 1ch/Samples conversion i16 to i24 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i16 to i24 - 60s - 16000Hz - 1ch/Samples conversion i16 to i24 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i16 to i24 - 60s - 16000Hz - 1ch/Samples conversion i16 to i24 - 60s - 16000Hz - ...
+                        time:   [190.53 ps 190.87 ps 191.34 ps]
+                        change: [+0.2434% +0.3950% +0.5593%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 17 outliers among 100 measurements (17.00%)
+  3 (3.00%) low severe
+  5 (5.00%) low mild
+  4 (4.00%) high mild
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion i16 to i24 - 60s - 44100Hz - 1ch/Samples conversion i16 to i24 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i16 to i24 - 60s - 44100Hz - 1ch/Samples conversion i16 to i24 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i24 - 60s - 44100Hz - 1ch/Samples conversion i16 to i24 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i16 to i24 - 60s - 44100Hz - 1ch/Samples conversion i16 to i24 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i16 to i24 - 60s - 44100Hz - 1ch/Samples conversion i16 to i24 - 60s - 44100Hz - ...
+                        time:   [189.25 ps 189.45 ps 189.66 ps]
+                        change: [+0.0413% +0.1851% +0.3366%] (p = 0.02 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to i32 - 1s - 8000Hz - 1ch/Samples conversion i16 to i32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i16 to i32 - 1s - 8000Hz - 1ch/Samples conversion i16 to i32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 1s - 8000Hz - 1ch/Samples conversion i16 to i32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 1s - 8000Hz - 1ch/Samples conversion i16 to i32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i16 to i32 - 1s - 8000Hz - 1ch/Samples conversion i16 to i32 - 1s - 8000Hz - 1ch
+                        time:   [189.46 ps 189.71 ps 189.96 ps]
+                        change: [-0.3601% -0.2212% -0.0724%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to i32 - 1s - 16000Hz - 1ch/Samples conversion i16 to i32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i16 to i32 - 1s - 16000Hz - 1ch/Samples conversion i16 to i32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 1s - 16000Hz - 1ch/Samples conversion i16 to i32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 1s - 16000Hz - 1ch/Samples conversion i16 to i32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i16 to i32 - 1s - 16000Hz - 1ch/Samples conversion i16 to i32 - 1s - 16000Hz - 1c...
+                        time:   [189.65 ps 189.92 ps 190.23 ps]
+                        change: [-0.4831% -0.2937% -0.0994%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to i32 - 1s - 44100Hz - 1ch/Samples conversion i16 to i32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i16 to i32 - 1s - 44100Hz - 1ch/Samples conversion i16 to i32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 1s - 44100Hz - 1ch/Samples conversion i16 to i32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 1s - 44100Hz - 1ch/Samples conversion i16 to i32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i16 to i32 - 1s - 44100Hz - 1ch/Samples conversion i16 to i32 - 1s - 44100Hz - 1c...
+                        time:   [188.76 ps 188.99 ps 189.22 ps]
+                        change: [-1.0089% -0.8788% -0.7447%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i16 to i32 - 10s - 8000Hz - 1ch/Samples conversion i16 to i32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to i32 - 10s - 8000Hz - 1ch/Samples conversion i16 to i32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 10s - 8000Hz - 1ch/Samples conversion i16 to i32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 10s - 8000Hz - 1ch/Samples conversion i16 to i32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to i32 - 10s - 8000Hz - 1ch/Samples conversion i16 to i32 - 10s - 8000Hz - 1c...
+                        time:   [189.15 ps 189.38 ps 189.62 ps]
+                        change: [-0.7030% -0.5565% -0.3916%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to i32 - 10s - 16000Hz - 1ch/Samples conversion i16 to i32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i16 to i32 - 10s - 16000Hz - 1ch/Samples conversion i16 to i32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 10s - 16000Hz - 1ch/Samples conversion i16 to i32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 10s - 16000Hz - 1ch/Samples conversion i16 to i32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i16 to i32 - 10s - 16000Hz - 1ch/Samples conversion i16 to i32 - 10s - 16000Hz - ...
+                        time:   [188.85 ps 189.04 ps 189.24 ps]
+                        change: [-0.7616% -0.6133% -0.4655%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to i32 - 10s - 44100Hz - 1ch/Samples conversion i16 to i32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i16 to i32 - 10s - 44100Hz - 1ch/Samples conversion i16 to i32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to i32 - 10s - 44100Hz - 1ch/Samples conversion i16 to i32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to i32 - 10s - 44100Hz - 1ch/Samples conversion i16 to i32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i16 to i32 - 10s - 44100Hz - 1ch/Samples conversion i16 to i32 - 10s - 44100Hz - ...
+                        time:   [190.02 ps 190.27 ps 190.49 ps]
+                        change: [-0.2906% -0.1207% +0.0253%] (p = 0.13 > 0.10)
+                        No change in performance detected.
+
+Benchmarking Samples conversion i16 to i32 - 60s - 8000Hz - 1ch/Samples conversion i16 to i32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to i32 - 60s - 8000Hz - 1ch/Samples conversion i16 to i32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i32 - 60s - 8000Hz - 1ch/Samples conversion i16 to i32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i16 to i32 - 60s - 8000Hz - 1ch/Samples conversion i16 to i32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to i32 - 60s - 8000Hz - 1ch/Samples conversion i16 to i32 - 60s - 8000Hz - 1c...
+                        time:   [188.91 ps 189.06 ps 189.21 ps]
+                        change: [-0.5842% -0.4555% -0.3249%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to i32 - 60s - 16000Hz - 1ch/Samples conversion i16 to i32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i16 to i32 - 60s - 16000Hz - 1ch/Samples conversion i16 to i32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i32 - 60s - 16000Hz - 1ch/Samples conversion i16 to i32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to i32 - 60s - 16000Hz - 1ch/Samples conversion i16 to i32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i16 to i32 - 60s - 16000Hz - 1ch/Samples conversion i16 to i32 - 60s - 16000Hz - ...
+                        time:   [189.00 ps 189.21 ps 189.43 ps]
+                        change: [-0.4441% -0.3022% -0.1580%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to i32 - 60s - 44100Hz - 1ch/Samples conversion i16 to i32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i16 to i32 - 60s - 44100Hz - 1ch/Samples conversion i16 to i32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to i32 - 60s - 44100Hz - 1ch/Samples conversion i16 to i32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to i32 - 60s - 44100Hz - 1ch/Samples conversion i16 to i32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i16 to i32 - 60s - 44100Hz - 1ch/Samples conversion i16 to i32 - 60s - 44100Hz - ...
+                        time:   [189.34 ps 189.58 ps 189.80 ps]
+                        change: [-0.4417% -0.2666% -0.0842%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to f32 - 1s - 8000Hz - 1ch/Samples conversion i16 to f32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i16 to f32 - 1s - 8000Hz - 1ch/Samples conversion i16 to f32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 1s - 8000Hz - 1ch/Samples conversion i16 to f32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f32 - 1s - 8000Hz - 1ch/Samples conversion i16 to f32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i16 to f32 - 1s - 8000Hz - 1ch/Samples conversion i16 to f32 - 1s - 8000Hz - 1ch
+                        time:   [190.42 ps 190.67 ps 190.91 ps]
+                        change: [-0.8523% -0.4195% -0.0486%] (p = 0.04 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f32 - 1s - 16000Hz - 1ch/Samples conversion i16 to f32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i16 to f32 - 1s - 16000Hz - 1ch/Samples conversion i16 to f32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 1s - 16000Hz - 1ch/Samples conversion i16 to f32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f32 - 1s - 16000Hz - 1ch/Samples conversion i16 to f32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i16 to f32 - 1s - 16000Hz - 1ch/Samples conversion i16 to f32 - 1s - 16000Hz - 1c...
+                        time:   [188.99 ps 189.34 ps 189.74 ps]
+                        change: [-0.3813% -0.1723% +0.0582%] (p = 0.13 > 0.10)
+                        No change in performance detected.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to f32 - 1s - 44100Hz - 1ch/Samples conversion i16 to f32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i16 to f32 - 1s - 44100Hz - 1ch/Samples conversion i16 to f32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 1s - 44100Hz - 1ch/Samples conversion i16 to f32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f32 - 1s - 44100Hz - 1ch/Samples conversion i16 to f32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i16 to f32 - 1s - 44100Hz - 1ch/Samples conversion i16 to f32 - 1s - 44100Hz - 1c...
+                        time:   [188.99 ps 189.15 ps 189.31 ps]
+                        change: [-0.4477% -0.2966% -0.1352%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to f32 - 10s - 8000Hz - 1ch/Samples conversion i16 to f32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to f32 - 10s - 8000Hz - 1ch/Samples conversion i16 to f32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 10s - 8000Hz - 1ch/Samples conversion i16 to f32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion i16 to f32 - 10s - 8000Hz - 1ch/Samples conversion i16 to f32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to f32 - 10s - 8000Hz - 1ch/Samples conversion i16 to f32 - 10s - 8000Hz - 1c...
+                        time:   [188.46 ps 188.68 ps 188.93 ps]
+                        change: [-0.0324% +0.1736% +0.3770%] (p = 0.11 > 0.10)
+                        No change in performance detected.
+
+Benchmarking Samples conversion i16 to f32 - 10s - 16000Hz - 1ch/Samples conversion i16 to f32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i16 to f32 - 10s - 16000Hz - 1ch/Samples conversion i16 to f32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 10s - 16000Hz - 1ch/Samples conversion i16 to f32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f32 - 10s - 16000Hz - 1ch/Samples conversion i16 to f32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i16 to f32 - 10s - 16000Hz - 1ch/Samples conversion i16 to f32 - 10s - 16000Hz - ...
+                        time:   [189.63 ps 189.84 ps 190.04 ps]
+                        change: [+0.1382% +0.3286% +0.5246%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to f32 - 10s - 44100Hz - 1ch/Samples conversion i16 to f32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i16 to f32 - 10s - 44100Hz - 1ch/Samples conversion i16 to f32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f32 - 10s - 44100Hz - 1ch/Samples conversion i16 to f32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f32 - 10s - 44100Hz - 1ch/Samples conversion i16 to f32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i16 to f32 - 10s - 44100Hz - 1ch/Samples conversion i16 to f32 - 10s - 44100Hz - ...
+                        time:   [189.82 ps 190.04 ps 190.26 ps]
+                        change: [+0.3752% +0.5620% +0.7427%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f32 - 60s - 8000Hz - 1ch/Samples conversion i16 to f32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to f32 - 60s - 8000Hz - 1ch/Samples conversion i16 to f32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f32 - 60s - 8000Hz - 1ch/Samples conversion i16 to f32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to f32 - 60s - 8000Hz - 1ch/Samples conversion i16 to f32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to f32 - 60s - 8000Hz - 1ch/Samples conversion i16 to f32 - 60s - 8000Hz - 1c...
+                        time:   [189.47 ps 189.63 ps 189.78 ps]
+                        change: [+0.3619% +0.5147% +0.6642%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f32 - 60s - 16000Hz - 1ch/Samples conversion i16 to f32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i16 to f32 - 60s - 16000Hz - 1ch/Samples conversion i16 to f32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f32 - 60s - 16000Hz - 1ch/Samples conversion i16 to f32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to f32 - 60s - 16000Hz - 1ch/Samples conversion i16 to f32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i16 to f32 - 60s - 16000Hz - 1ch/Samples conversion i16 to f32 - 60s - 16000Hz - ...
+                        time:   [189.72 ps 189.91 ps 190.10 ps]
+                        change: [+0.4325% +0.6127% +0.7852%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f32 - 60s - 44100Hz - 1ch/Samples conversion i16 to f32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i16 to f32 - 60s - 44100Hz - 1ch/Samples conversion i16 to f32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f32 - 60s - 44100Hz - 1ch/Samples conversion i16 to f32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to f32 - 60s - 44100Hz - 1ch/Samples conversion i16 to f32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i16 to f32 - 60s - 44100Hz - 1ch/Samples conversion i16 to f32 - 60s - 44100Hz - ...
+                        time:   [188.60 ps 188.72 ps 188.85 ps]
+                        change: [-0.1713% -0.0292% +0.1141%] (p = 0.69 > 0.10)
+                        No change in performance detected.
+Found 5 outliers among 100 measurements (5.00%)
+  5 (5.00%) high mild
+
+Benchmarking Samples conversion i16 to f64 - 1s - 8000Hz - 1ch/Samples conversion i16 to f64 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i16 to f64 - 1s - 8000Hz - 1ch/Samples conversion i16 to f64 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 1s - 8000Hz - 1ch/Samples conversion i16 to f64 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f64 - 1s - 8000Hz - 1ch/Samples conversion i16 to f64 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i16 to f64 - 1s - 8000Hz - 1ch/Samples conversion i16 to f64 - 1s - 8000Hz - 1ch
+                        time:   [189.52 ps 189.77 ps 190.04 ps]
+                        change: [+0.2340% +0.4315% +0.6221%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f64 - 1s - 16000Hz - 1ch/Samples conversion i16 to f64 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i16 to f64 - 1s - 16000Hz - 1ch/Samples conversion i16 to f64 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 1s - 16000Hz - 1ch/Samples conversion i16 to f64 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f64 - 1s - 16000Hz - 1ch/Samples conversion i16 to f64 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i16 to f64 - 1s - 16000Hz - 1ch/Samples conversion i16 to f64 - 1s - 16000Hz - 1c...
+                        time:   [189.64 ps 189.91 ps 190.19 ps]
+                        change: [+0.1202% +0.3217% +0.5197%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i16 to f64 - 1s - 44100Hz - 1ch/Samples conversion i16 to f64 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i16 to f64 - 1s - 44100Hz - 1ch/Samples conversion i16 to f64 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 1s - 44100Hz - 1ch/Samples conversion i16 to f64 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f64 - 1s - 44100Hz - 1ch/Samples conversion i16 to f64 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i16 to f64 - 1s - 44100Hz - 1ch/Samples conversion i16 to f64 - 1s - 44100Hz - 1c...
+                        time:   [189.34 ps 189.78 ps 190.26 ps]
+                        change: [-0.1804% +0.0042% +0.1997%] (p = 0.97 > 0.10)
+                        No change in performance detected.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i16 to f64 - 10s - 8000Hz - 1ch/Samples conversion i16 to f64 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to f64 - 10s - 8000Hz - 1ch/Samples conversion i16 to f64 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 10s - 8000Hz - 1ch/Samples conversion i16 to f64 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f64 - 10s - 8000Hz - 1ch/Samples conversion i16 to f64 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to f64 - 10s - 8000Hz - 1ch/Samples conversion i16 to f64 - 10s - 8000Hz - 1c...
+                        time:   [189.50 ps 189.74 ps 189.99 ps]
+                        change: [-0.8377% -0.6964% -0.5656%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to f64 - 10s - 16000Hz - 1ch/Samples conversion i16 to f64 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i16 to f64 - 10s - 16000Hz - 1ch/Samples conversion i16 to f64 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 10s - 16000Hz - 1ch/Samples conversion i16 to f64 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i16 to f64 - 10s - 16000Hz - 1ch/Samples conversion i16 to f64 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i16 to f64 - 10s - 16000Hz - 1ch/Samples conversion i16 to f64 - 10s - 16000Hz - ...
+                        time:   [189.20 ps 189.50 ps 189.81 ps]
+                        change: [-0.3720% -0.1633% +0.0424%] (p = 0.12 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to f64 - 10s - 44100Hz - 1ch/Samples conversion i16 to f64 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i16 to f64 - 10s - 44100Hz - 1ch/Samples conversion i16 to f64 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i16 to f64 - 10s - 44100Hz - 1ch/Samples conversion i16 to f64 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion i16 to f64 - 10s - 44100Hz - 1ch/Samples conversion i16 to f64 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i16 to f64 - 10s - 44100Hz - 1ch/Samples conversion i16 to f64 - 10s - 44100Hz - ...
+                        time:   [188.14 ps 188.32 ps 188.50 ps]
+                        change: [-0.7032% -0.5274% -0.3467%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i16 to f64 - 60s - 8000Hz - 1ch/Samples conversion i16 to f64 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i16 to f64 - 60s - 8000Hz - 1ch/Samples conversion i16 to f64 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f64 - 60s - 8000Hz - 1ch/Samples conversion i16 to f64 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion i16 to f64 - 60s - 8000Hz - 1ch/Samples conversion i16 to f64 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i16 to f64 - 60s - 8000Hz - 1ch/Samples conversion i16 to f64 - 60s - 8000Hz - 1c...
+                        time:   [189.44 ps 189.66 ps 189.89 ps]
+                        change: [-0.0298% +0.1296% +0.2981%] (p = 0.11 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to f64 - 60s - 16000Hz - 1ch/Samples conversion i16 to f64 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i16 to f64 - 60s - 16000Hz - 1ch/Samples conversion i16 to f64 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f64 - 60s - 16000Hz - 1ch/Samples conversion i16 to f64 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to f64 - 60s - 16000Hz - 1ch/Samples conversion i16 to f64 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i16 to f64 - 60s - 16000Hz - 1ch/Samples conversion i16 to f64 - 60s - 16000Hz - ...
+                        time:   [189.03 ps 189.24 ps 189.46 ps]
+                        change: [+0.0634% +0.2415% +0.4233%] (p = 0.01 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i16 to f64 - 60s - 44100Hz - 1ch/Samples conversion i16 to f64 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i16 to f64 - 60s - 44100Hz - 1ch/Samples conversion i16 to f64 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i16 to f64 - 60s - 44100Hz - 1ch/Samples conversion i16 to f64 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i16 to f64 - 60s - 44100Hz - 1ch/Samples conversion i16 to f64 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i16 to f64 - 60s - 44100Hz - 1ch/Samples conversion i16 to f64 - 60s - 44100Hz - ...
+                        time:   [189.07 ps 189.22 ps 189.39 ps]
+                        change: [-0.0221% +0.1206% +0.2605%] (p = 0.10 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 1s - 8000Hz - 1ch/Samples conversion i24 to i16 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i24 to i16 - 1s - 8000Hz - 1ch/Samples conversion i24 to i16 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 1s - 8000Hz - 1ch/Samples conversion i24 to i16 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i16 - 1s - 8000Hz - 1ch/Samples conversion i24 to i16 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i24 to i16 - 1s - 8000Hz - 1ch/Samples conversion i24 to i16 - 1s - 8000Hz - 1ch
+                        time:   [188.68 ps 188.84 ps 189.01 ps]
+                        change: [-0.4691% -0.2772% -0.0975%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i16 - 1s - 16000Hz - 1ch/Samples conversion i24 to i16 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i24 to i16 - 1s - 16000Hz - 1ch/Samples conversion i24 to i16 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 1s - 16000Hz - 1ch/Samples conversion i24 to i16 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i16 - 1s - 16000Hz - 1ch/Samples conversion i24 to i16 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i24 to i16 - 1s - 16000Hz - 1ch/Samples conversion i24 to i16 - 1s - 16000Hz - 1c...
+                        time:   [188.83 ps 189.04 ps 189.24 ps]
+                        change: [-1.0036% -0.8826% -0.7536%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i16 - 1s - 44100Hz - 1ch/Samples conversion i24 to i16 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i24 to i16 - 1s - 44100Hz - 1ch/Samples conversion i24 to i16 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 1s - 44100Hz - 1ch/Samples conversion i24 to i16 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion i24 to i16 - 1s - 44100Hz - 1ch/Samples conversion i24 to i16 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i24 to i16 - 1s - 44100Hz - 1ch/Samples conversion i24 to i16 - 1s - 44100Hz - 1c...
+                        time:   [188.64 ps 188.96 ps 189.33 ps]
+                        change: [-0.1859% -0.0397% +0.0975%] (p = 0.59 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 10s - 8000Hz - 1ch/Samples conversion i24 to i16 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to i16 - 10s - 8000Hz - 1ch/Samples conversion i24 to i16 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 10s - 8000Hz - 1ch/Samples conversion i24 to i16 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i16 - 10s - 8000Hz - 1ch/Samples conversion i24 to i16 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to i16 - 10s - 8000Hz - 1ch/Samples conversion i24 to i16 - 10s - 8000Hz - 1c...
+                        time:   [190.47 ps 190.68 ps 190.90 ps]
+                        change: [+0.9935% +1.1497% +1.3041%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 5 outliers among 100 measurements (5.00%)
+  3 (3.00%) low mild
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 10s - 16000Hz - 1ch/Samples conversion i24 to i16 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i24 to i16 - 10s - 16000Hz - 1ch/Samples conversion i24 to i16 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 10s - 16000Hz - 1ch/Samples conversion i24 to i16 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion i24 to i16 - 10s - 16000Hz - 1ch/Samples conversion i24 to i16 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i24 to i16 - 10s - 16000Hz - 1ch/Samples conversion i24 to i16 - 10s - 16000Hz - ...
+                        time:   [191.35 ps 191.41 ps 191.46 ps]
+                        change: [+1.8647% +2.0004% +2.1270%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 11 outliers among 100 measurements (11.00%)
+  1 (1.00%) low severe
+  2 (2.00%) low mild
+  5 (5.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 10s - 44100Hz - 1ch/Samples conversion i24 to i16 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i24 to i16 - 10s - 44100Hz - 1ch/Samples conversion i24 to i16 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i16 - 10s - 44100Hz - 1ch/Samples conversion i24 to i16 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i16 - 10s - 44100Hz - 1ch/Samples conversion i24 to i16 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i24 to i16 - 10s - 44100Hz - 1ch/Samples conversion i24 to i16 - 10s - 44100Hz - ...
+                        time:   [190.71 ps 190.82 ps 191.00 ps]
+                        change: [+1.9432% +1.9896% +2.0354%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 9 outliers among 100 measurements (9.00%)
+  1 (1.00%) high mild
+  8 (8.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 60s - 8000Hz - 1ch/Samples conversion i24 to i16 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to i16 - 60s - 8000Hz - 1ch/Samples conversion i24 to i16 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i16 - 60s - 8000Hz - 1ch/Samples conversion i24 to i16 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i24 to i16 - 60s - 8000Hz - 1ch/Samples conversion i24 to i16 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to i16 - 60s - 8000Hz - 1ch/Samples conversion i24 to i16 - 60s - 8000Hz - 1c...
+                        time:   [190.33 ps 190.63 ps 190.94 ps]
+                        change: [+1.9430% +2.0234% +2.1020%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 11 outliers among 100 measurements (11.00%)
+  1 (1.00%) low severe
+  9 (9.00%) low mild
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to i16 - 60s - 16000Hz - 1ch/Samples conversion i24 to i16 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i24 to i16 - 60s - 16000Hz - 1ch/Samples conversion i24 to i16 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i16 - 60s - 16000Hz - 1ch/Samples conversion i24 to i16 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to i16 - 60s - 16000Hz - 1ch/Samples conversion i24 to i16 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i24 to i16 - 60s - 16000Hz - 1ch/Samples conversion i24 to i16 - 60s - 16000Hz - ...
+                        time:   [189.80 ps 190.06 ps 190.34 ps]
+                        change: [+1.4451% +1.5535% +1.6854%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i16 - 60s - 44100Hz - 1ch/Samples conversion i24 to i16 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i24 to i16 - 60s - 44100Hz - 1ch/Samples conversion i24 to i16 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i16 - 60s - 44100Hz - 1ch/Samples conversion i24 to i16 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to i16 - 60s - 44100Hz - 1ch/Samples conversion i24 to i16 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i24 to i16 - 60s - 44100Hz - 1ch/Samples conversion i24 to i16 - 60s - 44100Hz - ...
+                        time:   [189.96 ps 190.21 ps 190.45 ps]
+                        change: [+1.2941% +1.4066% +1.5256%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i32 - 1s - 8000Hz - 1ch/Samples conversion i24 to i32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i24 to i32 - 1s - 8000Hz - 1ch/Samples conversion i24 to i32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 1s - 8000Hz - 1ch/Samples conversion i24 to i32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i32 - 1s - 8000Hz - 1ch/Samples conversion i24 to i32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i24 to i32 - 1s - 8000Hz - 1ch/Samples conversion i24 to i32 - 1s - 8000Hz - 1ch
+                        time:   [190.61 ps 190.82 ps 191.00 ps]
+                        change: [+1.5292% +1.6578% +1.7821%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to i32 - 1s - 16000Hz - 1ch/Samples conversion i24 to i32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i24 to i32 - 1s - 16000Hz - 1ch/Samples conversion i24 to i32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 1s - 16000Hz - 1ch/Samples conversion i24 to i32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion i24 to i32 - 1s - 16000Hz - 1ch/Samples conversion i24 to i32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i24 to i32 - 1s - 16000Hz - 1ch/Samples conversion i24 to i32 - 1s - 16000Hz - 1c...
+                        time:   [190.98 ps 191.10 ps 191.26 ps]
+                        change: [+2.2184% +2.2897% +2.3649%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  4 (4.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion i24 to i32 - 1s - 44100Hz - 1ch/Samples conversion i24 to i32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i24 to i32 - 1s - 44100Hz - 1ch/Samples conversion i24 to i32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 1s - 44100Hz - 1ch/Samples conversion i24 to i32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion i24 to i32 - 1s - 44100Hz - 1ch/Samples conversion i24 to i32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i24 to i32 - 1s - 44100Hz - 1ch/Samples conversion i24 to i32 - 1s - 44100Hz - 1c...
+                        time:   [190.23 ps 190.43 ps 190.62 ps]
+                        change: [+1.8097% +1.9207% +2.0398%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 13 outliers among 100 measurements (13.00%)
+  2 (2.00%) low severe
+  6 (6.00%) low mild
+  4 (4.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i32 - 10s - 8000Hz - 1ch/Samples conversion i24 to i32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to i32 - 10s - 8000Hz - 1ch/Samples conversion i24 to i32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 10s - 8000Hz - 1ch/Samples conversion i24 to i32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i32 - 10s - 8000Hz - 1ch/Samples conversion i24 to i32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to i32 - 10s - 8000Hz - 1ch/Samples conversion i24 to i32 - 10s - 8000Hz - 1c...
+                        time:   [189.04 ps 189.30 ps 189.57 ps]
+                        change: [+1.1247% +1.2620% +1.3888%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i32 - 10s - 16000Hz - 1ch/Samples conversion i24 to i32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i24 to i32 - 10s - 16000Hz - 1ch/Samples conversion i24 to i32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 10s - 16000Hz - 1ch/Samples conversion i24 to i32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i32 - 10s - 16000Hz - 1ch/Samples conversion i24 to i32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i24 to i32 - 10s - 16000Hz - 1ch/Samples conversion i24 to i32 - 10s - 16000Hz - ...
+                        time:   [190.26 ps 190.55 ps 190.80 ps]
+                        change: [+1.3843% +1.5314% +1.6512%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i32 - 10s - 44100Hz - 1ch/Samples conversion i24 to i32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i24 to i32 - 10s - 44100Hz - 1ch/Samples conversion i24 to i32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to i32 - 10s - 44100Hz - 1ch/Samples conversion i24 to i32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to i32 - 10s - 44100Hz - 1ch/Samples conversion i24 to i32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i24 to i32 - 10s - 44100Hz - 1ch/Samples conversion i24 to i32 - 10s - 44100Hz - ...
+                        time:   [190.65 ps 190.80 ps 190.94 ps]
+                        change: [+1.9554% +2.0556% +2.1649%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to i32 - 60s - 8000Hz - 1ch/Samples conversion i24 to i32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to i32 - 60s - 8000Hz - 1ch/Samples conversion i24 to i32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i32 - 60s - 8000Hz - 1ch/Samples conversion i24 to i32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i24 to i32 - 60s - 8000Hz - 1ch/Samples conversion i24 to i32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to i32 - 60s - 8000Hz - 1ch/Samples conversion i24 to i32 - 60s - 8000Hz - 1c...
+                        time:   [190.22 ps 190.47 ps 190.73 ps]
+                        change: [+1.9462% +2.0180% +2.1016%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 8 outliers among 100 measurements (8.00%)
+  7 (7.00%) low mild
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to i32 - 60s - 16000Hz - 1ch/Samples conversion i24 to i32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i24 to i32 - 60s - 16000Hz - 1ch/Samples conversion i24 to i32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i32 - 60s - 16000Hz - 1ch/Samples conversion i24 to i32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to i32 - 60s - 16000Hz - 1ch/Samples conversion i24 to i32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i24 to i32 - 60s - 16000Hz - 1ch/Samples conversion i24 to i32 - 60s - 16000Hz - ...
+                        time:   [189.57 ps 189.84 ps 190.11 ps]
+                        change: [+1.5612% +1.6816% +1.8245%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) low mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i24 to i32 - 60s - 44100Hz - 1ch/Samples conversion i24 to i32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i24 to i32 - 60s - 44100Hz - 1ch/Samples conversion i24 to i32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to i32 - 60s - 44100Hz - 1ch/Samples conversion i24 to i32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i24 to i32 - 60s - 44100Hz - 1ch/Samples conversion i24 to i32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i24 to i32 - 60s - 44100Hz - 1ch/Samples conversion i24 to i32 - 60s - 44100Hz - ...
+                        time:   [189.93 ps 190.14 ps 190.37 ps]
+                        change: [+1.6090% +1.7137% +1.8238%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 1s - 8000Hz - 1ch/Samples conversion i24 to f32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i24 to f32 - 1s - 8000Hz - 1ch/Samples conversion i24 to f32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 1s - 8000Hz - 1ch/Samples conversion i24 to f32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 1s - 8000Hz - 1ch/Samples conversion i24 to f32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i24 to f32 - 1s - 8000Hz - 1ch/Samples conversion i24 to f32 - 1s - 8000Hz - 1ch
+                        time:   [190.26 ps 190.48 ps 190.68 ps]
+                        change: [+1.6636% +1.7852% +1.9242%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 1s - 16000Hz - 1ch/Samples conversion i24 to f32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i24 to f32 - 1s - 16000Hz - 1ch/Samples conversion i24 to f32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 1s - 16000Hz - 1ch/Samples conversion i24 to f32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 1s - 16000Hz - 1ch/Samples conversion i24 to f32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i24 to f32 - 1s - 16000Hz - 1ch/Samples conversion i24 to f32 - 1s - 16000Hz - 1c...
+                        time:   [189.73 ps 189.91 ps 190.07 ps]
+                        change: [+1.4808% +1.5798% +1.6703%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 1s - 44100Hz - 1ch/Samples conversion i24 to f32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i24 to f32 - 1s - 44100Hz - 1ch/Samples conversion i24 to f32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 1s - 44100Hz - 1ch/Samples conversion i24 to f32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 1s - 44100Hz - 1ch/Samples conversion i24 to f32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i24 to f32 - 1s - 44100Hz - 1ch/Samples conversion i24 to f32 - 1s - 44100Hz - 1c...
+                        time:   [189.79 ps 190.07 ps 190.36 ps]
+                        change: [+1.6771% +1.7830% +1.8915%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 10s - 8000Hz - 1ch/Samples conversion i24 to f32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to f32 - 10s - 8000Hz - 1ch/Samples conversion i24 to f32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 10s - 8000Hz - 1ch/Samples conversion i24 to f32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 10s - 8000Hz - 1ch/Samples conversion i24 to f32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to f32 - 10s - 8000Hz - 1ch/Samples conversion i24 to f32 - 10s - 8000Hz - 1c...
+                        time:   [189.78 ps 189.96 ps 190.13 ps]
+                        change: [+1.5642% +1.6726% +1.7740%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) low mild
+
+Benchmarking Samples conversion i24 to f32 - 10s - 16000Hz - 1ch/Samples conversion i24 to f32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i24 to f32 - 10s - 16000Hz - 1ch/Samples conversion i24 to f32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 10s - 16000Hz - 1ch/Samples conversion i24 to f32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 10s - 16000Hz - 1ch/Samples conversion i24 to f32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i24 to f32 - 10s - 16000Hz - 1ch/Samples conversion i24 to f32 - 10s - 16000Hz - ...
+                        time:   [190.24 ps 190.44 ps 190.62 ps]
+                        change: [+1.6395% +1.7643% +1.8863%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 10s - 44100Hz - 1ch/Samples conversion i24 to f32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i24 to f32 - 10s - 44100Hz - 1ch/Samples conversion i24 to f32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f32 - 10s - 44100Hz - 1ch/Samples conversion i24 to f32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f32 - 10s - 44100Hz - 1ch/Samples conversion i24 to f32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i24 to f32 - 10s - 44100Hz - 1ch/Samples conversion i24 to f32 - 10s - 44100Hz - ...
+                        time:   [190.40 ps 190.50 ps 190.58 ps]
+                        change: [+1.4859% +1.6122% +1.7263%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 13 outliers among 100 measurements (13.00%)
+  11 (11.00%) low mild
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 60s - 8000Hz - 1ch/Samples conversion i24 to f32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to f32 - 60s - 8000Hz - 1ch/Samples conversion i24 to f32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f32 - 60s - 8000Hz - 1ch/Samples conversion i24 to f32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to f32 - 60s - 8000Hz - 1ch/Samples conversion i24 to f32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to f32 - 60s - 8000Hz - 1ch/Samples conversion i24 to f32 - 60s - 8000Hz - 1c...
+                        time:   [188.82 ps 189.11 ps 189.42 ps]
+                        change: [+0.8461% +0.9495% +1.0663%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i24 to f32 - 60s - 16000Hz - 1ch/Samples conversion i24 to f32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i24 to f32 - 60s - 16000Hz - 1ch/Samples conversion i24 to f32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f32 - 60s - 16000Hz - 1ch/Samples conversion i24 to f32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to f32 - 60s - 16000Hz - 1ch/Samples conversion i24 to f32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i24 to f32 - 60s - 16000Hz - 1ch/Samples conversion i24 to f32 - 60s - 16000Hz - ...
+                        time:   [189.62 ps 189.79 ps 189.97 ps]
+                        change: [+1.1786% +1.2882% +1.3876%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to f32 - 60s - 44100Hz - 1ch/Samples conversion i24 to f32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i24 to f32 - 60s - 44100Hz - 1ch/Samples conversion i24 to f32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f32 - 60s - 44100Hz - 1ch/Samples conversion i24 to f32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i24 to f32 - 60s - 44100Hz - 1ch/Samples conversion i24 to f32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i24 to f32 - 60s - 44100Hz - 1ch/Samples conversion i24 to f32 - 60s - 44100Hz - ...
+                        time:   [190.27 ps 190.49 ps 190.72 ps]
+                        change: [+1.6363% +1.7470% +1.8725%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 1s - 8000Hz - 1ch/Samples conversion i24 to f64 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i24 to f64 - 1s - 8000Hz - 1ch/Samples conversion i24 to f64 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 1s - 8000Hz - 1ch/Samples conversion i24 to f64 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 1s - 8000Hz - 1ch/Samples conversion i24 to f64 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i24 to f64 - 1s - 8000Hz - 1ch/Samples conversion i24 to f64 - 1s - 8000Hz - 1ch
+                        time:   [189.10 ps 189.33 ps 189.55 ps]
+                        change: [+1.1681% +1.2962% +1.4266%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 1s - 16000Hz - 1ch/Samples conversion i24 to f64 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i24 to f64 - 1s - 16000Hz - 1ch/Samples conversion i24 to f64 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 1s - 16000Hz - 1ch/Samples conversion i24 to f64 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 1s - 16000Hz - 1ch/Samples conversion i24 to f64 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i24 to f64 - 1s - 16000Hz - 1ch/Samples conversion i24 to f64 - 1s - 16000Hz - 1c...
+                        time:   [189.60 ps 189.93 ps 190.31 ps]
+                        change: [+1.5293% +1.6941% +1.8649%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  2 (2.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion i24 to f64 - 1s - 44100Hz - 1ch/Samples conversion i24 to f64 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i24 to f64 - 1s - 44100Hz - 1ch/Samples conversion i24 to f64 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 1s - 44100Hz - 1ch/Samples conversion i24 to f64 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 1s - 44100Hz - 1ch/Samples conversion i24 to f64 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i24 to f64 - 1s - 44100Hz - 1ch/Samples conversion i24 to f64 - 1s - 44100Hz - 1c...
+                        time:   [189.89 ps 190.09 ps 190.32 ps]
+                        change: [+1.6597% +1.7805% +1.8868%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 10s - 8000Hz - 1ch/Samples conversion i24 to f64 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to f64 - 10s - 8000Hz - 1ch/Samples conversion i24 to f64 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 10s - 8000Hz - 1ch/Samples conversion i24 to f64 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 10s - 8000Hz - 1ch/Samples conversion i24 to f64 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to f64 - 10s - 8000Hz - 1ch/Samples conversion i24 to f64 - 10s - 8000Hz - 1c...
+                        time:   [189.10 ps 189.40 ps 189.76 ps]
+                        change: [+1.4236% +1.5510% +1.6959%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 10s - 16000Hz - 1ch/Samples conversion i24 to f64 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i24 to f64 - 10s - 16000Hz - 1ch/Samples conversion i24 to f64 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 10s - 16000Hz - 1ch/Samples conversion i24 to f64 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 10s - 16000Hz - 1ch/Samples conversion i24 to f64 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i24 to f64 - 10s - 16000Hz - 1ch/Samples conversion i24 to f64 - 10s - 16000Hz - ...
+                        time:   [189.67 ps 189.92 ps 190.19 ps]
+                        change: [+1.7331% +1.8793% +2.0144%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i24 to f64 - 10s - 44100Hz - 1ch/Samples conversion i24 to f64 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i24 to f64 - 10s - 44100Hz - 1ch/Samples conversion i24 to f64 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i24 to f64 - 10s - 44100Hz - 1ch/Samples conversion i24 to f64 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i24 to f64 - 10s - 44100Hz - 1ch/Samples conversion i24 to f64 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i24 to f64 - 10s - 44100Hz - 1ch/Samples conversion i24 to f64 - 10s - 44100Hz - ...
+                        time:   [189.43 ps 189.67 ps 189.89 ps]
+                        change: [+1.0286% +1.1719% +1.3066%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 60s - 8000Hz - 1ch/Samples conversion i24 to f64 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i24 to f64 - 60s - 8000Hz - 1ch/Samples conversion i24 to f64 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f64 - 60s - 8000Hz - 1ch/Samples conversion i24 to f64 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to f64 - 60s - 8000Hz - 1ch/Samples conversion i24 to f64 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i24 to f64 - 60s - 8000Hz - 1ch/Samples conversion i24 to f64 - 60s - 8000Hz - 1c...
+                        time:   [189.68 ps 189.95 ps 190.25 ps]
+                        change: [+1.3410% +1.4636% +1.5815%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 60s - 16000Hz - 1ch/Samples conversion i24 to f64 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i24 to f64 - 60s - 16000Hz - 1ch/Samples conversion i24 to f64 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f64 - 60s - 16000Hz - 1ch/Samples conversion i24 to f64 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i24 to f64 - 60s - 16000Hz - 1ch/Samples conversion i24 to f64 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i24 to f64 - 60s - 16000Hz - 1ch/Samples conversion i24 to f64 - 60s - 16000Hz - ...
+                        time:   [189.34 ps 189.53 ps 189.74 ps]
+                        change: [+1.1861% +1.3151% +1.4593%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  3 (3.00%) high mild
+
+Benchmarking Samples conversion i24 to f64 - 60s - 44100Hz - 1ch/Samples conversion i24 to f64 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i24 to f64 - 60s - 44100Hz - 1ch/Samples conversion i24 to f64 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i24 to f64 - 60s - 44100Hz - 1ch/Samples conversion i24 to f64 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i24 to f64 - 60s - 44100Hz - 1ch/Samples conversion i24 to f64 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i24 to f64 - 60s - 44100Hz - 1ch/Samples conversion i24 to f64 - 60s - 44100Hz - ...
+                        time:   [189.90 ps 190.11 ps 190.31 ps]
+                        change: [+0.3158% +0.5936% +0.8518%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to i16 - 1s - 8000Hz - 1ch/Samples conversion i32 to i16 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i32 to i16 - 1s - 8000Hz - 1ch/Samples conversion i32 to i16 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 1s - 8000Hz - 1ch/Samples conversion i32 to i16 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 1s - 8000Hz - 1ch/Samples conversion i32 to i16 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i32 to i16 - 1s - 8000Hz - 1ch/Samples conversion i32 to i16 - 1s - 8000Hz - 1ch
+                        time:   [190.27 ps 190.60 ps 190.98 ps]
+                        change: [+1.3934% +1.5438% +1.7069%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  2 (2.00%) low mild
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to i16 - 1s - 16000Hz - 1ch/Samples conversion i32 to i16 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i32 to i16 - 1s - 16000Hz - 1ch/Samples conversion i32 to i16 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 1s - 16000Hz - 1ch/Samples conversion i32 to i16 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 1s - 16000Hz - 1ch/Samples conversion i32 to i16 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i32 to i16 - 1s - 16000Hz - 1ch/Samples conversion i32 to i16 - 1s - 16000Hz - 1c...
+                        time:   [189.73 ps 190.06 ps 190.36 ps]
+                        change: [+1.2061% +1.3748% +1.5371%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to i16 - 1s - 44100Hz - 1ch/Samples conversion i32 to i16 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i32 to i16 - 1s - 44100Hz - 1ch/Samples conversion i32 to i16 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 1s - 44100Hz - 1ch/Samples conversion i32 to i16 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 1s - 44100Hz - 1ch/Samples conversion i32 to i16 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i32 to i16 - 1s - 44100Hz - 1ch/Samples conversion i32 to i16 - 1s - 44100Hz - 1c...
+                        time:   [190.02 ps 190.32 ps 190.58 ps]
+                        change: [+0.2921% +0.5034% +0.7155%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i16 - 10s - 8000Hz - 1ch/Samples conversion i32 to i16 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to i16 - 10s - 8000Hz - 1ch/Samples conversion i32 to i16 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 10s - 8000Hz - 1ch/Samples conversion i32 to i16 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 10s - 8000Hz - 1ch/Samples conversion i32 to i16 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to i16 - 10s - 8000Hz - 1ch/Samples conversion i32 to i16 - 10s - 8000Hz - 1c...
+                        time:   [189.62 ps 189.92 ps 190.22 ps]
+                        change: [+0.2771% +0.5139% +0.7414%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i16 - 10s - 16000Hz - 1ch/Samples conversion i32 to i16 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i32 to i16 - 10s - 16000Hz - 1ch/Samples conversion i32 to i16 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 10s - 16000Hz - 1ch/Samples conversion i32 to i16 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 10s - 16000Hz - 1ch/Samples conversion i32 to i16 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i32 to i16 - 10s - 16000Hz - 1ch/Samples conversion i32 to i16 - 10s - 16000Hz - ...
+                        time:   [189.96 ps 190.21 ps 190.44 ps]
+                        change: [+0.9559% +1.1046% +1.2440%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i16 - 10s - 44100Hz - 1ch/Samples conversion i32 to i16 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i32 to i16 - 10s - 44100Hz - 1ch/Samples conversion i32 to i16 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i16 - 10s - 44100Hz - 1ch/Samples conversion i32 to i16 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i16 - 10s - 44100Hz - 1ch/Samples conversion i32 to i16 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i32 to i16 - 10s - 44100Hz - 1ch/Samples conversion i32 to i16 - 10s - 44100Hz - ...
+                        time:   [189.41 ps 189.69 ps 190.00 ps]
+                        change: [+0.0879% +0.6750% +1.1037%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) low mild
+  1 (1.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion i32 to i16 - 60s - 8000Hz - 1ch/Samples conversion i32 to i16 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to i16 - 60s - 8000Hz - 1ch/Samples conversion i32 to i16 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i16 - 60s - 8000Hz - 1ch/Samples conversion i32 to i16 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to i16 - 60s - 8000Hz - 1ch/Samples conversion i32 to i16 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to i16 - 60s - 8000Hz - 1ch/Samples conversion i32 to i16 - 60s - 8000Hz - 1c...
+                        time:   [188.92 ps 189.16 ps 189.41 ps]
+                        change: [+0.4521% +0.6158% +0.7660%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i16 - 60s - 16000Hz - 1ch/Samples conversion i32 to i16 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i32 to i16 - 60s - 16000Hz - 1ch/Samples conversion i32 to i16 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i16 - 60s - 16000Hz - 1ch/Samples conversion i32 to i16 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to i16 - 60s - 16000Hz - 1ch/Samples conversion i32 to i16 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i32 to i16 - 60s - 16000Hz - 1ch/Samples conversion i32 to i16 - 60s - 16000Hz - ...
+                        time:   [189.82 ps 190.08 ps 190.34 ps]
+                        change: [+0.9828% +1.1742% +1.3601%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i16 - 60s - 44100Hz - 1ch/Samples conversion i32 to i16 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i32 to i16 - 60s - 44100Hz - 1ch/Samples conversion i32 to i16 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i16 - 60s - 44100Hz - 1ch/Samples conversion i32 to i16 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to i16 - 60s - 44100Hz - 1ch/Samples conversion i32 to i16 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i32 to i16 - 60s - 44100Hz - 1ch/Samples conversion i32 to i16 - 60s - 44100Hz - ...
+                        time:   [189.16 ps 189.39 ps 189.62 ps]
+                        change: [-0.0471% +0.1820% +0.3940%] (p = 0.11 > 0.10)
+                        No change in performance detected.
+
+Benchmarking Samples conversion i32 to i24 - 1s - 8000Hz - 1ch/Samples conversion i32 to i24 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i32 to i24 - 1s - 8000Hz - 1ch/Samples conversion i32 to i24 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 1s - 8000Hz - 1ch/Samples conversion i32 to i24 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i24 - 1s - 8000Hz - 1ch/Samples conversion i32 to i24 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i32 to i24 - 1s - 8000Hz - 1ch/Samples conversion i32 to i24 - 1s - 8000Hz - 1ch
+                        time:   [189.48 ps 189.77 ps 190.07 ps]
+                        change: [+0.3660% +0.5695% +0.7784%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to i24 - 1s - 16000Hz - 1ch/Samples conversion i32 to i24 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i32 to i24 - 1s - 16000Hz - 1ch/Samples conversion i32 to i24 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 1s - 16000Hz - 1ch/Samples conversion i32 to i24 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i24 - 1s - 16000Hz - 1ch/Samples conversion i32 to i24 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i32 to i24 - 1s - 16000Hz - 1ch/Samples conversion i32 to i24 - 1s - 16000Hz - 1c...
+                        time:   [189.72 ps 189.94 ps 190.17 ps]
+                        change: [+0.0993% +0.3094% +0.5122%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  3 (3.00%) high mild
+
+Benchmarking Samples conversion i32 to i24 - 1s - 44100Hz - 1ch/Samples conversion i32 to i24 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i32 to i24 - 1s - 44100Hz - 1ch/Samples conversion i32 to i24 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 1s - 44100Hz - 1ch/Samples conversion i32 to i24 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i24 - 1s - 44100Hz - 1ch/Samples conversion i32 to i24 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i32 to i24 - 1s - 44100Hz - 1ch/Samples conversion i32 to i24 - 1s - 44100Hz - 1c...
+                        time:   [189.85 ps 190.08 ps 190.35 ps]
+                        change: [-0.1520% +0.0763% +0.2917%] (p = 0.50 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to i24 - 10s - 8000Hz - 1ch/Samples conversion i32 to i24 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to i24 - 10s - 8000Hz - 1ch/Samples conversion i32 to i24 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 10s - 8000Hz - 1ch/Samples conversion i32 to i24 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i24 - 10s - 8000Hz - 1ch/Samples conversion i32 to i24 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to i24 - 10s - 8000Hz - 1ch/Samples conversion i32 to i24 - 10s - 8000Hz - 1c...
+                        time:   [189.29 ps 189.58 ps 189.89 ps]
+                        change: [-0.2419% -0.0242% +0.1874%] (p = 0.82 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to i24 - 10s - 16000Hz - 1ch/Samples conversion i32 to i24 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i32 to i24 - 10s - 16000Hz - 1ch/Samples conversion i32 to i24 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 10s - 16000Hz - 1ch/Samples conversion i32 to i24 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to i24 - 10s - 16000Hz - 1ch/Samples conversion i32 to i24 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i32 to i24 - 10s - 16000Hz - 1ch/Samples conversion i32 to i24 - 10s - 16000Hz - ...
+                        time:   [188.94 ps 189.31 ps 189.72 ps]
+                        change: [+0.6193% +0.8494% +1.0743%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to i24 - 10s - 44100Hz - 1ch/Samples conversion i32 to i24 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i32 to i24 - 10s - 44100Hz - 1ch/Samples conversion i32 to i24 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to i24 - 10s - 44100Hz - 1ch/Samples conversion i32 to i24 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion i32 to i24 - 10s - 44100Hz - 1ch/Samples conversion i32 to i24 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i32 to i24 - 10s - 44100Hz - 1ch/Samples conversion i32 to i24 - 10s - 44100Hz - ...
+                        time:   [189.61 ps 189.95 ps 190.28 ps]
+                        change: [+0.5865% +0.7950% +0.9983%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i24 - 60s - 8000Hz - 1ch/Samples conversion i32 to i24 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to i24 - 60s - 8000Hz - 1ch/Samples conversion i32 to i24 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i24 - 60s - 8000Hz - 1ch/Samples conversion i32 to i24 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (157B iterations)
+Benchmarking Samples conversion i32 to i24 - 60s - 8000Hz - 1ch/Samples conversion i32 to i24 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to i24 - 60s - 8000Hz - 1ch/Samples conversion i32 to i24 - 60s - 8000Hz - 1c...
+                        time:   [189.67 ps 189.88 ps 190.10 ps]
+                        change: [+0.1706% +0.6407% +1.0163%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to i24 - 60s - 16000Hz - 1ch/Samples conversion i32 to i24 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i32 to i24 - 60s - 16000Hz - 1ch/Samples conversion i32 to i24 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i24 - 60s - 16000Hz - 1ch/Samples conversion i32 to i24 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to i24 - 60s - 16000Hz - 1ch/Samples conversion i32 to i24 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i32 to i24 - 60s - 16000Hz - 1ch/Samples conversion i32 to i24 - 60s - 16000Hz - ...
+                        time:   [189.84 ps 190.05 ps 190.25 ps]
+                        change: [+0.9880% +1.1850% +1.3921%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  1 (1.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion i32 to i24 - 60s - 44100Hz - 1ch/Samples conversion i32 to i24 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i32 to i24 - 60s - 44100Hz - 1ch/Samples conversion i32 to i24 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to i24 - 60s - 44100Hz - 1ch/Samples conversion i32 to i24 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion i32 to i24 - 60s - 44100Hz - 1ch/Samples conversion i32 to i24 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i32 to i24 - 60s - 44100Hz - 1ch/Samples conversion i32 to i24 - 60s - 44100Hz - ...
+                        time:   [189.73 ps 190.25 ps 190.95 ps]
+                        change: [+0.5689% +0.9770% +1.3518%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion i32 to f32 - 1s - 8000Hz - 1ch/Samples conversion i32 to f32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i32 to f32 - 1s - 8000Hz - 1ch/Samples conversion i32 to f32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 1s - 8000Hz - 1ch/Samples conversion i32 to f32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 1s - 8000Hz - 1ch/Samples conversion i32 to f32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i32 to f32 - 1s - 8000Hz - 1ch/Samples conversion i32 to f32 - 1s - 8000Hz - 1ch
+                        time:   [188.98 ps 189.30 ps 189.65 ps]
+                        change: [-0.0836% +0.2359% +0.5267%] (p = 0.14 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 1s - 16000Hz - 1ch/Samples conversion i32 to f32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i32 to f32 - 1s - 16000Hz - 1ch/Samples conversion i32 to f32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 1s - 16000Hz - 1ch/Samples conversion i32 to f32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 1s - 16000Hz - 1ch/Samples conversion i32 to f32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i32 to f32 - 1s - 16000Hz - 1ch/Samples conversion i32 to f32 - 1s - 16000Hz - 1c...
+                        time:   [189.02 ps 189.25 ps 189.50 ps]
+                        change: [-0.5487% -0.0444% +0.4089%] (p = 0.86 > 0.10)
+                        No change in performance detected.
+Found 4 outliers among 100 measurements (4.00%)
+  4 (4.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 1s - 44100Hz - 1ch/Samples conversion i32 to f32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i32 to f32 - 1s - 44100Hz - 1ch/Samples conversion i32 to f32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 1s - 44100Hz - 1ch/Samples conversion i32 to f32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 1s - 44100Hz - 1ch/Samples conversion i32 to f32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i32 to f32 - 1s - 44100Hz - 1ch/Samples conversion i32 to f32 - 1s - 44100Hz - 1c...
+                        time:   [189.40 ps 189.65 ps 189.89 ps]
+                        change: [+0.6523% +0.8454% +1.0401%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 10s - 8000Hz - 1ch/Samples conversion i32 to f32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to f32 - 10s - 8000Hz - 1ch/Samples conversion i32 to f32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 10s - 8000Hz - 1ch/Samples conversion i32 to f32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 10s - 8000Hz - 1ch/Samples conversion i32 to f32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to f32 - 10s - 8000Hz - 1ch/Samples conversion i32 to f32 - 10s - 8000Hz - 1c...
+                        time:   [189.90 ps 190.16 ps 190.42 ps]
+                        change: [+0.7141% +0.9224% +1.1205%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 10s - 16000Hz - 1ch/Samples conversion i32 to f32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i32 to f32 - 10s - 16000Hz - 1ch/Samples conversion i32 to f32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 10s - 16000Hz - 1ch/Samples conversion i32 to f32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 10s - 16000Hz - 1ch/Samples conversion i32 to f32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i32 to f32 - 10s - 16000Hz - 1ch/Samples conversion i32 to f32 - 10s - 16000Hz - ...
+                        time:   [189.85 ps 190.10 ps 190.32 ps]
+                        change: [+0.5363% +0.7842% +1.0099%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 10s - 44100Hz - 1ch/Samples conversion i32 to f32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i32 to f32 - 10s - 44100Hz - 1ch/Samples conversion i32 to f32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f32 - 10s - 44100Hz - 1ch/Samples conversion i32 to f32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f32 - 10s - 44100Hz - 1ch/Samples conversion i32 to f32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i32 to f32 - 10s - 44100Hz - 1ch/Samples conversion i32 to f32 - 10s - 44100Hz - ...
+                        time:   [189.55 ps 189.80 ps 190.03 ps]
+                        change: [-0.1647% +0.1638% +0.4647%] (p = 0.32 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 60s - 8000Hz - 1ch/Samples conversion i32 to f32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to f32 - 60s - 8000Hz - 1ch/Samples conversion i32 to f32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f32 - 60s - 8000Hz - 1ch/Samples conversion i32 to f32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to f32 - 60s - 8000Hz - 1ch/Samples conversion i32 to f32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to f32 - 60s - 8000Hz - 1ch/Samples conversion i32 to f32 - 60s - 8000Hz - 1c...
+                        time:   [189.60 ps 189.86 ps 190.14 ps]
+                        change: [+0.9446% +1.1632% +1.3711%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) low mild
+  2 (2.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to f32 - 60s - 16000Hz - 1ch/Samples conversion i32 to f32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i32 to f32 - 60s - 16000Hz - 1ch/Samples conversion i32 to f32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f32 - 60s - 16000Hz - 1ch/Samples conversion i32 to f32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion i32 to f32 - 60s - 16000Hz - 1ch/Samples conversion i32 to f32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i32 to f32 - 60s - 16000Hz - 1ch/Samples conversion i32 to f32 - 60s - 16000Hz - ...
+                        time:   [189.76 ps 190.02 ps 190.28 ps]
+                        change: [+0.7460% +0.9778% +1.1901%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i32 to f32 - 60s - 44100Hz - 1ch/Samples conversion i32 to f32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i32 to f32 - 60s - 44100Hz - 1ch/Samples conversion i32 to f32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f32 - 60s - 44100Hz - 1ch/Samples conversion i32 to f32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to f32 - 60s - 44100Hz - 1ch/Samples conversion i32 to f32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i32 to f32 - 60s - 44100Hz - 1ch/Samples conversion i32 to f32 - 60s - 44100Hz - ...
+                        time:   [190.02 ps 190.27 ps 190.51 ps]
+                        change: [+0.5337% +0.7708% +1.0000%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to f64 - 1s - 8000Hz - 1ch/Samples conversion i32 to f64 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion i32 to f64 - 1s - 8000Hz - 1ch/Samples conversion i32 to f64 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 1s - 8000Hz - 1ch/Samples conversion i32 to f64 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 1s - 8000Hz - 1ch/Samples conversion i32 to f64 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion i32 to f64 - 1s - 8000Hz - 1ch/Samples conversion i32 to f64 - 1s - 8000Hz - 1ch
+                        time:   [189.30 ps 189.54 ps 189.79 ps]
+                        change: [+0.0421% +0.2860% +0.5156%] (p = 0.02 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion i32 to f64 - 1s - 16000Hz - 1ch/Samples conversion i32 to f64 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion i32 to f64 - 1s - 16000Hz - 1ch/Samples conversion i32 to f64 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 1s - 16000Hz - 1ch/Samples conversion i32 to f64 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 1s - 16000Hz - 1ch/Samples conversion i32 to f64 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion i32 to f64 - 1s - 16000Hz - 1ch/Samples conversion i32 to f64 - 1s - 16000Hz - 1c...
+                        time:   [189.50 ps 189.84 ps 190.16 ps]
+                        change: [+0.0956% +0.3073% +0.5299%] (p = 0.01 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f64 - 1s - 44100Hz - 1ch/Samples conversion i32 to f64 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion i32 to f64 - 1s - 44100Hz - 1ch/Samples conversion i32 to f64 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 1s - 44100Hz - 1ch/Samples conversion i32 to f64 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 1s - 44100Hz - 1ch/Samples conversion i32 to f64 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion i32 to f64 - 1s - 44100Hz - 1ch/Samples conversion i32 to f64 - 1s - 44100Hz - 1c...
+                        time:   [189.96 ps 190.32 ps 190.67 ps]
+                        change: [+1.4620% +1.6164% +1.7663%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion i32 to f64 - 10s - 8000Hz - 1ch/Samples conversion i32 to f64 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to f64 - 10s - 8000Hz - 1ch/Samples conversion i32 to f64 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 10s - 8000Hz - 1ch/Samples conversion i32 to f64 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 10s - 8000Hz - 1ch/Samples conversion i32 to f64 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to f64 - 10s - 8000Hz - 1ch/Samples conversion i32 to f64 - 10s - 8000Hz - 1c...
+                        time:   [189.41 ps 189.60 ps 189.78 ps]
+                        change: [+1.2745% +1.4204% +1.6017%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to f64 - 10s - 16000Hz - 1ch/Samples conversion i32 to f64 - 10s - 16000Hz - ...
+Benchmarking Samples conversion i32 to f64 - 10s - 16000Hz - 1ch/Samples conversion i32 to f64 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 10s - 16000Hz - 1ch/Samples conversion i32 to f64 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 10s - 16000Hz - 1ch/Samples conversion i32 to f64 - 10s - 16000Hz - ...: Analyzing
+Samples conversion i32 to f64 - 10s - 16000Hz - 1ch/Samples conversion i32 to f64 - 10s - 16000Hz - ...
+                        time:   [189.63 ps 190.00 ps 190.39 ps]
+                        change: [+1.4234% +1.5735% +1.7349%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  2 (2.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to f64 - 10s - 44100Hz - 1ch/Samples conversion i32 to f64 - 10s - 44100Hz - ...
+Benchmarking Samples conversion i32 to f64 - 10s - 44100Hz - 1ch/Samples conversion i32 to f64 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion i32 to f64 - 10s - 44100Hz - 1ch/Samples conversion i32 to f64 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion i32 to f64 - 10s - 44100Hz - 1ch/Samples conversion i32 to f64 - 10s - 44100Hz - ...: Analyzing
+Samples conversion i32 to f64 - 10s - 44100Hz - 1ch/Samples conversion i32 to f64 - 10s - 44100Hz - ...
+                        time:   [189.33 ps 189.62 ps 189.99 ps]
+                        change: [+1.2567% +1.4075% +1.5747%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to f64 - 60s - 8000Hz - 1ch/Samples conversion i32 to f64 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion i32 to f64 - 60s - 8000Hz - 1ch/Samples conversion i32 to f64 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f64 - 60s - 8000Hz - 1ch/Samples conversion i32 to f64 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to f64 - 60s - 8000Hz - 1ch/Samples conversion i32 to f64 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion i32 to f64 - 60s - 8000Hz - 1ch/Samples conversion i32 to f64 - 60s - 8000Hz - 1c...
+                        time:   [189.31 ps 189.62 ps 189.95 ps]
+                        change: [+1.2605% +1.4287% +1.5959%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion i32 to f64 - 60s - 16000Hz - 1ch/Samples conversion i32 to f64 - 60s - 16000Hz - ...
+Benchmarking Samples conversion i32 to f64 - 60s - 16000Hz - 1ch/Samples conversion i32 to f64 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f64 - 60s - 16000Hz - 1ch/Samples conversion i32 to f64 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to f64 - 60s - 16000Hz - 1ch/Samples conversion i32 to f64 - 60s - 16000Hz - ...: Analyzing
+Samples conversion i32 to f64 - 60s - 16000Hz - 1ch/Samples conversion i32 to f64 - 60s - 16000Hz - ...
+                        time:   [189.77 ps 189.96 ps 190.17 ps]
+                        change: [+1.5211% +1.6478% +1.7986%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion i32 to f64 - 60s - 44100Hz - 1ch/Samples conversion i32 to f64 - 60s - 44100Hz - ...
+Benchmarking Samples conversion i32 to f64 - 60s - 44100Hz - 1ch/Samples conversion i32 to f64 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion i32 to f64 - 60s - 44100Hz - 1ch/Samples conversion i32 to f64 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion i32 to f64 - 60s - 44100Hz - 1ch/Samples conversion i32 to f64 - 60s - 44100Hz - ...: Analyzing
+Samples conversion i32 to f64 - 60s - 44100Hz - 1ch/Samples conversion i32 to f64 - 60s - 44100Hz - ...
+                        time:   [189.01 ps 189.21 ps 189.41 ps]
+                        change: [+1.1934% +1.2960% +1.4025%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f32 to i16 - 1s - 8000Hz - 1ch/Samples conversion f32 to i16 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f32 to i16 - 1s - 8000Hz - 1ch/Samples conversion f32 to i16 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 1s - 8000Hz - 1ch/Samples conversion f32 to i16 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.002 s (24M iterations)
+Benchmarking Samples conversion f32 to i16 - 1s - 8000Hz - 1ch/Samples conversion f32 to i16 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f32 to i16 - 1s - 8000Hz - 1ch/Samples conversion f32 to i16 - 1s - 8000Hz - 1ch
+                        time:   [626.49 ns 627.03 ns 627.57 ns]
+                        change: [-1.0330% -0.9141% -0.7943%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i16 - 1s - 16000Hz - 1ch/Samples conversion f32 to i16 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f32 to i16 - 1s - 16000Hz - 1ch/Samples conversion f32 to i16 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 1s - 16000Hz - 1ch/Samples conversion f32 to i16 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.006 s (12M iterations)
+Benchmarking Samples conversion f32 to i16 - 1s - 16000Hz - 1ch/Samples conversion f32 to i16 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f32 to i16 - 1s - 16000Hz - 1ch/Samples conversion f32 to i16 - 1s - 16000Hz - 1c...
+                        time:   [1.2722 µs 1.2740 µs 1.2757 µs]
+                        change: [-0.0629% +0.1000% +0.2547%] (p = 0.21 > 0.10)
+                        No change in performance detected.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f32 to i16 - 1s - 44100Hz - 1ch/Samples conversion f32 to i16 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f32 to i16 - 1s - 44100Hz - 1ch/Samples conversion f32 to i16 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 1s - 44100Hz - 1ch/Samples conversion f32 to i16 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.010 s (4.3M iterations)
+Benchmarking Samples conversion f32 to i16 - 1s - 44100Hz - 1ch/Samples conversion f32 to i16 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f32 to i16 - 1s - 44100Hz - 1ch/Samples conversion f32 to i16 - 1s - 44100Hz - 1c...
+                        time:   [3.4845 µs 3.4927 µs 3.5016 µs]
+                        change: [-0.8567% -0.6106% -0.3722%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f32 to i16 - 10s - 8000Hz - 1ch/Samples conversion f32 to i16 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i16 - 10s - 8000Hz - 1ch/Samples conversion f32 to i16 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 10s - 8000Hz - 1ch/Samples conversion f32 to i16 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.022 s (2.4M iterations)
+Benchmarking Samples conversion f32 to i16 - 10s - 8000Hz - 1ch/Samples conversion f32 to i16 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i16 - 10s - 8000Hz - 1ch/Samples conversion f32 to i16 - 10s - 8000Hz - 1c...
+                        time:   [6.3365 µs 6.3490 µs 6.3624 µs]
+                        change: [+2.4240% +2.6288% +2.8467%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f32 to i16 - 10s - 16000Hz - 1ch/Samples conversion f32 to i16 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i16 - 10s - 16000Hz - 1ch/Samples conversion f32 to i16 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 10s - 16000Hz - 1ch/Samples conversion f32 to i16 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.003 s (1.2M iterations)
+Benchmarking Samples conversion f32 to i16 - 10s - 16000Hz - 1ch/Samples conversion f32 to i16 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i16 - 10s - 16000Hz - 1ch/Samples conversion f32 to i16 - 10s - 16000Hz - ...
+                        time:   [12.731 µs 12.762 µs 12.806 µs]
+                        change: [+1.0989% +1.3284% +1.5624%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i16 - 10s - 44100Hz - 1ch/Samples conversion f32 to i16 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i16 - 10s - 44100Hz - 1ch/Samples conversion f32 to i16 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i16 - 10s - 44100Hz - 1ch/Samples conversion f32 to i16 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.131 s (252k iterations)
+Benchmarking Samples conversion f32 to i16 - 10s - 44100Hz - 1ch/Samples conversion f32 to i16 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i16 - 10s - 44100Hz - 1ch/Samples conversion f32 to i16 - 10s - 44100Hz - ...
+                        time:   [60.122 µs 60.320 µs 60.550 µs]
+                        change: [-1.0193% +0.3710% +1.7131%] (p = 0.60 > 0.10)
+                        No change in performance detected.
+Found 19 outliers among 100 measurements (19.00%)
+  7 (7.00%) high mild
+  12 (12.00%) high severe
+
+Benchmarking Samples conversion f32 to i16 - 60s - 8000Hz - 1ch/Samples conversion f32 to i16 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i16 - 60s - 8000Hz - 1ch/Samples conversion f32 to i16 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i16 - 60s - 8000Hz - 1ch/Samples conversion f32 to i16 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.061 s (454k iterations)
+Benchmarking Samples conversion f32 to i16 - 60s - 8000Hz - 1ch/Samples conversion f32 to i16 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i16 - 60s - 8000Hz - 1ch/Samples conversion f32 to i16 - 60s - 8000Hz - 1c...
+                        time:   [66.239 µs 66.411 µs 66.575 µs]
+                        change: [+1.0316% +1.3634% +1.6794%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i16 - 60s - 16000Hz - 1ch/Samples conversion f32 to i16 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i16 - 60s - 16000Hz - 1ch/Samples conversion f32 to i16 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i16 - 60s - 16000Hz - 1ch/Samples conversion f32 to i16 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.505 s (222k iterations)
+Benchmarking Samples conversion f32 to i16 - 60s - 16000Hz - 1ch/Samples conversion f32 to i16 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i16 - 60s - 16000Hz - 1ch/Samples conversion f32 to i16 - 60s - 16000Hz - ...
+                        time:   [134.11 µs 134.54 µs 135.05 µs]
+                        change: [-0.7256% +0.5500% +2.1357%] (p = 0.45 > 0.10)
+                        No change in performance detected.
+Found 11 outliers among 100 measurements (11.00%)
+  4 (4.00%) high mild
+  7 (7.00%) high severe
+
+Benchmarking Samples conversion f32 to i16 - 60s - 44100Hz - 1ch/Samples conversion f32 to i16 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i16 - 60s - 44100Hz - 1ch/Samples conversion f32 to i16 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i16 - 60s - 44100Hz - 1ch/Samples conversion f32 to i16 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.836 s (76k iterations)
+Benchmarking Samples conversion f32 to i16 - 60s - 44100Hz - 1ch/Samples conversion f32 to i16 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i16 - 60s - 44100Hz - 1ch/Samples conversion f32 to i16 - 60s - 44100Hz - ...
+                        time:   [403.66 µs 407.69 µs 412.35 µs]
+                        change: [+2.8389% +4.0279% +5.1966%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 9 outliers among 100 measurements (9.00%)
+  8 (8.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 1s - 8000Hz - 1ch/Samples conversion f32 to i24 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f32 to i24 - 1s - 8000Hz - 1ch/Samples conversion f32 to i24 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 1s - 8000Hz - 1ch/Samples conversion f32 to i24 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.016 s (2.4M iterations)
+Benchmarking Samples conversion f32 to i24 - 1s - 8000Hz - 1ch/Samples conversion f32 to i24 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f32 to i24 - 1s - 8000Hz - 1ch/Samples conversion f32 to i24 - 1s - 8000Hz - 1ch
+                        time:   [6.1341 µs 6.1399 µs 6.1456 µs]
+                        change: [+0.5036% +0.8821% +1.2349%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f32 to i24 - 1s - 16000Hz - 1ch/Samples conversion f32 to i24 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f32 to i24 - 1s - 16000Hz - 1ch/Samples conversion f32 to i24 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 1s - 16000Hz - 1ch/Samples conversion f32 to i24 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.047 s (1.2M iterations)
+Benchmarking Samples conversion f32 to i24 - 1s - 16000Hz - 1ch/Samples conversion f32 to i24 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f32 to i24 - 1s - 16000Hz - 1ch/Samples conversion f32 to i24 - 1s - 16000Hz - 1c...
+                        time:   [12.251 µs 12.405 µs 12.611 µs]
+                        change: [+0.7975% +1.8694% +2.9287%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 11 outliers among 100 measurements (11.00%)
+  2 (2.00%) high mild
+  9 (9.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 1s - 44100Hz - 1ch/Samples conversion f32 to i24 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f32 to i24 - 1s - 44100Hz - 1ch/Samples conversion f32 to i24 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 1s - 44100Hz - 1ch/Samples conversion f32 to i24 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.154 s (429k iterations)
+Benchmarking Samples conversion f32 to i24 - 1s - 44100Hz - 1ch/Samples conversion f32 to i24 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f32 to i24 - 1s - 44100Hz - 1ch/Samples conversion f32 to i24 - 1s - 44100Hz - 1c...
+                        time:   [33.754 µs 34.128 µs 34.591 µs]
+                        change: [+0.9267% +2.3546% +3.5993%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 14 outliers among 100 measurements (14.00%)
+  4 (4.00%) high mild
+  10 (10.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 10s - 8000Hz - 1ch/Samples conversion f32 to i24 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i24 - 10s - 8000Hz - 1ch/Samples conversion f32 to i24 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 10s - 8000Hz - 1ch/Samples conversion f32 to i24 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.234 s (247k iterations)
+Benchmarking Samples conversion f32 to i24 - 10s - 8000Hz - 1ch/Samples conversion f32 to i24 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i24 - 10s - 8000Hz - 1ch/Samples conversion f32 to i24 - 10s - 8000Hz - 1c...
+                        time:   [60.847 µs 60.992 µs 61.148 µs]
+                        change: [-5.2385% -3.8127% -2.4330%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 10s - 16000Hz - 1ch/Samples conversion f32 to i24 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i24 - 10s - 16000Hz - 1ch/Samples conversion f32 to i24 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 10s - 16000Hz - 1ch/Samples conversion f32 to i24 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.542 s (126k iterations)
+Benchmarking Samples conversion f32 to i24 - 10s - 16000Hz - 1ch/Samples conversion f32 to i24 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i24 - 10s - 16000Hz - 1ch/Samples conversion f32 to i24 - 10s - 16000Hz - ...
+                        time:   [122.80 µs 123.21 µs 123.71 µs]
+                        change: [-3.5104% -1.8157% -0.1743%] (p = 0.04 < 0.10)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 10s - 44100Hz - 1ch/Samples conversion f32 to i24 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i24 - 10s - 44100Hz - 1ch/Samples conversion f32 to i24 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i24 - 10s - 44100Hz - 1ch/Samples conversion f32 to i24 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 16.515 s (45k iterations)
+Benchmarking Samples conversion f32 to i24 - 10s - 44100Hz - 1ch/Samples conversion f32 to i24 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i24 - 10s - 44100Hz - 1ch/Samples conversion f32 to i24 - 10s - 44100Hz - ...
+                        time:   [364.65 µs 372.24 µs 380.70 µs]
+                        change: [+0.3879% +1.2977% +2.4370%] (p = 0.01 < 0.10)
+                        Change within noise threshold.
+Found 9 outliers among 100 measurements (9.00%)
+  3 (3.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 60s - 8000Hz - 1ch/Samples conversion f32 to i24 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i24 - 60s - 8000Hz - 1ch/Samples conversion f32 to i24 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i24 - 60s - 8000Hz - 1ch/Samples conversion f32 to i24 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 31.796 s (81k iterations)
+Benchmarking Samples conversion f32 to i24 - 60s - 8000Hz - 1ch/Samples conversion f32 to i24 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i24 - 60s - 8000Hz - 1ch/Samples conversion f32 to i24 - 60s - 8000Hz - 1c...
+                        time:   [395.88 µs 398.62 µs 402.87 µs]
+                        change: [-2.8462% -1.5057% -0.2720%] (p = 0.03 < 0.10)
+                        Change within noise threshold.
+Found 8 outliers among 100 measurements (8.00%)
+  6 (6.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 60s - 16000Hz - 1ch/Samples conversion f32 to i24 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i24 - 60s - 16000Hz - 1ch/Samples conversion f32 to i24 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i24 - 60s - 16000Hz - 1ch/Samples conversion f32 to i24 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 32.330 s (40k iterations)
+Benchmarking Samples conversion f32 to i24 - 60s - 16000Hz - 1ch/Samples conversion f32 to i24 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i24 - 60s - 16000Hz - 1ch/Samples conversion f32 to i24 - 60s - 16000Hz - ...
+                        time:   [791.12 µs 796.52 µs 804.89 µs]
+                        change: [-2.4112% -1.1765% -0.0164%] (p = 0.06 < 0.10)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  4 (4.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion f32 to i24 - 60s - 44100Hz - 1ch/Samples conversion f32 to i24 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i24 - 60s - 44100Hz - 1ch/Samples conversion f32 to i24 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i24 - 60s - 44100Hz - 1ch/Samples conversion f32 to i24 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 35.078 s (15k iterations)
+Benchmarking Samples conversion f32 to i24 - 60s - 44100Hz - 1ch/Samples conversion f32 to i24 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i24 - 60s - 44100Hz - 1ch/Samples conversion f32 to i24 - 60s - 44100Hz - ...
+                        time:   [2.3384 ms 2.3628 ms 2.3922 ms]
+                        change: [+1.5351% +2.5464% +3.6836%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 10 outliers among 100 measurements (10.00%)
+  1 (1.00%) low mild
+  3 (3.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 1s - 8000Hz - 1ch/Samples conversion f32 to i32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f32 to i32 - 1s - 8000Hz - 1ch/Samples conversion f32 to i32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 1s - 8000Hz - 1ch/Samples conversion f32 to i32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.014 s (2.2M iterations)
+Benchmarking Samples conversion f32 to i32 - 1s - 8000Hz - 1ch/Samples conversion f32 to i32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f32 to i32 - 1s - 8000Hz - 1ch/Samples conversion f32 to i32 - 1s - 8000Hz - 1ch
+                        time:   [6.5560 µs 6.5612 µs 6.5666 µs]
+                        change: [+5.0333% +5.3898% +5.7116%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 4 outliers among 100 measurements (4.00%)
+  1 (1.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 1s - 16000Hz - 1ch/Samples conversion f32 to i32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f32 to i32 - 1s - 16000Hz - 1ch/Samples conversion f32 to i32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 1s - 16000Hz - 1ch/Samples conversion f32 to i32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.003 s (1.1M iterations)
+Benchmarking Samples conversion f32 to i32 - 1s - 16000Hz - 1ch/Samples conversion f32 to i32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f32 to i32 - 1s - 16000Hz - 1ch/Samples conversion f32 to i32 - 1s - 16000Hz - 1c...
+                        time:   [13.116 µs 13.137 µs 13.161 µs]
+                        change: [+5.0377% +5.6450% +6.2720%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 5 outliers among 100 measurements (5.00%)
+  2 (2.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 1s - 44100Hz - 1ch/Samples conversion f32 to i32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f32 to i32 - 1s - 44100Hz - 1ch/Samples conversion f32 to i32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 1s - 44100Hz - 1ch/Samples conversion f32 to i32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.037 s (414k iterations)
+Benchmarking Samples conversion f32 to i32 - 1s - 44100Hz - 1ch/Samples conversion f32 to i32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f32 to i32 - 1s - 44100Hz - 1ch/Samples conversion f32 to i32 - 1s - 44100Hz - 1c...
+                        time:   [36.304 µs 36.720 µs 37.219 µs]
+                        change: [+4.5983% +5.3790% +6.2265%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 5 outliers among 100 measurements (5.00%)
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 10s - 8000Hz - 1ch/Samples conversion f32 to i32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i32 - 10s - 8000Hz - 1ch/Samples conversion f32 to i32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 10s - 8000Hz - 1ch/Samples conversion f32 to i32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.099 s (222k iterations)
+Benchmarking Samples conversion f32 to i32 - 10s - 8000Hz - 1ch/Samples conversion f32 to i32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i32 - 10s - 8000Hz - 1ch/Samples conversion f32 to i32 - 10s - 8000Hz - 1c...
+                        time:   [65.400 µs 65.670 µs 66.022 µs]
+                        change: [-2.7273% -1.6178% -0.5341%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 3 outliers among 100 measurements (3.00%)
+  1 (1.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 10s - 16000Hz - 1ch/Samples conversion f32 to i32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i32 - 10s - 16000Hz - 1ch/Samples conversion f32 to i32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 10s - 16000Hz - 1ch/Samples conversion f32 to i32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.639 s (116k iterations)
+Benchmarking Samples conversion f32 to i32 - 10s - 16000Hz - 1ch/Samples conversion f32 to i32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i32 - 10s - 16000Hz - 1ch/Samples conversion f32 to i32 - 10s - 16000Hz - ...
+                        time:   [132.23 µs 132.56 µs 133.00 µs]
+                        change: [-0.1587% +0.1716% +0.5592%] (p = 0.38 > 0.10)
+                        No change in performance detected.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 10s - 44100Hz - 1ch/Samples conversion f32 to i32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i32 - 10s - 44100Hz - 1ch/Samples conversion f32 to i32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to i32 - 10s - 44100Hz - 1ch/Samples conversion f32 to i32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.622 s (40k iterations)
+Benchmarking Samples conversion f32 to i32 - 10s - 44100Hz - 1ch/Samples conversion f32 to i32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i32 - 10s - 44100Hz - 1ch/Samples conversion f32 to i32 - 10s - 44100Hz - ...
+                        time:   [392.19 µs 396.80 µs 401.89 µs]
+                        change: [-0.0111% +0.8652% +1.7439%] (p = 0.06 < 0.10)
+                        Change within noise threshold.
+Found 11 outliers among 100 measurements (11.00%)
+  4 (4.00%) high mild
+  7 (7.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 60s - 8000Hz - 1ch/Samples conversion f32 to i32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to i32 - 60s - 8000Hz - 1ch/Samples conversion f32 to i32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i32 - 60s - 8000Hz - 1ch/Samples conversion f32 to i32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.025 s (71k iterations)
+Benchmarking Samples conversion f32 to i32 - 60s - 8000Hz - 1ch/Samples conversion f32 to i32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to i32 - 60s - 8000Hz - 1ch/Samples conversion f32 to i32 - 60s - 8000Hz - 1c...
+                        time:   [427.20 µs 432.81 µs 439.25 µs]
+                        change: [-0.1668% +0.9761% +2.0668%] (p = 0.09 < 0.10)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  2 (2.00%) high mild
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 60s - 16000Hz - 1ch/Samples conversion f32 to i32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f32 to i32 - 60s - 16000Hz - 1ch/Samples conversion f32 to i32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i32 - 60s - 16000Hz - 1ch/Samples conversion f32 to i32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 32.838 s (35k iterations)
+Benchmarking Samples conversion f32 to i32 - 60s - 16000Hz - 1ch/Samples conversion f32 to i32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f32 to i32 - 60s - 16000Hz - 1ch/Samples conversion f32 to i32 - 60s - 16000Hz - ...
+                        time:   [900.97 µs 902.35 µs 904.09 µs]
+                        change: [-0.4774% +0.1706% +0.8177%] (p = 0.63 > 0.10)
+                        No change in performance detected.
+Found 3 outliers among 100 measurements (3.00%)
+  2 (2.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to i32 - 60s - 44100Hz - 1ch/Samples conversion f32 to i32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f32 to i32 - 60s - 44100Hz - 1ch/Samples conversion f32 to i32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to i32 - 60s - 44100Hz - 1ch/Samples conversion f32 to i32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 38.984 s (15k iterations)
+Benchmarking Samples conversion f32 to i32 - 60s - 44100Hz - 1ch/Samples conversion f32 to i32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f32 to i32 - 60s - 44100Hz - 1ch/Samples conversion f32 to i32 - 60s - 44100Hz - ...
+                        time:   [2.5600 ms 2.5880 ms 2.6202 ms]
+                        change: [+0.1908% +1.5287% +2.7869%] (p = 0.02 < 0.10)
+                        Change within noise threshold.
+Found 5 outliers among 100 measurements (5.00%)
+  3 (3.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f32 to f64 - 1s - 8000Hz - 1ch/Samples conversion f32 to f64 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f32 to f64 - 1s - 8000Hz - 1ch/Samples conversion f32 to f64 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 1s - 8000Hz - 1ch/Samples conversion f32 to f64 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.005 s (9.7M iterations)
+Benchmarking Samples conversion f32 to f64 - 1s - 8000Hz - 1ch/Samples conversion f32 to f64 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f32 to f64 - 1s - 8000Hz - 1ch/Samples conversion f32 to f64 - 1s - 8000Hz - 1ch
+                        time:   [1.5502 µs 1.5522 µs 1.5543 µs]
+                        change: [+12.335% +12.576% +12.847%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 5 outliers among 100 measurements (5.00%)
+  1 (1.00%) low severe
+  1 (1.00%) low mild
+  1 (1.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f32 to f64 - 1s - 16000Hz - 1ch/Samples conversion f32 to f64 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f32 to f64 - 1s - 16000Hz - 1ch/Samples conversion f32 to f64 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 1s - 16000Hz - 1ch/Samples conversion f32 to f64 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.008 s (5.1M iterations)
+Benchmarking Samples conversion f32 to f64 - 1s - 16000Hz - 1ch/Samples conversion f32 to f64 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f32 to f64 - 1s - 16000Hz - 1ch/Samples conversion f32 to f64 - 1s - 16000Hz - 1c...
+                        time:   [2.9562 µs 2.9599 µs 2.9638 µs]
+                        change: [+2.1806% +2.3335% +2.4920%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f32 to f64 - 1s - 44100Hz - 1ch/Samples conversion f32 to f64 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f32 to f64 - 1s - 44100Hz - 1ch/Samples conversion f32 to f64 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 1s - 44100Hz - 1ch/Samples conversion f32 to f64 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (1.9M iterations)
+Benchmarking Samples conversion f32 to f64 - 1s - 44100Hz - 1ch/Samples conversion f32 to f64 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f32 to f64 - 1s - 44100Hz - 1ch/Samples conversion f32 to f64 - 1s - 44100Hz - 1c...
+                        time:   [7.8941 µs 7.9033 µs 7.9135 µs]
+                        change: [+2.2067% +2.3239% +2.4138%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f32 to f64 - 10s - 8000Hz - 1ch/Samples conversion f32 to f64 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to f64 - 10s - 8000Hz - 1ch/Samples conversion f32 to f64 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 10s - 8000Hz - 1ch/Samples conversion f32 to f64 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.027 s (1.0M iterations)
+Benchmarking Samples conversion f32 to f64 - 10s - 8000Hz - 1ch/Samples conversion f32 to f64 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to f64 - 10s - 8000Hz - 1ch/Samples conversion f32 to f64 - 10s - 8000Hz - 1c...
+                        time:   [14.396 µs 14.504 µs 14.597 µs]
+                        change: [+7.3097% +7.9498% +8.4515%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 18 outliers among 100 measurements (18.00%)
+  17 (17.00%) low mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f32 to f64 - 10s - 16000Hz - 1ch/Samples conversion f32 to f64 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f32 to f64 - 10s - 16000Hz - 1ch/Samples conversion f32 to f64 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 10s - 16000Hz - 1ch/Samples conversion f32 to f64 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.067 s (399k iterations)
+Benchmarking Samples conversion f32 to f64 - 10s - 16000Hz - 1ch/Samples conversion f32 to f64 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f32 to f64 - 10s - 16000Hz - 1ch/Samples conversion f32 to f64 - 10s - 16000Hz - ...
+                        time:   [37.054 µs 37.331 µs 37.622 µs]
+                        change: [-1.9544% -0.9785% +0.3661%] (p = 0.10 < 0.10)
+                        Change within noise threshold.
+Found 16 outliers among 100 measurements (16.00%)
+  14 (14.00%) low mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f32 to f64 - 10s - 44100Hz - 1ch/Samples conversion f32 to f64 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f32 to f64 - 10s - 44100Hz - 1ch/Samples conversion f32 to f64 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f32 to f64 - 10s - 44100Hz - 1ch/Samples conversion f32 to f64 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.725 s (106k iterations)
+Benchmarking Samples conversion f32 to f64 - 10s - 44100Hz - 1ch/Samples conversion f32 to f64 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f32 to f64 - 10s - 44100Hz - 1ch/Samples conversion f32 to f64 - 10s - 44100Hz - ...
+                        time:   [153.37 µs 154.16 µs 154.97 µs]
+                        change: [+12.893% +13.658% +14.269%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 6 outliers among 100 measurements (6.00%)
+  3 (3.00%) low mild
+  3 (3.00%) high mild
+
+Benchmarking Samples conversion f32 to f64 - 60s - 8000Hz - 1ch/Samples conversion f32 to f64 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f32 to f64 - 60s - 8000Hz - 1ch/Samples conversion f32 to f64 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to f64 - 60s - 8000Hz - 1ch/Samples conversion f32 to f64 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.829 s (187k iterations)
+Benchmarking Samples conversion f32 to f64 - 60s - 8000Hz - 1ch/Samples conversion f32 to f64 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f32 to f64 - 60s - 8000Hz - 1ch/Samples conversion f32 to f64 - 60s - 8000Hz - 1c...
+                        time:   [164.24 µs 165.40 µs 166.43 µs]
+                        change: [+10.739% +11.273% +11.892%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+
+Benchmarking Samples conversion f32 to f64 - 60s - 16000Hz - 1ch/Samples conversion f32 to f64 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f32 to f64 - 60s - 16000Hz - 1ch/Samples conversion f32 to f64 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to f64 - 60s - 16000Hz - 1ch/Samples conversion f32 to f64 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 31.066 s (91k iterations)
+Benchmarking Samples conversion f32 to f64 - 60s - 16000Hz - 1ch/Samples conversion f32 to f64 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f32 to f64 - 60s - 16000Hz - 1ch/Samples conversion f32 to f64 - 60s - 16000Hz - ...
+                        time:   [322.16 µs 324.87 µs 327.69 µs]
+                        change: [+8.7408% +9.3891% +10.127%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+
+Benchmarking Samples conversion f32 to f64 - 60s - 44100Hz - 1ch/Samples conversion f32 to f64 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f32 to f64 - 60s - 44100Hz - 1ch/Samples conversion f32 to f64 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f32 to f64 - 60s - 44100Hz - 1ch/Samples conversion f32 to f64 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 33.155 s (20k iterations)
+Benchmarking Samples conversion f32 to f64 - 60s - 44100Hz - 1ch/Samples conversion f32 to f64 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f32 to f64 - 60s - 44100Hz - 1ch/Samples conversion f32 to f64 - 60s - 44100Hz - ...
+                        time:   [1.6129 ms 1.6407 ms 1.6735 ms]
+                        change: [+6.0756% +7.6517% +9.1208%] (p = 0.00 < 0.10)
+                        Performance has regressed.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion f64 to i16 - 1s - 8000Hz - 1ch/Samples conversion f64 to i16 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f64 to i16 - 1s - 8000Hz - 1ch/Samples conversion f64 to i16 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 1s - 8000Hz - 1ch/Samples conversion f64 to i16 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion f64 to i16 - 1s - 8000Hz - 1ch/Samples conversion f64 to i16 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f64 to i16 - 1s - 8000Hz - 1ch/Samples conversion f64 to i16 - 1s - 8000Hz - 1ch
+                        time:   [189.81 ps 190.10 ps 190.42 ps]
+                        change: [+1.3788% +1.5094% +1.6554%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i16 - 1s - 16000Hz - 1ch/Samples conversion f64 to i16 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f64 to i16 - 1s - 16000Hz - 1ch/Samples conversion f64 to i16 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 1s - 16000Hz - 1ch/Samples conversion f64 to i16 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i16 - 1s - 16000Hz - 1ch/Samples conversion f64 to i16 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f64 to i16 - 1s - 16000Hz - 1ch/Samples conversion f64 to i16 - 1s - 16000Hz - 1c...
+                        time:   [189.48 ps 189.69 ps 189.90 ps]
+                        change: [+1.6111% +1.9038% +2.2395%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 8 outliers among 100 measurements (8.00%)
+  3 (3.00%) high mild
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion f64 to i16 - 1s - 44100Hz - 1ch/Samples conversion f64 to i16 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f64 to i16 - 1s - 44100Hz - 1ch/Samples conversion f64 to i16 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 1s - 44100Hz - 1ch/Samples conversion f64 to i16 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i16 - 1s - 44100Hz - 1ch/Samples conversion f64 to i16 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f64 to i16 - 1s - 44100Hz - 1ch/Samples conversion f64 to i16 - 1s - 44100Hz - 1c...
+                        time:   [189.63 ps 189.84 ps 190.04 ps]
+                        change: [+1.1503% +1.2454% +1.3514%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f64 to i16 - 10s - 8000Hz - 1ch/Samples conversion f64 to i16 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i16 - 10s - 8000Hz - 1ch/Samples conversion f64 to i16 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 10s - 8000Hz - 1ch/Samples conversion f64 to i16 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i16 - 10s - 8000Hz - 1ch/Samples conversion f64 to i16 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i16 - 10s - 8000Hz - 1ch/Samples conversion f64 to i16 - 10s - 8000Hz - 1c...
+                        time:   [189.58 ps 189.85 ps 190.13 ps]
+                        change: [+1.5034% +1.6719% +1.8597%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to i16 - 10s - 16000Hz - 1ch/Samples conversion f64 to i16 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i16 - 10s - 16000Hz - 1ch/Samples conversion f64 to i16 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 10s - 16000Hz - 1ch/Samples conversion f64 to i16 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (78B iterations)
+Benchmarking Samples conversion f64 to i16 - 10s - 16000Hz - 1ch/Samples conversion f64 to i16 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i16 - 10s - 16000Hz - 1ch/Samples conversion f64 to i16 - 10s - 16000Hz - ...
+                        time:   [189.68 ps 189.99 ps 190.31 ps]
+                        change: [+1.4064% +1.5302% +1.6519%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion f64 to i16 - 10s - 44100Hz - 1ch/Samples conversion f64 to i16 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i16 - 10s - 44100Hz - 1ch/Samples conversion f64 to i16 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i16 - 10s - 44100Hz - 1ch/Samples conversion f64 to i16 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i16 - 10s - 44100Hz - 1ch/Samples conversion f64 to i16 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i16 - 10s - 44100Hz - 1ch/Samples conversion f64 to i16 - 10s - 44100Hz - ...
+                        time:   [189.43 ps 189.70 ps 189.98 ps]
+                        change: [+1.3050% +1.5550% +1.8637%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 6 outliers among 100 measurements (6.00%)
+  4 (4.00%) high mild
+  2 (2.00%) high severe
+
+Benchmarking Samples conversion f64 to i16 - 60s - 8000Hz - 1ch/Samples conversion f64 to i16 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i16 - 60s - 8000Hz - 1ch/Samples conversion f64 to i16 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i16 - 60s - 8000Hz - 1ch/Samples conversion f64 to i16 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion f64 to i16 - 60s - 8000Hz - 1ch/Samples conversion f64 to i16 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i16 - 60s - 8000Hz - 1ch/Samples conversion f64 to i16 - 60s - 8000Hz - 1c...
+                        time:   [189.37 ps 189.59 ps 189.90 ps]
+                        change: [+1.1774% +1.3544% +1.6282%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  1 (1.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to i16 - 60s - 16000Hz - 1ch/Samples conversion f64 to i16 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i16 - 60s - 16000Hz - 1ch/Samples conversion f64 to i16 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i16 - 60s - 16000Hz - 1ch/Samples conversion f64 to i16 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion f64 to i16 - 60s - 16000Hz - 1ch/Samples conversion f64 to i16 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i16 - 60s - 16000Hz - 1ch/Samples conversion f64 to i16 - 60s - 16000Hz - ...
+                        time:   [188.95 ps 189.07 ps 189.20 ps]
+                        change: [+1.0603% +1.1245% +1.1922%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i16 - 60s - 44100Hz - 1ch/Samples conversion f64 to i16 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i16 - 60s - 44100Hz - 1ch/Samples conversion f64 to i16 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i16 - 60s - 44100Hz - 1ch/Samples conversion f64 to i16 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion f64 to i16 - 60s - 44100Hz - 1ch/Samples conversion f64 to i16 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i16 - 60s - 44100Hz - 1ch/Samples conversion f64 to i16 - 60s - 44100Hz - ...
+                        time:   [189.25 ps 189.48 ps 189.69 ps]
+                        change: [+1.0684% +1.1665% +1.2594%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f64 to i24 - 1s - 8000Hz - 1ch/Samples conversion f64 to i24 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f64 to i24 - 1s - 8000Hz - 1ch/Samples conversion f64 to i24 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 1s - 8000Hz - 1ch/Samples conversion f64 to i24 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 1s - 8000Hz - 1ch/Samples conversion f64 to i24 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f64 to i24 - 1s - 8000Hz - 1ch/Samples conversion f64 to i24 - 1s - 8000Hz - 1ch
+                        time:   [189.99 ps 190.22 ps 190.46 ps]
+                        change: [+1.5788% +1.6931% +1.8184%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i24 - 1s - 16000Hz - 1ch/Samples conversion f64 to i24 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f64 to i24 - 1s - 16000Hz - 1ch/Samples conversion f64 to i24 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 1s - 16000Hz - 1ch/Samples conversion f64 to i24 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 1s - 16000Hz - 1ch/Samples conversion f64 to i24 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f64 to i24 - 1s - 16000Hz - 1ch/Samples conversion f64 to i24 - 1s - 16000Hz - 1c...
+                        time:   [189.06 ps 189.31 ps 189.56 ps]
+                        change: [+1.2989% +1.4360% +1.5627%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f64 to i24 - 1s - 44100Hz - 1ch/Samples conversion f64 to i24 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f64 to i24 - 1s - 44100Hz - 1ch/Samples conversion f64 to i24 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 1s - 44100Hz - 1ch/Samples conversion f64 to i24 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 1s - 44100Hz - 1ch/Samples conversion f64 to i24 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f64 to i24 - 1s - 44100Hz - 1ch/Samples conversion f64 to i24 - 1s - 44100Hz - 1c...
+                        time:   [189.61 ps 189.91 ps 190.26 ps]
+                        change: [+1.5128% +1.6489% +1.7824%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 2 outliers among 100 measurements (2.00%)
+  2 (2.00%) high mild
+
+Benchmarking Samples conversion f64 to i24 - 10s - 8000Hz - 1ch/Samples conversion f64 to i24 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i24 - 10s - 8000Hz - 1ch/Samples conversion f64 to i24 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 10s - 8000Hz - 1ch/Samples conversion f64 to i24 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 10s - 8000Hz - 1ch/Samples conversion f64 to i24 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i24 - 10s - 8000Hz - 1ch/Samples conversion f64 to i24 - 10s - 8000Hz - 1c...
+                        time:   [189.86 ps 190.13 ps 190.41 ps]
+                        change: [+1.4092% +1.5295% +1.6529%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i24 - 10s - 16000Hz - 1ch/Samples conversion f64 to i24 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i24 - 10s - 16000Hz - 1ch/Samples conversion f64 to i24 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 10s - 16000Hz - 1ch/Samples conversion f64 to i24 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 10s - 16000Hz - 1ch/Samples conversion f64 to i24 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i24 - 10s - 16000Hz - 1ch/Samples conversion f64 to i24 - 10s - 16000Hz - ...
+                        time:   [188.79 ps 189.08 ps 189.47 ps]
+                        change: [+0.8553% +0.9876% +1.1347%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to i24 - 10s - 44100Hz - 1ch/Samples conversion f64 to i24 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i24 - 10s - 44100Hz - 1ch/Samples conversion f64 to i24 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i24 - 10s - 44100Hz - 1ch/Samples conversion f64 to i24 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i24 - 10s - 44100Hz - 1ch/Samples conversion f64 to i24 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i24 - 10s - 44100Hz - 1ch/Samples conversion f64 to i24 - 10s - 44100Hz - ...
+                        time:   [189.26 ps 189.61 ps 190.01 ps]
+                        change: [+1.0456% +1.1779% +1.3084%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i24 - 60s - 8000Hz - 1ch/Samples conversion f64 to i24 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i24 - 60s - 8000Hz - 1ch/Samples conversion f64 to i24 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i24 - 60s - 8000Hz - 1ch/Samples conversion f64 to i24 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion f64 to i24 - 60s - 8000Hz - 1ch/Samples conversion f64 to i24 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i24 - 60s - 8000Hz - 1ch/Samples conversion f64 to i24 - 60s - 8000Hz - 1c...
+                        time:   [189.77 ps 190.01 ps 190.25 ps]
+                        change: [+1.4176% +1.5520% +1.6577%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f64 to i24 - 60s - 16000Hz - 1ch/Samples conversion f64 to i24 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i24 - 60s - 16000Hz - 1ch/Samples conversion f64 to i24 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i24 - 60s - 16000Hz - 1ch/Samples conversion f64 to i24 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion f64 to i24 - 60s - 16000Hz - 1ch/Samples conversion f64 to i24 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i24 - 60s - 16000Hz - 1ch/Samples conversion f64 to i24 - 60s - 16000Hz - ...
+                        time:   [188.93 ps 189.11 ps 189.31 ps]
+                        change: [+1.1709% +1.2637% +1.3629%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i24 - 60s - 44100Hz - 1ch/Samples conversion f64 to i24 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i24 - 60s - 44100Hz - 1ch/Samples conversion f64 to i24 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i24 - 60s - 44100Hz - 1ch/Samples conversion f64 to i24 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (159B iterations)
+Benchmarking Samples conversion f64 to i24 - 60s - 44100Hz - 1ch/Samples conversion f64 to i24 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i24 - 60s - 44100Hz - 1ch/Samples conversion f64 to i24 - 60s - 44100Hz - ...
+                        time:   [189.73 ps 189.95 ps 190.15 ps]
+                        change: [+1.5931% +2.0345% +2.6623%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 8 outliers among 100 measurements (8.00%)
+  2 (2.00%) low mild
+  3 (3.00%) high mild
+  3 (3.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 1s - 8000Hz - 1ch/Samples conversion f64 to i32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f64 to i32 - 1s - 8000Hz - 1ch/Samples conversion f64 to i32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 1s - 8000Hz - 1ch/Samples conversion f64 to i32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i32 - 1s - 8000Hz - 1ch/Samples conversion f64 to i32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f64 to i32 - 1s - 8000Hz - 1ch/Samples conversion f64 to i32 - 1s - 8000Hz - 1ch
+                        time:   [189.50 ps 189.73 ps 189.94 ps]
+                        change: [+1.1771% +1.3156% +1.4646%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 1s - 16000Hz - 1ch/Samples conversion f64 to i32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f64 to i32 - 1s - 16000Hz - 1ch/Samples conversion f64 to i32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 1s - 16000Hz - 1ch/Samples conversion f64 to i32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i32 - 1s - 16000Hz - 1ch/Samples conversion f64 to i32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f64 to i32 - 1s - 16000Hz - 1ch/Samples conversion f64 to i32 - 1s - 16000Hz - 1c...
+                        time:   [189.13 ps 189.41 ps 189.67 ps]
+                        change: [+0.9709% +1.0898% +1.2031%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+
+Benchmarking Samples conversion f64 to i32 - 1s - 44100Hz - 1ch/Samples conversion f64 to i32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f64 to i32 - 1s - 44100Hz - 1ch/Samples conversion f64 to i32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 1s - 44100Hz - 1ch/Samples conversion f64 to i32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i32 - 1s - 44100Hz - 1ch/Samples conversion f64 to i32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f64 to i32 - 1s - 44100Hz - 1ch/Samples conversion f64 to i32 - 1s - 44100Hz - 1c...
+                        time:   [189.96 ps 190.26 ps 190.58 ps]
+                        change: [+1.6393% +1.7828% +1.9495%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+
+Benchmarking Samples conversion f64 to i32 - 10s - 8000Hz - 1ch/Samples conversion f64 to i32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i32 - 10s - 8000Hz - 1ch/Samples conversion f64 to i32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 10s - 8000Hz - 1ch/Samples conversion f64 to i32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (79B iterations)
+Benchmarking Samples conversion f64 to i32 - 10s - 8000Hz - 1ch/Samples conversion f64 to i32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i32 - 10s - 8000Hz - 1ch/Samples conversion f64 to i32 - 10s - 8000Hz - 1c...
+                        time:   [187.78 ps 188.03 ps 188.32 ps]
+                        change: [+0.6263% +0.7845% +0.9405%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 10s - 16000Hz - 1ch/Samples conversion f64 to i32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i32 - 10s - 16000Hz - 1ch/Samples conversion f64 to i32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 10s - 16000Hz - 1ch/Samples conversion f64 to i32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to i32 - 10s - 16000Hz - 1ch/Samples conversion f64 to i32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i32 - 10s - 16000Hz - 1ch/Samples conversion f64 to i32 - 10s - 16000Hz - ...
+                        time:   [187.04 ps 187.08 ps 187.14 ps]
+                        change: [-0.0502% +0.0320% +0.1117%] (p = 0.47 > 0.10)
+                        No change in performance detected.
+Found 14 outliers among 100 measurements (14.00%)
+  8 (8.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 10s - 44100Hz - 1ch/Samples conversion f64 to i32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i32 - 10s - 44100Hz - 1ch/Samples conversion f64 to i32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to i32 - 10s - 44100Hz - 1ch/Samples conversion f64 to i32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to i32 - 10s - 44100Hz - 1ch/Samples conversion f64 to i32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i32 - 10s - 44100Hz - 1ch/Samples conversion f64 to i32 - 10s - 44100Hz - ...
+                        time:   [187.04 ps 187.08 ps 187.14 ps]
+                        change: [-0.0083% +0.0235% +0.0586%] (p = 0.22 > 0.10)
+                        No change in performance detected.
+Found 11 outliers among 100 measurements (11.00%)
+  4 (4.00%) high mild
+  7 (7.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 60s - 8000Hz - 1ch/Samples conversion f64 to i32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to i32 - 60s - 8000Hz - 1ch/Samples conversion f64 to i32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i32 - 60s - 8000Hz - 1ch/Samples conversion f64 to i32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (160B iterations)
+Benchmarking Samples conversion f64 to i32 - 60s - 8000Hz - 1ch/Samples conversion f64 to i32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to i32 - 60s - 8000Hz - 1ch/Samples conversion f64 to i32 - 60s - 8000Hz - 1c...
+                        time:   [187.05 ps 187.10 ps 187.15 ps]
+                        change: [+0.0009% +0.0241% +0.0471%] (p = 0.04 < 0.10)
+                        Change within noise threshold.
+Found 10 outliers among 100 measurements (10.00%)
+  3 (3.00%) high mild
+  7 (7.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 60s - 16000Hz - 1ch/Samples conversion f64 to i32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f64 to i32 - 60s - 16000Hz - 1ch/Samples conversion f64 to i32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i32 - 60s - 16000Hz - 1ch/Samples conversion f64 to i32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (160B iterations)
+Benchmarking Samples conversion f64 to i32 - 60s - 16000Hz - 1ch/Samples conversion f64 to i32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f64 to i32 - 60s - 16000Hz - 1ch/Samples conversion f64 to i32 - 60s - 16000Hz - ...
+                        time:   [187.03 ps 187.04 ps 187.05 ps]
+                        change: [+0.0072% +0.0221% +0.0393%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 7 outliers among 100 measurements (7.00%)
+  2 (2.00%) high mild
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion f64 to i32 - 60s - 44100Hz - 1ch/Samples conversion f64 to i32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f64 to i32 - 60s - 44100Hz - 1ch/Samples conversion f64 to i32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to i32 - 60s - 44100Hz - 1ch/Samples conversion f64 to i32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (160B iterations)
+Benchmarking Samples conversion f64 to i32 - 60s - 44100Hz - 1ch/Samples conversion f64 to i32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f64 to i32 - 60s - 44100Hz - 1ch/Samples conversion f64 to i32 - 60s - 44100Hz - ...
+                        time:   [187.03 ps 187.05 ps 187.08 ps]
+                        change: [-0.0118% +0.1356% +0.3966%] (p = 0.31 > 0.10)
+                        No change in performance detected.
+Found 8 outliers among 100 measurements (8.00%)
+  2 (2.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 1s - 8000Hz - 1ch/Samples conversion f64 to f32 - 1s - 8000Hz - 1ch
+Benchmarking Samples conversion f64 to f32 - 1s - 8000Hz - 1ch/Samples conversion f64 to f32 - 1s - 8000Hz - 1ch: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 1s - 8000Hz - 1ch/Samples conversion f64 to f32 - 1s - 8000Hz - 1ch: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 1s - 8000Hz - 1ch/Samples conversion f64 to f32 - 1s - 8000Hz - 1ch: Analyzing
+Samples conversion f64 to f32 - 1s - 8000Hz - 1ch/Samples conversion f64 to f32 - 1s - 8000Hz - 1ch
+                        time:   [187.05 ps 187.09 ps 187.16 ps]
+                        change: [-0.2187% -0.0929% +0.0074%] (p = 0.12 > 0.10)
+                        No change in performance detected.
+Found 10 outliers among 100 measurements (10.00%)
+  4 (4.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 1s - 16000Hz - 1ch/Samples conversion f64 to f32 - 1s - 16000Hz - 1c...
+Benchmarking Samples conversion f64 to f32 - 1s - 16000Hz - 1ch/Samples conversion f64 to f32 - 1s - 16000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 1s - 16000Hz - 1ch/Samples conversion f64 to f32 - 1s - 16000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 1s - 16000Hz - 1ch/Samples conversion f64 to f32 - 1s - 16000Hz - 1c...: Analyzing
+Samples conversion f64 to f32 - 1s - 16000Hz - 1ch/Samples conversion f64 to f32 - 1s - 16000Hz - 1c...
+                        time:   [187.05 ps 187.08 ps 187.12 ps]
+                        change: [-0.0755% -0.0092% +0.0374%] (p = 0.79 > 0.10)
+                        No change in performance detected.
+Found 11 outliers among 100 measurements (11.00%)
+  3 (3.00%) high mild
+  8 (8.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 1s - 44100Hz - 1ch/Samples conversion f64 to f32 - 1s - 44100Hz - 1c...
+Benchmarking Samples conversion f64 to f32 - 1s - 44100Hz - 1ch/Samples conversion f64 to f32 - 1s - 44100Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 1s - 44100Hz - 1ch/Samples conversion f64 to f32 - 1s - 44100Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 1s - 44100Hz - 1ch/Samples conversion f64 to f32 - 1s - 44100Hz - 1c...: Analyzing
+Samples conversion f64 to f32 - 1s - 44100Hz - 1ch/Samples conversion f64 to f32 - 1s - 44100Hz - 1c...
+                        time:   [187.04 ps 187.05 ps 187.07 ps]
+                        change: [-0.0446% +0.0108% +0.0853%] (p = 0.78 > 0.10)
+                        No change in performance detected.
+Found 11 outliers among 100 measurements (11.00%)
+  6 (6.00%) high mild
+  5 (5.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 10s - 8000Hz - 1ch/Samples conversion f64 to f32 - 10s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to f32 - 10s - 8000Hz - 1ch/Samples conversion f64 to f32 - 10s - 8000Hz - 1c...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 10s - 8000Hz - 1ch/Samples conversion f64 to f32 - 10s - 8000Hz - 1c...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 10s - 8000Hz - 1ch/Samples conversion f64 to f32 - 10s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to f32 - 10s - 8000Hz - 1ch/Samples conversion f64 to f32 - 10s - 8000Hz - 1c...
+                        time:   [187.03 ps 187.04 ps 187.05 ps]
+                        change: [-0.0685% +0.0096% +0.0849%] (p = 0.82 > 0.10)
+                        No change in performance detected.
+Found 12 outliers among 100 measurements (12.00%)
+  3 (3.00%) high mild
+  9 (9.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 10s - 16000Hz - 1ch/Samples conversion f64 to f32 - 10s - 16000Hz - ...
+Benchmarking Samples conversion f64 to f32 - 10s - 16000Hz - 1ch/Samples conversion f64 to f32 - 10s - 16000Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 10s - 16000Hz - 1ch/Samples conversion f64 to f32 - 10s - 16000Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 10s - 16000Hz - 1ch/Samples conversion f64 to f32 - 10s - 16000Hz - ...: Analyzing
+Samples conversion f64 to f32 - 10s - 16000Hz - 1ch/Samples conversion f64 to f32 - 10s - 16000Hz - ...
+                        time:   [187.05 ps 187.08 ps 187.10 ps]
+                        change: [-0.0159% +0.0278% +0.0863%] (p = 0.31 > 0.10)
+                        No change in performance detected.
+Found 13 outliers among 100 measurements (13.00%)
+  6 (6.00%) high mild
+  7 (7.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 10s - 44100Hz - 1ch/Samples conversion f64 to f32 - 10s - 44100Hz - ...
+Benchmarking Samples conversion f64 to f32 - 10s - 44100Hz - 1ch/Samples conversion f64 to f32 - 10s - 44100Hz - ...: Warming up for 3.0000 s
+Benchmarking Samples conversion f64 to f32 - 10s - 44100Hz - 1ch/Samples conversion f64 to f32 - 10s - 44100Hz - ...: Collecting 100 samples in estimated 15.000 s (80B iterations)
+Benchmarking Samples conversion f64 to f32 - 10s - 44100Hz - 1ch/Samples conversion f64 to f32 - 10s - 44100Hz - ...: Analyzing
+Samples conversion f64 to f32 - 10s - 44100Hz - 1ch/Samples conversion f64 to f32 - 10s - 44100Hz - ...
+                        time:   [187.04 ps 187.05 ps 187.06 ps]
+                        change: [-0.0328% +0.0179% +0.0773%] (p = 0.54 > 0.10)
+                        No change in performance detected.
+Found 13 outliers among 100 measurements (13.00%)
+  7 (7.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 60s - 8000Hz - 1ch/Samples conversion f64 to f32 - 60s - 8000Hz - 1c...
+Benchmarking Samples conversion f64 to f32 - 60s - 8000Hz - 1ch/Samples conversion f64 to f32 - 60s - 8000Hz - 1c...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to f32 - 60s - 8000Hz - 1ch/Samples conversion f64 to f32 - 60s - 8000Hz - 1c...: Collecting 100 samples in estimated 30.000 s (160B iterations)
+Benchmarking Samples conversion f64 to f32 - 60s - 8000Hz - 1ch/Samples conversion f64 to f32 - 60s - 8000Hz - 1c...: Analyzing
+Samples conversion f64 to f32 - 60s - 8000Hz - 1ch/Samples conversion f64 to f32 - 60s - 8000Hz - 1c...
+                        time:   [187.13 ps 187.17 ps 187.21 ps]
+                        change: [+0.0967% +0.1428% +0.1963%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 4 outliers among 100 measurements (4.00%)
+  3 (3.00%) high mild
+  1 (1.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 60s - 16000Hz - 1ch/Samples conversion f64 to f32 - 60s - 16000Hz - ...
+Benchmarking Samples conversion f64 to f32 - 60s - 16000Hz - 1ch/Samples conversion f64 to f32 - 60s - 16000Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to f32 - 60s - 16000Hz - 1ch/Samples conversion f64 to f32 - 60s - 16000Hz - ...: Collecting 100 samples in estimated 30.000 s (160B iterations)
+Benchmarking Samples conversion f64 to f32 - 60s - 16000Hz - 1ch/Samples conversion f64 to f32 - 60s - 16000Hz - ...: Analyzing
+Samples conversion f64 to f32 - 60s - 16000Hz - 1ch/Samples conversion f64 to f32 - 60s - 16000Hz - ...
+                        time:   [187.03 ps 187.05 ps 187.07 ps]
+                        change: [-0.0131% +0.0109% +0.0330%] (p = 0.37 > 0.10)
+                        No change in performance detected.
+Found 15 outliers among 100 measurements (15.00%)
+  9 (9.00%) high mild
+  6 (6.00%) high severe
+
+Benchmarking Samples conversion f64 to f32 - 60s - 44100Hz - 1ch/Samples conversion f64 to f32 - 60s - 44100Hz - ...
+Benchmarking Samples conversion f64 to f32 - 60s - 44100Hz - 1ch/Samples conversion f64 to f32 - 60s - 44100Hz - ...: Warming up for 6.0000 s
+Benchmarking Samples conversion f64 to f32 - 60s - 44100Hz - 1ch/Samples conversion f64 to f32 - 60s - 44100Hz - ...: Collecting 100 samples in estimated 30.000 s (158B iterations)
+Benchmarking Samples conversion f64 to f32 - 60s - 44100Hz - 1ch/Samples conversion f64 to f32 - 60s - 44100Hz - ...: Analyzing
+Samples conversion f64 to f32 - 60s - 44100Hz - 1ch/Samples conversion f64 to f32 - 60s - 44100Hz - ...
+                        time:   [189.26 ps 189.67 ps 190.10 ps]
+                        change: [+1.1232% +1.3186% +1.4776%] (p = 0.00 < 0.10)
+                        Change within noise threshold.
+Found 1 outliers among 100 measurements (1.00%)
+  1 (1.00%) high mild
+

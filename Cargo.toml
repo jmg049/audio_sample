@@ -1,7 +1,17 @@
 [package]
 name = "audio_sample"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2024"
+authors = ["Jack Geraghty <jgeraghty049@gmail.com>"]
+license = "MIT"
+description = "A library for working with audio samples."
+readme = "README.md"
+homepage = "https://github.com/jmg049/audio_sample"
+repository = "https://github.com/jmg049/audio_sample"
+documentation = "https://docs.rs/audio_sample"
+keywords = ["dsp", "audio", "conversion"]
+categories = ["encoding", "multimedia"]
+
 
 [dependencies]
 bytemuck = { version = "1.22.0", features = ["derive"] }
@@ -9,3 +19,20 @@ i24 = "1.0.1"
 
 [dev-dependencies]
 approx_eq = "0.1.8"
+criterion = "0.5.1"
+rand = "0.9.0"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 3
+panic = "abort"
+strip = true
+
+[profile.bench]
+inherits = "release"
+debug = true
+
+[[bench]]
+name = "conversion_benches"
+harness = false

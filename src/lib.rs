@@ -67,11 +67,11 @@
 //! ### Converting Buffers of Samples
 //!
 //! ```rust
-//! use audio_sample::ConvertSlice;
+//! use audio_sample::{ConvertSequence, Samples};
 //!
 //! // Using ConvertSlice trait for Box<[T]>
 //! let i16_buffer: Box<[i16]> = vec![0, 16384, -16384, 32767].into_boxed_slice();
-//! let f32_buffer: Box<[f32]> = i16_buffer.convert_slice();
+//! let f32_buffer: Samples<f32> = i16_buffer.convert_sequence();
 //! ```
 //! ## Implementation Details
 //!
@@ -100,15 +100,46 @@
 //! Report them on the [Github Page](<https://www.github.com/jmg049/audio_sample>) and I will try and get to it as soon as I can :)
 //!
 
-use bytemuck::{Pod, Zeroable};
+use std::alloc::Layout;
+use std::any::TypeId;
+use std::convert::{AsMut, AsRef};
+use std::fmt::{Debug, Display};
+use std::ops::{Deref, DerefMut};
+
+use bytemuck::{Pod, cast_slice};
 use i24::i24;
-use std::{
-    fmt::{Debug, Display},
-    ops::{Deref, DerefMut},
-};
-/// Marker trait used to signify a valid audio sample type.
+
+/// Allocates an exact sized heap buffer for samples.
+pub(crate) fn alloc_sample_buffer<T>(len: usize) -> Box<[T]>
+where
+    T: AudioSample + Copy + Debug,
+{
+    if len == 0 {
+        return <Box<[T]>>::default();
+    }
+
+    let layout = match Layout::array::<T>(len) {
+        Ok(layout) => layout,
+        Err(_) => panic!("Failed to allocate buffer of size {}", len),
+    };
+
+    let ptr = unsafe { std::alloc::alloc(layout) as *mut T };
+    let slice_ptr: *mut [T] = core::ptr::slice_from_raw_parts_mut(ptr, len);
+    unsafe { Box::from_raw(slice_ptr) }
+}
+
+/// Marker trait for audio sample types.
 pub trait AudioSample:
-    Clone + Copy + Debug + Display + Pod + Zeroable + PartialEq + PartialOrd + Send + Sync
+    Copy
+    + Pod
+    + ConvertTo<i16>
+    + ConvertTo<i32>
+    + ConvertTo<i24>
+    + ConvertTo<f32>
+    + ConvertTo<f64>
+    + Sync
+    + Send
+    + Debug
 {
 }
 
@@ -118,184 +149,150 @@ impl AudioSample for i32 {}
 impl AudioSample for f32 {}
 impl AudioSample for f64 {}
 
-/// ConvertTo<To> expresses the ability of one [AudioSample] type to convert into another sample type (the “To” type).
-pub trait ConvertTo<To: AudioSample> {
-    fn convert_to(&self) -> To;
+/// Trait for converting one sample type to another.
+pub trait ConvertTo<T: AudioSample> {
+    fn convert_to(&self) -> T;
 }
 
-/// ConvertSlice expresses the ability to convert a slice of type [AudioSample] into a box of some
-/// other [AudioSample] ``To``.
-pub trait ConvertSlice<To: AudioSample> {
-    fn convert_slice(&self) -> Box<[To]>;
+pub trait ConvertSequence<T: AudioSample> {
+    fn convert_sequence(self) -> Box<[T]>;
 }
 
-impl<From, To> ConvertSlice<To> for Box<[From]>
+impl<T: AudioSample, F> ConvertSequence<T> for Box<[F]>
 where
-    From: AudioSample + ConvertTo<To>,
-    To: AudioSample,
+    F: AudioSample + ConvertTo<T>,
 {
-    fn convert_slice(&self) -> Box<[To]> {
-        self.iter().map(|sample| sample.convert_to()).collect()
+    fn convert_sequence(self) -> Box<[T]> {
+        let mut out: Box<[T]> = alloc_sample_buffer(self.len());
+        for i in 0..self.len() {
+            out[i] = self[i].convert_to();
+        }
+        out
     }
 }
 
-pub struct Samples<T: AudioSample> {
-    samples: Box<[T]>,
-}
-
-impl<T: AudioSample> Deref for Samples<T> {
-    type Target = [T];
-    fn deref(&self) -> &Self::Target {
-        self.as_ref()
-    }
-}
-
-impl<T: AudioSample> DerefMut for Samples<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        self.as_mut()
-    }
-}
-
-impl<T: AudioSample> AsRef<[T]> for Samples<T> {
-    fn as_ref(&self) -> &[T] {
-        self.samples.as_ref()
-    }
-}
-
-impl<T: AudioSample> AsMut<[T]> for Samples<T> {
-    fn as_mut(&mut self) -> &mut [T] {
-        self.samples.as_mut()
-    }
-}
-
-impl<T: AudioSample> Samples<T> {
-    pub const fn new(samples: Box<[T]>) -> Self {
-        Self { samples }
-    }
-
-    pub fn len(&self) -> usize {
-        self.as_ref().len()
-    }
-
-    pub fn is_empty(&self) -> bool {
-        self.as_ref().is_empty()
-    }
-
-    pub fn to_owned<S: AudioSample>(&self) -> Vec<S>
-    where
-        T: ConvertTo<S>,
-        Box<[T]>: ConvertSlice<S>,
-    {
-        // The boxed slice conversion is done by our blanket impl.
-        Vec::from(self.samples.convert_slice())
-    }
-}
+// ========================
+// Conversion implementations
+// ========================
 
 // i16 //
-impl ConvertTo<Self> for i16 {
-    fn convert_to(&self) -> Self {
+impl ConvertTo<i16> for i16 {
+    #[inline(always)]
+    fn convert_to(&self) -> i16 {
         *self
     }
 }
 
 impl ConvertTo<i24> for i16 {
+    #[inline(always)]
     fn convert_to(&self) -> i24 {
-        i24::from_i32((i32::from(*self)) << 8)
+        i24::from_i32((*self as i32) << 8)
     }
 }
 
 impl ConvertTo<i32> for i16 {
+    #[inline(always)]
     fn convert_to(&self) -> i32 {
-        (i32::from(*self)) << 16
+        (*self as i32) << 16
     }
 }
 
 impl ConvertTo<f32> for i16 {
+    #[inline(always)]
     fn convert_to(&self) -> f32 {
-        (f32::from(*self) / (f32::from(Self::MAX))).clamp(-1.0, 1.0)
+        ((*self as f32) / (i16::MAX as f32)).clamp(-1.0, 1.0)
     }
 }
 
 impl ConvertTo<f64> for i16 {
+    #[inline(always)]
     fn convert_to(&self) -> f64 {
-        (f64::from(*self) / f64::from(Self::MAX)).clamp(-1.0, 1.0)
+        ((*self as f64) / (i16::MAX as f64)).clamp(-1.0, 1.0)
     }
 }
 
 // i24 //
 impl ConvertTo<i16> for i24 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> i16 {
         (self.to_i32() >> 8) as i16
     }
 }
 
-impl ConvertTo<Self> for i24 {
-    fn convert_to(&self) -> Self {
+impl ConvertTo<i24> for i24 {
+    #[inline(always)]
+    fn convert_to(&self) -> i24 {
         *self
     }
 }
 
 impl ConvertTo<i32> for i24 {
+    #[inline(always)]
     fn convert_to(&self) -> i32 {
         self.to_i32() << 8
     }
 }
 
 impl ConvertTo<f32> for i24 {
+    #[inline(always)]
     fn convert_to(&self) -> f32 {
         (self.to_i32() as f32) / (i32::MAX as f32)
     }
 }
 
 impl ConvertTo<f64> for i24 {
+    #[inline(always)]
     fn convert_to(&self) -> f64 {
-        f64::from(self.to_i32()) / f64::from(i32::MAX)
+        (self.to_i32() as f64) / (i32::MAX as f64)
     }
 }
 
 // i32 //
 impl ConvertTo<i16> for i32 {
+    #[inline(always)]
     fn convert_to(&self) -> i16 {
         (*self >> 16) as i16
     }
 }
 
 impl ConvertTo<i24> for i32 {
+    #[inline(always)]
     fn convert_to(&self) -> i24 {
         i24::from_i32(*self >> 8)
     }
 }
 
-impl ConvertTo<Self> for i32 {
-    fn convert_to(&self) -> Self {
+impl ConvertTo<i32> for i32 {
+    #[inline(always)]
+    fn convert_to(&self) -> i32 {
         *self
     }
 }
 
 impl ConvertTo<f32> for i32 {
+    #[inline(always)]
     fn convert_to(&self) -> f32 {
-        (*self as f32 / Self::MAX as f32).clamp(-1.0, 1.0)
+        ((*self as f32) / (i32::MAX as f32)).clamp(-1.0, 1.0)
     }
 }
 
 impl ConvertTo<f64> for i32 {
+    #[inline(always)]
     fn convert_to(&self) -> f64 {
-        (f64::from(*self) / f64::from(Self::MAX)).clamp(-1.0, 1.0)
+        ((*self as f64) / (i32::MAX as f64)).clamp(-1.0, 1.0)
     }
 }
 
 // f32 //
 impl ConvertTo<i16> for f32 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> i16 {
-        (*self * Self::from(i16::MAX))
-            .clamp(Self::from(i16::MIN), Self::from(i16::MAX))
-            .round() as i16
+        ((*self * (i16::MAX as f32)).clamp(i16::MIN as f32, i16::MAX as f32)).round() as i16
     }
 }
 
 impl ConvertTo<i24> for f32 {
+    #[inline(always)]
     fn convert_to(&self) -> i24 {
         i24::from_i32(
             ((*self * (i32::MAX as f32)).clamp(i32::MIN as f32, i32::MAX as f32)).round() as i32,
@@ -304,60 +301,192 @@ impl ConvertTo<i24> for f32 {
 }
 
 impl ConvertTo<i32> for f32 {
+    #[inline(always)]
     fn convert_to(&self) -> i32 {
-        ((*self * (i32::MAX as Self)).clamp(i32::MIN as Self, i32::MAX as Self)).round() as i32
+        ((*self * (i32::MAX as f32)).clamp(i32::MIN as f32, i32::MAX as f32)).round() as i32
     }
 }
 
-impl ConvertTo<Self> for f32 {
-    fn convert_to(&self) -> Self {
+impl ConvertTo<f32> for f32 {
+    #[inline(always)]
+    fn convert_to(&self) -> f32 {
         *self
     }
 }
 
 impl ConvertTo<f64> for f32 {
+    #[inline(always)]
     fn convert_to(&self) -> f64 {
-        f64::from(*self)
+        *self as f64
     }
 }
 
 // f64 //
 impl ConvertTo<i16> for f64 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> i16 {
-        ((*self * Self::from(i16::MAX)).clamp(Self::from(i16::MIN), Self::from(i16::MAX))).round()
-            as i16
+        ((*self * (i16::MAX as f64)).clamp(i16::MIN as f64, i16::MAX as f64)).round() as i16
     }
 }
 
 impl ConvertTo<i24> for f64 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> i24 {
         i24::from_i32(
-            ((*self * Self::from(i32::MAX)).clamp(Self::from(i32::MIN), Self::from(i32::MAX)))
-                .round() as i32,
+            ((*self * (i32::MAX as f64)).clamp(i32::MIN as f64, i32::MAX as f64)).round() as i32,
         )
     }
 }
 
 impl ConvertTo<i32> for f64 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> i32 {
-        ((*self * Self::from(i32::MAX)).clamp(Self::from(i32::MIN), Self::from(i32::MAX))).round()
-            as i32
+        ((*self * (i32::MAX as f64)).clamp(i32::MIN as f64, i32::MAX as f64)).round() as i32
     }
 }
 
 impl ConvertTo<f32> for f64 {
-    #[allow(clippy::cast_possible_truncation)]
+    #[inline(always)]
     fn convert_to(&self) -> f32 {
         *self as f32
     }
 }
 
-impl ConvertTo<Self> for f64 {
-    fn convert_to(&self) -> Self {
+impl ConvertTo<f64> for f64 {
+    #[inline(always)]
+    fn convert_to(&self) -> f64 {
         *self
+    }
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Samples<T>
+where
+    T: AudioSample,
+{
+    pub(crate) samples: Box<[T]>,
+}
+
+impl<T> AsRef<[T]> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn as_ref(&self) -> &[T] {
+        &self.samples
+    }
+}
+
+impl<T> AsMut<[T]> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn as_mut(&mut self) -> &mut [T] {
+        &mut self.samples
+    }
+}
+
+impl<T> Deref for Samples<T>
+where
+    T: AudioSample,
+{
+    type Target = [T];
+
+    fn deref(&self) -> &Self::Target {
+        &self.samples
+    }
+}
+
+impl<T> DerefMut for Samples<T>
+where
+    T: AudioSample,
+{
+    fn deref_mut(&mut self) -> &mut Self::Target {
+        &mut self.samples
+    }
+}
+
+impl<T> From<Vec<T>> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn from(samples: Vec<T>) -> Self {
+        Samples {
+            samples: samples.into_boxed_slice(),
+        }
+    }
+}
+
+impl<T> From<&[T]> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn from(samples: &[T]) -> Self {
+        Samples {
+            samples: Box::from(samples),
+        }
+    }
+}
+
+impl<T> From<Box<[T]>> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn from(samples: Box<[T]>) -> Self {
+        Samples { samples }
+    }
+}
+
+impl<T> From<&[u8]> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn from(bytes: &[u8]) -> Self {
+        let casted_samples: &[T] = cast_slice::<u8, T>(bytes);
+        Samples {
+            samples: Box::from(casted_samples),
+        }
+    }
+}
+
+impl<T> Display for Samples<T>
+where
+    T: AudioSample + Debug,
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}", &self.samples)
+    }
+}
+
+impl<T> Samples<T>
+where
+    T: AudioSample,
+{
+    /// Constructs a new Samples struct from a boxed slice of audio samples.
+    pub const fn new(samples: Box<[T]>) -> Self {
+        Self { samples }
+    }
+
+    #[inline(always)]
+    pub fn convert<F: AudioSample>(self) -> Samples<F>
+    where
+        T: ConvertTo<F>,
+        Box<[T]>: ConvertSequence<F>,
+    {
+        if TypeId::of::<T>() == TypeId::of::<F>() {
+            let data: Box<[T]> = self.samples;
+            return Samples {
+                samples: Box::from(cast_slice::<T, F>(&data)),
+            };
+        }
+        let converted_samples = self.samples.convert_sequence();
+        Samples {
+            samples: converted_samples,
+        }
+    }
+
+    /// Converts the boxed slice of samples to the corresponding bytes.
+    pub fn as_bytes(&self) -> &[u8] {
+        cast_slice::<T, u8>(&self.samples)
     }
 }
 
@@ -396,9 +525,11 @@ mod conversion_tests {
             read_text_to_vec(Path::new("./test_resources/one_channel_f32.txt")).unwrap();
 
         let f32_samples: &[f32] = &f32_samples;
-        let converted_i16_samples: Box<[f32]> = i16_samples.convert_slice();
+        let converted_i16_samples: Box<[f32]> = i16_samples.convert_sequence();
 
-        for (expected_sample, actual_sample) in converted_i16_samples.iter().zip(f32_samples) {
+        for (_, (expected_sample, actual_sample)) in
+            converted_i16_samples.iter().zip(f32_samples).enumerate()
+        {
             assert_approx_eq!(*expected_sample as f64, *actual_sample as f64, 1e-4);
         }
     }
