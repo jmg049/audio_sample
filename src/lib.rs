@@ -371,15 +371,12 @@ impl ConvertTo<f64> for i32 {
 impl ConvertTo<i16> for f32 {
     #[inline(always)]
     fn convert_to(&self) -> i16 {
-        // Clamp to -1.0 to 1.0 range
-        let clamped = self.clamp(-1.0, 1.0);
-
         // Scale and convert to i16
         // Negative values scale to -32768, positive to 32767
-        if clamped < 0.0 {
-            (clamped * -(i16::MIN as f32)).round() as i16
+        if *self < 0.0 {
+            (*self * -(i16::MIN as f32)).round() as i16
         } else {
-            (clamped * (i16::MAX as f32)).round() as i16
+            (*self * (i16::MAX as f32)).round() as i16
         }
     }
 }
@@ -387,18 +384,15 @@ impl ConvertTo<i16> for f32 {
 impl ConvertTo<i24> for f32 {
     #[inline(always)]
     fn convert_to(&self) -> i24 {
-        // Clamp to -1.0 to 1.0 range
-        let clamped = self.clamp(-1.0, 1.0);
-
         // Scale and convert to i24
         // The i24 range is -8388608 to 8388607
         let i24_min: i32 = -8388608;
         let i24_max: i32 = 8388607;
 
-        let scaled_val = if clamped < 0.0 {
-            (clamped * -(i24_min as f32)).round() as i32
+        let scaled_val = if *self < 0.0 {
+            (*self * -(i24_min as f32)).round() as i32
         } else {
-            (clamped * (i24_max as f32)).round() as i32
+            (*self * (i24_max as f32)).round() as i32
         };
 
         i24::try_from_i32(scaled_val).unwrap()
@@ -441,14 +435,11 @@ impl ConvertTo<f64> for f32 {
 impl ConvertTo<i16> for f64 {
     #[inline(always)]
     fn convert_to(&self) -> i16 {
-        // Clamp to -1.0 to 1.0 range
-        let clamped = self.clamp(-1.0, 1.0);
-
         // Scale and convert to i16
-        if clamped < 0.0 {
-            (clamped * -(i16::MIN as f64)).round() as i16
+        if *self < 0.0 {
+            (*self * -(i16::MIN as f64)).round() as i16
         } else {
-            (clamped * (i16::MAX as f64)).round() as i16
+            (*self * (i16::MAX as f64)).round() as i16
         }
     }
 }
@@ -456,17 +447,14 @@ impl ConvertTo<i16> for f64 {
 impl ConvertTo<i24> for f64 {
     #[inline(always)]
     fn convert_to(&self) -> i24 {
-        // Clamp to -1.0 to 1.0 range
-        let clamped = self.clamp(-1.0, 1.0);
-
         // Scale and convert to i24
         let i24_min: i32 = -8388608;
         let i24_max: i32 = 8388607;
 
-        let scaled_val = if clamped < 0.0 {
-            (clamped * -(i24_min as f64)).round() as i32
+        let scaled_val = if *self < 0.0 {
+            (*self * -(i24_min as f64)).round() as i32
         } else {
-            (clamped * (i24_max as f64)).round() as i32
+            (*self * (i24_max as f64)).round() as i32
         };
 
         i24::try_from_i32(scaled_val).unwrap()
@@ -476,14 +464,11 @@ impl ConvertTo<i24> for f64 {
 impl ConvertTo<i32> for f64 {
     #[inline(always)]
     fn convert_to(&self) -> i32 {
-        // Clamp to -1.0 to 1.0 range
-        let clamped = self.clamp(-1.0, 1.0);
-
         // Scale and convert to i32
-        if clamped < 0.0 {
-            (clamped * -(i32::MIN as f64)).round() as i32
+        if *self < 0.0 {
+            (*self * -(i32::MIN as f64)).round() as i32
         } else {
-            (clamped * (i32::MAX as f64)).round() as i32
+            (*self * (i32::MAX as f64)).round() as i32
         }
     }
 }
