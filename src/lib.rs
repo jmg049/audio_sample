@@ -109,7 +109,7 @@ use std::convert::{AsMut, AsRef};
 use std::fmt::{Debug, Display};
 use std::ops::{Deref, DerefMut};
 
-use bytemuck::{Pod, cast_slice};
+use bytemuck::{cast_slice, Pod};
 use i24::i24;
 
 /// Allocates an exact sized heap buffer for samples.
@@ -291,14 +291,12 @@ impl ConvertTo<f32> for i24 {
     fn convert_to(&self) -> f32 {
         // For audio, map the i24 range to -1.0 to 1.0
         // i24 range is -8388608 to 8388607
-        let i24_min: i32 = -8388608;
-        let i24_max: i32 = 8388607;
         let val = self.to_i32();
 
         if val < 0 {
-            (val as f32) / (-(i24_min as f32))
+            (val as f32) / -(i24::MIN.to_i32() as f32)
         } else {
-            (val as f32) / (i24_max as f32)
+            (val as f32) / (i24::MAX.to_i32() as f32)
         }
     }
 }
@@ -307,14 +305,12 @@ impl ConvertTo<f64> for i24 {
     #[inline(always)]
     fn convert_to(&self) -> f64 {
         // Same principle as i24 to f32
-        let i24_min: i32 = -8388608;
-        let i24_max: i32 = 8388607;
         let val = self.to_i32();
 
         if val < 0 {
-            (val as f64) / (-(i24_min as f64))
+            (val as f64) / -(i24::MIN.to_i32() as f64)
         } else {
-            (val as f64) / (i24_max as f64)
+            (val as f64) / (i24::MAX.to_i32() as f64)
         }
     }
 }
@@ -385,14 +381,11 @@ impl ConvertTo<i24> for f32 {
     #[inline(always)]
     fn convert_to(&self) -> i24 {
         // Scale and convert to i24
-        // The i24 range is -8388608 to 8388607
-        let i24_min: i32 = -8388608;
-        let i24_max: i32 = 8388607;
 
         let scaled_val = if *self < 0.0 {
-            (*self * -(i24_min as f32)).round() as i32
+            (*self * -(i24::MIN.to_i32() as f32)).round() as i32
         } else {
-            (*self * (i24_max as f32)).round() as i32
+            (*self * (i24::MAX.to_i32() as f32)).round() as i32
         };
 
         i24::try_from_i32(scaled_val).unwrap()
@@ -448,13 +441,11 @@ impl ConvertTo<i24> for f64 {
     #[inline(always)]
     fn convert_to(&self) -> i24 {
         // Scale and convert to i24
-        let i24_min: i32 = -8388608;
-        let i24_max: i32 = 8388607;
 
         let scaled_val = if *self < 0.0 {
-            (*self * -(i24_min as f64)).round() as i32
+            (*self * -(i24::MIN.to_i32() as f64)).round() as i32
         } else {
-            (*self * (i24_max as f64)).round() as i32
+            (*self * (i24::MAX.to_i32() as f64)).round() as i32
         };
 
         i24::try_from_i32(scaled_val).unwrap()
@@ -1482,7 +1473,7 @@ mod conversion_tests {
         #[test]
         fn test_longer_input() {
             let samples: Vec<i16> = (0..12).collect(); // [0, 1, 2, ..., 11]
-            // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
+                                                       // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
             let buffer = Samples::from(samples.into_boxed_slice());
             let result = buffer.into_ndarray(2, 44100).unwrap();
             let expected = arr2(&[[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]);
