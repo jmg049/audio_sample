@@ -15,7 +15,9 @@ categories = ["encoding", "multimedia"]
 
 [dependencies]
 bytemuck = { version = "1.22.0", features = ["derive"] }
-i24 = "1.0.1"
+i24 = { path = "../i24/" }
+ndarray = { version = "0.16.1", optional = true }
+thiserror = "2.0.12"
 
 [dev-dependencies]
 approx_eq = "0.1.8"
@@ -36,3 +38,6 @@ debug = true
 [[bench]]
 name = "conversion_benches"
 harness = false
+
+[features]
+ndarray = ["dep:ndarray"]
