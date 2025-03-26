@@ -1,438 +1,485 @@
-use bytemuck::cast_slice;
-use std::{
-    fmt::{Debug, Display},
-    ops::{Deref, DerefMut},
-    sync::Arc,
-};
+//! # Samples
+//!
+//! This module provides a flexible and efficient trait-based framework for working with audio sample sequences in Rust.
+//! It defines a [Samples] trait for enhancing iterators over [AudioSample] items, allowing transformations, conversions,
+//! serialization, and integration with numerical computing libraries like [`ndarray'](https://crates.io/crates/ndarray).
+//!
+//! ## Core Traits
+//!
+//! - [``Samples``]: Extends iterators of [AudioSample] to support mapping, conversion, and serialization to byte buffers.
+//! - [``ConvertCollection``]: Enables conversion of entire collections (e.g., ``Vec``, ``Box``, ``Arc``) to a different [AudioSample] type.
+//! - [``AsSamples``]: Provides an ergonomic way to turn references like ``&[T]``, ``Vec<T>`` into sample iterators.
+//! - [``StructuredSamples``]: Adds structural metadata (e.g., channel layout, count) to sample iterators.
+//! - [``ToNdarray``]: Converts structured samples into an [Array2](https://docs.rs/ndarray/latest/ndarray/) for numerical processing.
+//!
+//! ## Format Conversion Functions
+//!
+//! - [``planar_to_interleaved``]: Rearranges audio data from planar (channel-major) to interleaved (frame-major) layout.
+//! - [``interleaved_to_planar``]: Reorders interleaved audio data into planar layout.
+//!
+//!
+//! This trait-based design allows ergonomic extensions to common audio containers without requiring wrapper types,
+//! and is designed for real-time and offline DSP applications, audio pipelines, or I/O contexts.
 
-use crate::{AudioSample, ConvertTo};
+use num_traits::ToBytes;
+use std::{alloc::Layout, sync::Arc};
 
-/// Defines the storage backend for audio samples.
-///
-/// This enum allows `Samples` to store data in different ways,
-/// enabling zero-copy operations when possible.
-enum SamplesStorage<T: AudioSample> {
-    /// Owned buffer - samples are owned by this struct
-    Owned(Box<[T]>),
+use crate::{AudioSample, ChannelLayout, ConvertTo, I24};
 
-    /// Borrowed buffer - samples are borrowed and have a lifetime
-    Borrowed(&'static [T]),
+use crate::{AudioSampleError, AudioSampleResult};
 
-    /// Memory-mapped buffer - samples are viewed from a memory-mapped file
-    MemoryMapped {
-        mmap: Arc<memmap2::Mmap>,
-        offset: usize,
-        len: usize,
-    },
+#[cfg(feature = "ndarray")]
+use ndarray::Array2;
 
-    /// Shared buffer - samples are in an Arc for cheap cloning
-    Shared(Arc<[T]>),
+/// Helper function to allocate a fixed sized, heap allocated buffer of bytes.
+pub(crate) fn alloc_box_buffer(len: usize) -> Box<[u8]> {
+    if len == 0 {
+        return <Box<[u8]>>::default();
+    }
+    let layout = match Layout::array::<u8>(len) {
+        Ok(layout) => layout,
+        Err(_) => panic!("Failed to allocate buffer of size {}", len),
+    };
+
+    let ptr = unsafe { std::alloc::alloc(layout) };
+    let slice_ptr = core::ptr::slice_from_raw_parts_mut(ptr, len);
+    unsafe { Box::from_raw(slice_ptr) }
 }
 
-/// A collection of audio samples with support for zero-copy operations.
-///
-/// `Samples<T>` can store audio data in various ways, optimizing for
-/// different use cases:
-/// - Owned data for full control
-/// - Borrowed data for zero-copy reading
-/// - Memory-mapped data for efficient file access
-/// - Shared data for multi-threaded processing
-///
-/// This struct implements `Deref<Target=[T]>`, allowing it to be used
-/// like a slice in most cases.
-pub struct Samples<T: AudioSample> {
-    storage: SamplesStorage<T>,
-}
-
-impl<T: AudioSample> Samples<T> {
-    /// Creates a new `Samples` with owned data.
-    ///
-    /// # Arguments
-    ///
-    /// * `samples` - A boxed slice containing the audio samples
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` that owns the data.
-    pub fn new(samples: Box<[T]>) -> Self {
-        Self {
-            storage: SamplesStorage::Owned(samples),
+/// Trait for iterators over audio sample types providing convenient conversions and utilities.
+pub trait Samples: Iterator
+where
+    Self::Item: AudioSample,
+    Self: Default,
+{
+    /// Consumes the iterator and maps each element to another sample type using ``ConvertTo``.
+    fn map_converted<T: AudioSample>(self) -> std::iter::Map<Self, fn(Self::Item) -> T>
+    where
+        Self: Sized,
+        Self::Item: ConvertTo<T>,
+    {
+        fn convert<F: AudioSample, T: AudioSample>(item: F) -> T
+        where
+            F: ConvertTo<T>,
+        {
+            item.convert_to()
         }
+
+        self.map(convert::<Self::Item, T>)
     }
 
-    /// Creates a new `Samples` that borrows data.
-    ///
-    /// This method allows for zero-copy operations when the data
-    /// already exists elsewhere.
-    ///
-    /// # Arguments
-    ///
-    /// * `samples` - A slice of audio samples to borrow
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` that borrows the data.
-    pub fn from_slice(samples: &'static [T]) -> Self {
-        Self {
-            storage: SamplesStorage::Borrowed(samples),
-        }
+    /// Clones the iterator and maps each element to another sample type using ``ConvertTo``.
+    fn clone_and_convert<T: AudioSample>(&self) -> std::iter::Map<Self, fn(Self::Item) -> T>
+    where
+        Self: Sized + Clone,
+        Self::Item: ConvertTo<T>,
+    {
+        self.clone().map_converted()
     }
 
-    /// Creates a new `Samples` from a memory-mapped file.
-    ///
-    /// This method enables zero-copy reading directly from a file
-    /// when the sample type matches the file's native format.
-    ///
-    /// # Arguments
-    ///
-    /// * `mmap` - A shared reference to a memory-mapped file
-    /// * `offset` - Offset in bytes to the start of the sample data
-    /// * `len` - Number of samples in the data
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` that views the memory-mapped file.
-    pub fn from_mmap(mmap: Arc<memmap2::Mmap>, offset: usize, len: usize) -> Self {
-        Self {
-            storage: SamplesStorage::MemoryMapped { mmap, offset, len },
-        }
+    /// Clones the iterator and collects it into a byte buffer using ``to_ne_bytes()``.
+    fn as_bytes(&self) -> Box<[u8]>
+    where
+        Self: Sized + Clone + ExactSizeIterator,
+    {
+        self.clone().into_bytes()
     }
 
-    /// Creates a new `Samples` with shared data.
-    ///
-    /// This method is useful for multi-threaded processing where
-    /// multiple threads need access to the same data.
-    ///
-    /// # Arguments
-    ///
-    /// * `samples` - A shared slice of audio samples
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` that shares ownership of the data.
-    pub fn from_shared(samples: Arc<[T]>) -> Self {
-        Self {
-            storage: SamplesStorage::Shared(samples),
-        }
-    }
-
-    /// Gets the length of the samples.
-    ///
-    /// # Returns
-    ///
-    /// The number of samples.
-    pub fn len(&self) -> usize {
-        match &self.storage {
-            SamplesStorage::Owned(samples) => samples.len(),
-            SamplesStorage::Borrowed(samples) => samples.len(),
-            SamplesStorage::MemoryMapped { len, .. } => *len,
-            SamplesStorage::Shared(samples) => samples.len(),
-        }
-    }
-
-    /// Checks if the samples are empty.
-    ///
-    /// # Returns
-    ///
-    /// `true` if there are no samples, `false` otherwise.
-    pub fn is_empty(&self) -> bool {
-        self.len() == 0
-    }
-
-    /// Gets a reference to the samples as a slice.
-    ///
-    /// # Returns
-    ///
-    /// A slice containing the audio samples.
-    pub fn as_slice(&self) -> &[T] {
-        match &self.storage {
-            SamplesStorage::Owned(samples) => samples,
-            SamplesStorage::Borrowed(samples) => samples,
-            SamplesStorage::MemoryMapped { mmap, offset, len } => {
-                let byte_offset = *offset;
-                unsafe {
-                    let ptr = mmap.as_ptr().add(byte_offset) as *const T;
-                    std::slice::from_raw_parts(ptr, *len)
-                }
-            }
-            SamplesStorage::Shared(samples) => samples,
-        }
-    }
-
-    /// Gets a mutable reference to the samples as a slice.
-    ///
-    /// This will convert borrowed or memory-mapped samples to owned samples
-    /// if necessary, since those storage modes don't allow mutation.
-    ///
-    /// # Returns
-    ///
-    /// A mutable slice containing the audio samples.
-    pub fn as_mut_slice(&mut self) -> &mut [T] {
-        // First collect what we need to determine if conversion is necessary
-        let need_conversion = match &self.storage {
-            SamplesStorage::Owned(_) => false,
-            SamplesStorage::Shared(arc) => Arc::strong_count(arc) > 1,
-            _ => true, // Borrowed or MemoryMapped always need conversion
+    /// Consumes the iterator and collects it into a byte buffer using ``to_ne_bytes()``.
+    fn into_bytes(self) -> Box<[u8]>
+    where
+        Self: Sized + ExactSizeIterator,
+    {
+        let f_type = std::any::TypeId::of::<Self::Item>();
+        let size = if f_type == std::any::TypeId::of::<I24>() {
+            3
+        } else {
+            std::mem::size_of::<Self::Item>()
         };
 
-        // If we need to convert to owned, do it now
-        if need_conversion {
-            let owned = self.as_slice().to_vec().into_boxed_slice();
-            self.storage = SamplesStorage::Owned(owned);
+        let mut bytes = alloc_box_buffer(self.len() * size);
+
+        let mut i = 0;
+        for sample in self {
+            let s_buf = sample.to_ne_bytes();
+            let s_bytes: &[u8] = s_buf.as_ref();
+            bytes[i..i + size].copy_from_slice(s_bytes);
+            i += size;
         }
 
-        // Now return a mutable reference
-        match &mut self.storage {
-            SamplesStorage::Owned(samples) => samples,
-            SamplesStorage::Shared(arc) => {
-                // We know this is safe because we checked strong_count above
-                Arc::get_mut(arc).unwrap()
-            }
-            // These cases cannot happen after the conversion above
-            _ => unreachable!(),
-        }
-    }
-
-    /// Converts the samples to a new sample type.
-    ///
-    /// # Type Parameters
-    ///
-    /// * `U` - The target audio sample type
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<U>` with the converted data.
-    pub fn convert<U: AudioSample>(&self) -> Samples<U>
-    where
-        T: ConvertTo<U>,
-    {
-        // Check if types are the same (potential zero-copy conversion)
-        if std::any::TypeId::of::<T>() == std::any::TypeId::of::<U>() {
-            // If types are the same, we can potentially reuse the storage
-            match &self.storage {
-                SamplesStorage::MemoryMapped { mmap, offset, len } => {
-                    // Memory-mapped data can be reused directly
-                    return Samples::<U>::from_mmap(Arc::clone(mmap), *offset, *len);
-                }
-                SamplesStorage::Shared(samples) => {
-                    // If types are the same, we can reinterpret the shared data
-                    // This is a safe transmute because T and U are the same type (checked above)
-                    let samples_ptr = samples.as_ptr() as *const u8;
-                    let samples_len = samples.len();
-
-                    unsafe {
-                        let u_slice =
-                            std::slice::from_raw_parts(samples_ptr as *const U, samples_len);
-                        // Create the arc directly from a Vec to avoid Box->Arc conversion issues
-                        let u_vec = u_slice.to_vec();
-                        return Samples::<U>::from_shared(u_vec.into());
-                    }
-                }
-                _ => {}
-            }
-        }
-
-        // If zero-copy isn't possible, convert the data
-        let mut converted = Vec::with_capacity(self.len());
-        for &sample in self.as_slice() {
-            converted.push(sample.convert_to());
-        }
-
-        Samples::new(converted.into_boxed_slice())
-    }
-
-    /// Applies a function to each sample and returns a new `Samples`.
-    ///
-    /// # Arguments
-    ///
-    /// * `f` - A function that takes a sample and returns a new sample
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` with the mapped data.
-    pub fn map<F>(&self, mut f: F) -> Samples<T>
-    where
-        F: FnMut(T) -> T,
-    {
-        let mut result = Vec::with_capacity(self.len());
-        for &sample in self.as_slice() {
-            result.push(f(sample));
-        }
-
-        Samples::new(result.into_boxed_slice())
-    }
-
-    /// Extracts a channel from interleaved audio data.
-    ///
-    /// # Arguments
-    ///
-    /// * `channel` - The channel index to extract (0-based)
-    /// * `num_channels` - The total number of channels in the data
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` containing only the specified channel.
-    pub fn extract_channel(&self, channel: usize, num_channels: usize) -> Samples<T> {
-        if channel >= num_channels {
-            return Samples::new(Box::new([]));
-        }
-
-        let mut result = Vec::with_capacity(self.len() / num_channels);
-        for i in (channel..self.len()).step_by(num_channels) {
-            result.push(self.as_slice()[i]);
-        }
-
-        Samples::new(result.into_boxed_slice())
-    }
-
-    /// Applies a window function to the samples.
-    ///
-    /// # Arguments
-    ///
-    /// * `window_type` - The type of window function to apply
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` with the windowed data.
-    pub fn window(&self, window_type: WindowType) -> Samples<T>
-    where
-        T: AudioSample + std::ops::Mul<f32, Output = T>,
-    {
-        let len = self.len();
-        let mut result = Vec::with_capacity(len);
-
-        match window_type {
-            WindowType::Rectangular => {
-                // Rectangular window is just a copy
-                return Samples::new(self.as_slice().to_vec().into_boxed_slice());
-            }
-            WindowType::Hann => {
-                for i in 0..len {
-                    let window_value = 0.5
-                        * (1.0 - (2.0 * std::f32::consts::PI * i as f32 / (len - 1) as f32).cos());
-                    result.push(self.as_slice()[i] * window_value);
-                }
-            }
-            WindowType::Hamming => {
-                for i in 0..len {
-                    let window_value = 0.54
-                        - 0.46 * (2.0 * std::f32::consts::PI * i as f32 / (len - 1) as f32).cos();
-                    result.push(self.as_slice()[i] * window_value);
-                }
-            }
-            WindowType::Blackman => {
-                for i in 0..len {
-                    let x = 2.0 * std::f32::consts::PI * i as f32 / (len - 1) as f32;
-                    let window_value = 0.42 - 0.5 * x.cos() + 0.08 * (2.0 * x).cos();
-                    result.push(self.as_slice()[i] * window_value);
-                }
-            }
-        }
-
-        Samples::new(result.into_boxed_slice())
-    }
-
-    /// Gets the bytes representation of the samples.
-    ///
-    /// # Returns
-    ///
-    /// A slice of bytes representing the sample data.
-    pub fn as_bytes(&self) -> &[u8] {
-        match &self.storage {
-            SamplesStorage::MemoryMapped { mmap, offset, len } => {
-                let byte_len = *len * std::mem::size_of::<T>();
-                &mmap[*offset..*offset + byte_len]
-            }
-            _ => cast_slice(self.as_slice()),
-        }
-    }
-
-    /// Ensures the samples are owned, converting if necessary.
-    ///
-    /// This is useful when you need to guarantee that the sample data
-    /// won't be affected by external changes.
-    ///
-    /// # Returns
-    ///
-    /// A new `Samples<T>` that owns its data.
-    pub fn to_owned(&self) -> Samples<T> {
-        match &self.storage {
-            SamplesStorage::Owned(_) => {
-                // Already owned, just clone
-                Samples::new(self.as_slice().to_vec().into_boxed_slice())
-            }
-            _ => {
-                // Convert to owned
-                Samples::new(self.as_slice().to_vec().into_boxed_slice())
-            }
-        }
+        bytes
     }
 }
 
-impl<T: AudioSample> Deref for Samples<T> {
-    type Target = [T];
+/// Trait for defining a source of samples from a reference (e.g., ``&[T]``, ``Vec<T>``).
+pub trait AsSamples<'a> {
+    type Item: AudioSample;
+    type Iter: Samples<Item = Self::Item> + 'a;
 
-    fn deref(&self) -> &Self::Target {
-        self.as_slice()
+    fn as_samples(&'a self) -> Self::Iter;
+}
+
+impl<'a, T: AudioSample> AsSamples<'a> for Vec<T> {
+    type Item = T;
+    type Iter = std::iter::Cloned<std::slice::Iter<'a, T>>;
+
+    fn as_samples(&'a self) -> Self::Iter {
+        self.iter().cloned()
     }
 }
 
-impl<T: AudioSample> DerefMut for Samples<T> {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        self.as_mut_slice()
+impl<'a, T: AudioSample> AsSamples<'a> for Box<[T]> {
+    type Item = T;
+    type Iter = std::iter::Cloned<std::slice::Iter<'a, T>>;
+
+    fn as_samples(&'a self) -> Self::Iter {
+        self.iter().cloned()
     }
 }
 
-impl<T: AudioSample> AsRef<[T]> for Samples<T> {
-    fn as_ref(&self) -> &[T] {
-        self.as_slice()
+impl<'a, T: AudioSample> AsSamples<'a> for &'a [T] {
+    type Item = T;
+    type Iter = std::iter::Cloned<std::slice::Iter<'a, T>>;
+
+    fn as_samples(&'a self) -> Self::Iter {
+        self.iter().cloned()
     }
 }
 
-impl<T: AudioSample> AsMut<[T]> for Samples<T> {
-    fn as_mut(&mut self) -> &mut [T] {
-        self.as_mut_slice()
+/// Allows conversion of owned or borrowed collections of audio samples to another sample type.
+pub trait ConvertCollection<T: AudioSample> {
+    type Output;
+    fn convert(&self) -> Self::Output;
+    fn convert_into(self) -> Self::Output;
+}
+
+impl<F, T> ConvertCollection<T> for &[F]
+where
+    F: AudioSample + ConvertTo<T>,
+    T: AudioSample,
+{
+    type Output = Box<[T]>;
+
+    fn convert(&self) -> Self::Output {
+        self.iter().cloned().map(|s| s.convert_to()).collect()
+    }
+
+    fn convert_into(self) -> Self::Output {
+        self.iter().cloned().map(|s| s.convert_to()).collect()
     }
 }
 
-impl<T: AudioSample> From<Vec<T>> for Samples<T> {
-    fn from(vec: Vec<T>) -> Self {
-        Samples::new(vec.into_boxed_slice())
+impl<F, T> ConvertCollection<T> for Vec<F>
+where
+    F: AudioSample + ConvertTo<T>,
+    T: AudioSample,
+{
+    type Output = Vec<T>;
+
+    fn convert(&self) -> Self::Output {
+        self.iter().cloned().map(|s| s.convert_to()).collect()
+    }
+
+    fn convert_into(self) -> Self::Output {
+        self.into_iter().map(|s| s.convert_to()).collect()
     }
 }
 
-impl<T: AudioSample> From<Box<[T]>> for Samples<T> {
-    fn from(boxed: Box<[T]>) -> Self {
-        Samples::new(boxed)
+impl<F, T> ConvertCollection<T> for Box<[F]>
+where
+    F: AudioSample + ConvertTo<T>,
+    T: AudioSample,
+{
+    type Output = Box<[T]>;
+
+    fn convert(&self) -> Self::Output {
+        self.iter()
+            .cloned()
+            .map(|s| s.convert_to())
+            .collect::<Vec<_>>()
+            .into_boxed_slice()
+    }
+
+    fn convert_into(self) -> Self::Output {
+        self.into_vec()
+            .into_iter()
+            .map(|s| s.convert_to())
+            .collect::<Vec<_>>()
+            .into_boxed_slice()
     }
 }
 
-impl<T: AudioSample> From<&'static [T]> for Samples<T> {
-    fn from(slice: &'static [T]) -> Self {
-        Samples::from_slice(slice)
+impl<F, T> ConvertCollection<T> for &Box<[F]>
+where
+    F: AudioSample + ConvertTo<T>,
+    T: AudioSample,
+{
+    type Output = Box<[T]>;
+
+    fn convert(&self) -> Self::Output {
+        self.iter()
+            .cloned()
+            .map(|s| s.convert_to())
+            .collect::<Vec<_>>()
+            .into_boxed_slice()
+    }
+
+    fn convert_into(self) -> Self::Output {
+        self.clone()
+            .into_vec()
+            .into_iter()
+            .map(|s| s.convert_to())
+            .collect::<Vec<_>>()
+            .into_boxed_slice()
     }
 }
 
-impl<T: AudioSample + Debug> Display for Samples<T> {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "Samples<{}>({} samples)",
-            std::any::type_name::<T>(),
-            self.len()
+impl<F, T> ConvertCollection<T> for Arc<[F]>
+where
+    F: AudioSample + ConvertTo<T>,
+    T: AudioSample,
+{
+    type Output = Arc<[T]>;
+
+    fn convert(&self) -> Self::Output {
+        let converted: Vec<T> = self.iter().cloned().map(|s| s.convert_to()).collect();
+        Arc::from(converted)
+    }
+
+    fn convert_into(self) -> Self::Output {
+        let converted: Vec<T> = self.iter().cloned().map(|s| s.convert_to()).collect();
+        Arc::from(converted)
+    }
+}
+
+/// Trait for sample iterators that carry structural audio metadata (channel layout, etc.).
+pub trait StructuredSamples: Samples + ExactSizeIterator + Clone
+where
+    Self::Item: AudioSample,
+{
+    fn layout(&self) -> ChannelLayout;
+    fn channels(&self) -> usize;
+
+    fn frames(&self) -> usize {
+        self.len() / self.channels()
+    }
+}
+
+#[cfg(feature = "ndarray")]
+/// Trait allowing structured iterators to convert into a ``ndarray::Array2`` matrix of shape (channels, frames).
+pub trait ToNdarray<T: AudioSample>: StructuredSamples<Item = T> {
+    fn to_ndarray(&self) -> AudioSampleResult<Array2<T>>;
+}
+
+#[cfg(feature = "ndarray")]
+/// Interleaved-to-column-major conversion into ``ndarray::Array2``.
+impl<T, I> ToNdarray<T> for I
+where
+    T: AudioSample,
+    I: StructuredSamples<Item = T>,
+{
+    fn to_ndarray(&self) -> AudioSampleResult<Array2<T>> {
+        if self.layout() != ChannelLayout::Interleaved {
+            return Err(AudioSampleError::ChannelMismatch);
+        }
+
+        let channels = self.channels();
+        let frames = self.frames();
+        let data: Vec<T> = self.clone().collect();
+
+        let mut deinterleaved = vec![T::default(); data.len()];
+        for (i, sample) in data.iter().enumerate() {
+            let ch = i % channels;
+            let frame = i / channels;
+            deinterleaved[ch * frames + frame] = *sample;
+        }
+
+        Array2::from_shape_vec((channels, frames), deinterleaved)
+            .map_err(AudioSampleError::ShapeMismatch)
+    }
+}
+
+// Blanket impl for any iterator that satisfies trait bounds.
+impl<T, I> Samples for I
+where
+    T: AudioSample,
+    I: Iterator<Item = T> + ExactSizeIterator<Item = T> + Default,
+{
+}
+
+/// Converts planar audio data (grouped by channel) into interleaved layout.
+pub fn planar_to_interleaved<T: AudioSample + Copy, A: AsMut<[T]>>(
+    mut planar_data: A,
+    channels: usize,
+) -> AudioSampleResult<()> {
+    let data = planar_data.as_mut();
+    let total_samples = data.len();
+    if total_samples % channels != 0 {
+        return Err(AudioSampleError::InvalidChannelDivision(
+            total_samples,
+            channels,
+        ));
+    }
+    let samples_per_channel = total_samples / channels;
+
+    let temp = data.to_vec();
+    let chunks = temp.chunks_exact(samples_per_channel);
+    let remainder = chunks.remainder();
+
+    if !remainder.is_empty() {
+        return Err(AudioSampleError::InvalidChannelDivision(
+            total_samples,
+            channels,
+        ));
+    }
+
+    for (i, chunk) in chunks.enumerate() {
+        for (j, &sample) in chunk.iter().enumerate() {
+            data[j * channels + i] = sample;
+        }
+    }
+
+    Ok(())
+}
+
+/// Converts interleaved audio data into planar format (grouped by channel).
+pub fn interleaved_to_planar<T: AudioSample + Copy, A: AsMut<[T]>>(
+    mut interleaved_data: A,
+    channels: usize,
+) -> AudioSampleResult<()> {
+    let data = interleaved_data.as_mut();
+    let total_samples = data.len();
+    if total_samples % channels != 0 {
+        return Err(AudioSampleError::InvalidChannelDivision(
+            total_samples,
+            channels,
+        ));
+    }
+    let samples_per_channel = total_samples / channels;
+
+    let temp = data.to_vec();
+
+    for i in 0..samples_per_channel {
+        for c in 0..channels {
+            data[c * samples_per_channel + i] = temp[i * channels + c];
+        }
+    }
+
+    Ok(())
+}
+
+#[cfg(feature = "ndarray")]
+#[cfg(test)]
+mod ndarray_tests {
+    use std::sync::Arc;
+
+    use crate::{
+        samples::{interleaved_to_planar, planar_to_interleaved},
+        *,
+    };
+    use ndarray::Array2;
+
+    #[test]
+    fn test_to_ndarray_interleaved() {
+        let interleaved: Vec<f32> = vec![
+            1.0, 10.0, // Frame 0: ch0, ch1
+            2.0, 20.0, // Frame 1
+            3.0, 30.0, // Frame 2
+        ];
+
+        let expected = Array2::from_shape_vec(
+            (2, 3),
+            vec![
+                1.0, 2.0, 3.0, // ch0
+                10.0, 20.0, 30.0, // ch1
+            ],
         )
-    }
-}
+        .unwrap();
 
-/// Types of window functions for audio processing.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum WindowType {
-    /// Rectangular window (no windowing)
-    Rectangular,
-    /// Hann window
-    Hann,
-    /// Hamming window
-    Hamming,
-    /// Blackman window
-    Blackman,
+        #[derive(Clone, Default)]
+        struct InterleavedSamples {
+            data: Vec<f32>,
+            channels: usize,
+        }
+
+        impl Iterator for InterleavedSamples {
+            type Item = f32;
+
+            fn next(&mut self) -> Option<Self::Item> {
+                if self.data.is_empty() {
+                    None
+                } else {
+                    Some(self.data.remove(0))
+                }
+            }
+        }
+
+        impl ExactSizeIterator for InterleavedSamples {
+            fn len(&self) -> usize {
+                self.data.len()
+            }
+        }
+
+        impl StructuredSamples for InterleavedSamples {
+            fn layout(&self) -> ChannelLayout {
+                ChannelLayout::Interleaved
+            }
+
+            fn channels(&self) -> usize {
+                self.channels
+            }
+        }
+
+        let data = InterleavedSamples {
+            data: interleaved.clone(),
+            channels: 2,
+        };
+
+        let result = data.to_ndarray().unwrap();
+        assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_planar_interleaved_roundtrip() {
+        let mut planar: Vec<i16> = vec![1, 2, 3, 10, 20, 30]; // Two channels, 3 frames
+        let expected = planar.clone();
+
+        planar_to_interleaved(&mut planar, 2).unwrap();
+        interleaved_to_planar(&mut planar, 2).unwrap();
+
+        assert_eq!(planar, expected);
+    }
+
+    #[test]
+    fn test_convert_collection_vec() {
+        let input: Vec<i16> = vec![-32768, 0, 32767];
+        let output: Vec<f32> = input.convert();
+
+        assert_eq!(output.len(), 3);
+        assert!(output[0] < 0.0);
+        assert_eq!(output[1], 0.0);
+        assert!(output[2] > 0.0);
+    }
+
+    #[test]
+    fn test_convert_collection_boxed() {
+        let input: Box<[i16]> = vec![-32768, 0, 32767].into_boxed_slice();
+        let output: Box<[f32]> = input.convert();
+
+        assert_eq!(output.len(), 3);
+        assert!(output[0] < 0.0);
+        assert_eq!(output[1], 0.0);
+        assert!(output[2] > 0.0);
+    }
+
+    #[test]
+    fn test_convert_collection_arc() {
+        let input: Arc<[i16]> = Arc::from(vec![-32768, 0, 32767]);
+        let output: Arc<[f32]> = input.convert();
+
+        assert_eq!(output.len(), 3);
+        assert!(output[0] < 0.0);
+        assert_eq!(output[1], 0.0);
+        assert!(output[2] > 0.0);
+    }
 }

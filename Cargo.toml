@@ -1,6 +1,6 @@
 [package]
 name = "audio_sample"
-version = "1.0.1"
+version = "2.0.0"
 edition = "2024"
 authors = ["Jack Geraghty <jgeraghty049@gmail.com>"]
 license = "MIT"
@@ -15,8 +15,10 @@ categories = ["encoding", "multimedia"]
 
 [dependencies]
 bytemuck = { version = "1.22.0", features = ["derive"] }
-i24 = { git = "https://github.com/jmg049/i24.git"}
-memmap2 = "0.9.5"
+i24 = { version = "2.1.0", features = ["alloc"]}
+ndarray = { version = "0.16.1", optional = true }
+num-traits = "0.2.19"
+thiserror = "2.0.12"
 
 [dev-dependencies]
 approx_eq = "0.1.8"
@@ -38,3 +40,7 @@ debug = true
 [[bench]]
 name = "conversion_benches"
 harness = false
+
+[features]
+ndarray = ["dep:ndarray"]
+
