@@ -109,7 +109,7 @@ use std::convert::{AsMut, AsRef};
 use std::fmt::{Debug, Display};
 use std::ops::{Deref, DerefMut};
 
-use bytemuck::{cast_slice, Pod};
+use bytemuck::{NoUninit, cast_slice, AnyBitPattern};
 use i24::i24;
 
 /// Allocates an exact sized heap buffer for samples.
@@ -134,7 +134,8 @@ where
 /// Marker trait for audio sample types.
 pub trait AudioSample:
     Copy
-    + Pod
+    + NoUninit 
+    + AnyBitPattern
     + ConvertTo<i16>
     + ConvertTo<i32>
     + ConvertTo<i24>
@@ -145,10 +146,21 @@ pub trait AudioSample:
     + Debug
     + Default
 {
+    fn to_bytes_slice(samples: &[Self]) -> Vec<u8> {
+        Vec::from(bytemuck::cast_slice(samples))
+    }
 }
 
 impl AudioSample for i16 {}
-impl AudioSample for i24 {}
+impl AudioSample for i24 {
+    fn to_bytes_slice(samples: &[Self]) -> Vec<u8> {
+            let mut out = Vec::with_capacity(samples.len() * 3);
+            for sample in samples {
+                out.extend_from_slice(&sample.to_le_bytes());
+            }
+            out
+        }
+}
 impl AudioSample for i32 {}
 impl AudioSample for f32 {}
 impl AudioSample for f64 {}
@@ -557,7 +569,7 @@ where
 
 impl<T> From<&[u8]> for Samples<T>
 where
-    T: AudioSample,
+    T: AudioSample 
 {
     fn from(bytes: &[u8]) -> Self {
         let casted_samples: &[T] = cast_slice::<u8, T>(bytes);
@@ -592,8 +604,8 @@ impl<From: AudioSample> Samples<From> {
     }
 
     /// Converts the boxed slice of samples to the corresponding bytes.
-    pub fn as_bytes(&self) -> &[u8] {
-        cast_slice::<From, u8>(&self.samples)
+    pub fn as_bytes(&self) -> Vec<u8> {
+        From::to_bytes_slice(self)
     }
 
     #[cfg(feature = "ndarray")]
@@ -627,6 +639,12 @@ impl<From: AudioSample> Samples<From> {
 
         // SAFETY: All elements initialized above
         Ok(Array2::from_shape_vec((n_channels, n_frames), reordered)?)
+    }
+
+    #[cfg(feature = "ndarray")]
+    pub fn from_ndarray(samples: Array2<From>) -> AudioSampleResult<Self> {
+        let (samples, _offset) = samples.into_raw_vec_and_offset();
+        Ok(Samples::from(samples.into_boxed_slice()))
     }
 }
 
@@ -689,7 +707,6 @@ mod conversion_tests {
         Ok(data)
     }
 
-    // Your existing tests
     #[test]
     fn i16_to_f32() {
         let i16_samples: Vec<i16> =
@@ -740,8 +757,6 @@ mod conversion_tests {
             );
         }
     }
-
-    // ======= NEW TESTS BELOW =======
 
     // Edge cases for i16 conversions
     #[test]
@@ -1473,7 +1488,7 @@ mod conversion_tests {
         #[test]
         fn test_longer_input() {
             let samples: Vec<i16> = (0..12).collect(); // [0, 1, 2, ..., 11]
-                                                       // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
+            // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
             let buffer = Samples::from(samples.into_boxed_slice());
             let result = buffer.into_ndarray(2, 44100).unwrap();
             let expected = arr2(&[[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]);
