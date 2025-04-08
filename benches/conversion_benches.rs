@@ -2,7 +2,7 @@ use criterion::{AxisScale, Criterion, PlotConfiguration, criterion_group, criter
 
 use rand::Rng;
 
-use audio_sample::Samples;
+use audio_sample::samples::Samples;
 use i24::i24;
 use std::time::Duration;
 
@@ -48,7 +48,7 @@ macro_rules! bench_sample_conversions {
 
                         group.bench_function(&group_name, |b| {
                             b.iter(|| {
-                                let _samples = samples.clone().convert::<$to_type>();
+                                let _samples = samples.convert::<$to_type>();
                             });
                         });
                     }
