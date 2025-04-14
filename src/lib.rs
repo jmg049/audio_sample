@@ -106,7 +106,8 @@ use std::alloc::Layout;
 use std::fmt::Debug;
 
 use bytemuck::Pod;
-use i24::i24;
+pub use i24::i24 as I24;
+
 
 /// Allocates an exact sized heap buffer for samples.
 pub(crate) fn alloc_sample_buffer<T>(len: usize) -> Box<[T]>
@@ -133,7 +134,7 @@ pub trait AudioSample:
     + Pod
     + ConvertTo<i16>
     + ConvertTo<i32>
-    + ConvertTo<i24>
+    + ConvertTo<I24>
     + ConvertTo<f32>
     + ConvertTo<f64>
     + Sync
@@ -143,7 +144,7 @@ pub trait AudioSample:
 }
 
 impl AudioSample for i16 {}
-impl AudioSample for i24 {}
+impl AudioSample for I24 {}
 impl AudioSample for i32 {}
 impl AudioSample for f32 {}
 impl AudioSample for f64 {}
@@ -182,10 +183,10 @@ impl ConvertTo<i16> for i16 {
     }
 }
 
-impl ConvertTo<i24> for i16 {
+impl ConvertTo<I24> for i16 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        i24::saturating_from_i32((*self as i32) << 8)
+    fn convert_to(&self) -> I24 {
+        I24::saturating_from_i32((*self as i32) << 8)
     }
 }
 
@@ -210,36 +211,36 @@ impl ConvertTo<f64> for i16 {
     }
 }
 
-// i24 //
-impl ConvertTo<i16> for i24 {
+// I24 //
+impl ConvertTo<i16> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> i16 {
         (self.to_i32() >> 8) as i16
     }
 }
 
-impl ConvertTo<i24> for i24 {
+impl ConvertTo<I24> for I24 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
+    fn convert_to(&self) -> I24 {
         *self
     }
 }
 
-impl ConvertTo<i32> for i24 {
+impl ConvertTo<i32> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> i32 {
         self.to_i32() << 8
     }
 }
 
-impl ConvertTo<f32> for i24 {
+impl ConvertTo<f32> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> f32 {
-        (self.to_i32() as f32) / (i24::MAX.to_i32() as f32)
+        (self.to_i32() as f32) / (I24::MAX.to_i32() as f32)
     }
 }
 
-impl ConvertTo<f64> for i24 {
+impl ConvertTo<f64> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> f64 {
         (self.to_i32() as f64) / (i32::MAX as f64)
@@ -254,10 +255,10 @@ impl ConvertTo<i16> for i32 {
     }
 }
 
-impl ConvertTo<i24> for i32 {
+impl ConvertTo<I24> for i32 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        i24::try_from_i32(*self >> 8).unwrap()
+    fn convert_to(&self) -> I24 {
+        I24::try_from_i32(*self >> 8).unwrap()
     }
 }
 
@@ -290,10 +291,10 @@ impl ConvertTo<i16> for f32 {
     }
 }
 
-impl ConvertTo<i24> for f32 {
+impl ConvertTo<I24> for f32 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        i24::saturating_from_i32(
+    fn convert_to(&self) -> I24 {
+        I24::saturating_from_i32(
             ((*self * (i32::MAX as f32)).clamp(i32::MIN as f32, i32::MAX as f32)).round() as i32,
         )
     }
@@ -328,10 +329,10 @@ impl ConvertTo<i16> for f64 {
     }
 }
 
-impl ConvertTo<i24> for f64 {
+impl ConvertTo<I24> for f64 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        i24::saturating_from_i32(
+    fn convert_to(&self) -> I24 {
+        I24::saturating_from_i32(
             ((*self * (i32::MAX as f64)).clamp(i32::MIN as f64, i32::MAX as f64)).round() as i32,
         )
     }
@@ -360,7 +361,7 @@ impl ConvertTo<f64> for f64 {
 #[cfg(test)]
 mod sample_conversion_tests {
     use super::*;
-    use ::i24::i24;
+    use i24::i24 as I24;
 
     /// Helper function for approximate float comparison
     fn approx_eq_f32(a: f32, b: f32, epsilon: f32) -> bool {
@@ -381,8 +382,8 @@ mod sample_conversion_tests {
         let i16_id_val: i16 = i16_val.convert_to();
         assert_eq!(i16_id_val, i16_val);
 
-        let i24_val = i24::saturating_from_i32(1234567);
-        let converted: i24 = i24_val.convert_to();
+        let i24_val = I24::saturating_from_i32(1234567);
+        let converted: I24 = i24_val.convert_to();
         assert_eq!(converted.to_i32(), i24_val.to_i32());
         
         let i32_val: i32 = 1234567890;
@@ -415,29 +416,29 @@ mod sample_conversion_tests {
         let i16_val: i16 = i32_val.convert_to();
         assert_eq!(i16_val, expected_i16);
 
-        // i16 to i24 (widening)
+        // i16 to I24 (widening)
         let i16_val: i16 = 12345;
-        let expected_i24 = i24::saturating_from_i32((i16_val as i32) << 8);
-        let i24_val: i24 = i16_val.convert_to();
+        let expected_i24 = I24::saturating_from_i32((i16_val as i32) << 8);
+        let i24_val: I24 = i16_val.convert_to();
         assert_eq!(i24_val.to_i32(), expected_i24.to_i32());
 
-        // i24 to i16 (narrowing)
+        // I24 to i16 (narrowing)
         let i32_for_i24 = 12345 << 8;
-        let i24_val = i24::saturating_from_i32(i32_for_i24);
+        let i24_val = I24::saturating_from_i32(i32_for_i24);
         let expected_i16 = (i32_for_i24 >> 8) as i16;
         let i16_val: i16 = i24_val.convert_to();
         assert_eq!(i16_val, expected_i16);
 
-        // i24 to i32 (widening)
-        let i24_val = i24::saturating_from_i32(12345);
+        // I24 to i32 (widening)
+        let i24_val = I24::saturating_from_i32(12345);
         let expected_i32 = 12345 << 8;
         let i32_val: i32 = i24_val.convert_to();
         assert_eq!(i32_val, expected_i32);
 
-        // i32 to i24 (narrowing)
+        // i32 to I24 (narrowing)
         let i32_val: i32 = 12345 << 8;
-        let expected_i24 = i24::saturating_from_i32(i32_val >> 8);
-        let i24_val: i24 = i32_val.convert_to();
+        let expected_i24 = I24::saturating_from_i32(i32_val >> 8);
+        let i24_val: I24 = i32_val.convert_to();
         assert_eq!(i24_val.to_i32(), expected_i24.to_i32());
     }
 
@@ -470,8 +471,8 @@ mod sample_conversion_tests {
         let f64_val: f64 = i16_val.convert_to();
         assert!(approx_eq_f64(f64_val, 0.25, 1e-4), "{} != {}", f64_val, 0.25);
 
-        // i24 to f32
-        let i24_val: i24 = i24::MAX / i24!(8); // ~12.5% of maximum
+        // I24 to f32
+        let i24_val: I24 = I24::MAX / I24!(8); // ~12.5% of maximum
         let f32_val: f32 = i24_val.convert_to();
         let expected = 1.0 / 8.0;
 
@@ -497,11 +498,11 @@ mod sample_conversion_tests {
         let i16_val: i16 = f32_val.convert_to();
         assert_eq!(i16_val, 16384); // approx i16::MAX/2
 
-        // f32 to i24s
+        // f32 to I24s
         let f32_val: f32 = 0.25;  // 25%
 
-        let i24_val: i24 = f32_val.convert_to();
-        let expected = i24::saturating_from_i32((i32::MAX as f64 * 0.25).round() as i32);
+        let i24_val: I24 = f32_val.convert_to();
+        let expected = I24::saturating_from_i32((i32::MAX as f64 * 0.25).round() as i32);
 
         let diff = (i24_val.to_i32() - expected.to_i32()).abs();
         assert!(diff <= 1, "F32 to I24 conversion failed: {} != {} with diff = {}", i24_val.to_i32(), expected.to_i32(), diff);
