@@ -23,7 +23,6 @@
 #![warn(clippy::missing_panics_doc)] // Docs for functions that might panic
 #![warn(clippy::missing_safety_doc)] // Docs for `unsafe` functions
 #![warn(clippy::missing_const_for_fn)] // Suggests making eligible functions `const`
-
 //! # Audio Sample Conversion Library
 //!
 //! This crate provides functionality for working with audio samples and
@@ -33,7 +32,7 @@
 //! ## Supported Sample Types
 //!
 //! - `i16`: 16-bit signed integer samples - Common in WAV files and CD-quality audio
-//! - `i24`: 24-bit signed integer samples - From the [i24] crate. In-between PCM_16 and PCM_32 in
+//! - `I24`: 24-bit signed integer samples - From the [I24] crate. In-between PCM_16 and PCM_32 in
 //!     terms of quality and space on disk.
 //! - `i32`: 32-bit signed integer samples (high-resolution audio)
 //! - `f32`: 32-bit floating point samples (common in audio processing)
@@ -97,20 +96,28 @@
 #[cfg(feature = "ndarray")]
 pub mod error;
 
+#[cfg(feature = "visualization")]
+pub mod visualization;
+
 #[cfg(feature = "ndarray")]
 use ndarray::Array2;
 
 #[cfg(feature = "ndarray")]
 pub use crate::error::{AudioSampleError, AudioSampleResult};
 
+
+#[cfg(not(feature = "visualization"))]
+use std::fmt::Display;
+
 use std::alloc::Layout;
 use std::any::TypeId;
 use std::convert::{AsMut, AsRef};
-use std::fmt::{Debug, Display};
-use std::ops::{Deref, DerefMut};
+use std::fmt::Debug;
+use std::ops::{Add, Deref, DerefMut, Div, Mul, Sub};
 
-use bytemuck::{NoUninit, cast_slice, AnyBitPattern};
-use i24::i24;
+use bytemuck::{cast_slice, AnyBitPattern, NoUninit};
+use num_traits::Zero;
+pub use i24::i24 as I24;
 
 /// Allocates an exact sized heap buffer for samples.
 pub(crate) fn alloc_sample_buffer<T>(len: usize) -> Box<[T]>
@@ -134,32 +141,43 @@ where
 /// Marker trait for audio sample types.
 pub trait AudioSample:
     Copy
-    + NoUninit 
+    + NoUninit
     + AnyBitPattern
     + ConvertTo<i16>
     + ConvertTo<i32>
-    + ConvertTo<i24>
+    + ConvertTo<I24>
     + ConvertTo<f32>
     + ConvertTo<f64>
     + Sync
     + Send
     + Debug
     + Default
+    + Add<Output = Self>
+    + Sub<Output = Self>
+    + Mul<Output = Self>
+    + Div<Output = Self>
+    + PartialOrd
+    + PartialEq
+    + Zero
 {
     fn to_bytes_slice(samples: &[Self]) -> Vec<u8> {
         Vec::from(bytemuck::cast_slice(samples))
     }
+
+    fn into_inner(self) -> Self {
+        self
+    }
 }
 
 impl AudioSample for i16 {}
-impl AudioSample for i24 {
+impl AudioSample for I24 {
     fn to_bytes_slice(samples: &[Self]) -> Vec<u8> {
-            let mut out = Vec::with_capacity(samples.len() * 3);
-            for sample in samples {
-                out.extend_from_slice(&sample.to_le_bytes());
-            }
-            out
+        let mut out = Vec::with_capacity(samples.len() * 3);
+        for sample in samples {
+            out.extend_from_slice(&sample.to_le_bytes());
         }
+        out
+    }
 }
 impl AudioSample for i32 {}
 impl AudioSample for f32 {}
@@ -173,6 +191,22 @@ pub trait ConvertTo<T: AudioSample> {
 pub trait ConvertSequence<T: AudioSample> {
     type SeqType;
     fn convert_sequence(self) -> Self::SeqType;
+    fn as_sequence(&self) -> Self::SeqType;
+}
+
+impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Samples<From> {
+    type SeqType = Samples<To>;
+    fn convert_sequence(self) -> Self::SeqType {
+        let samples: Box<[From]> = self.samples;
+        let converted_samples: Box<[To]> = samples.convert_sequence();
+        Samples::from(converted_samples)
+    }
+
+    fn as_sequence(&self) -> Self::SeqType {
+        let samples = &self.samples;
+        let converted_samples: Box<[To]> = samples.as_sequence();
+        Samples::from(converted_samples)
+    }
 }
 
 impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Box<[From]> {
@@ -186,6 +220,48 @@ impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for
         let mut out: Box<[To]> = alloc_sample_buffer(self.len());
         for i in 0..self.len() {
             out[i] = self[i].convert_to();
+        }
+        out
+    }
+
+    fn as_sequence(&self) -> Self::SeqType {
+        // If the same, early return
+        if TypeId::of::<From>() == TypeId::of::<To>() {
+            return unsafe { reinterpret_boxed_slice_unchecked(self.to_vec().into_boxed_slice()) };
+        }
+
+        let mut out: Box<[To]> = alloc_sample_buffer(self.len());
+        for i in 0..self.len() {
+            out[i] = self[i].convert_to();
+        }
+        out
+    }
+}
+
+impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Vec<From> {
+    type SeqType = Vec<To>;
+    fn convert_sequence(self) -> Self::SeqType {
+        // If the same, early return
+        if TypeId::of::<From>() == TypeId::of::<To>() {
+            return unsafe { reinterpret_boxed_slice_unchecked(self.into_boxed_slice()) }.to_vec();
+        }
+
+        let mut out: Vec<To> = Vec::with_capacity(self.len());
+        for i in 0..self.len() {
+            out.push(self[i].convert_to());
+        }
+        out
+    }
+
+    fn as_sequence(&self) -> Self::SeqType {
+        // If the same, early return
+        if TypeId::of::<From>() == TypeId::of::<To>() {
+            return unsafe { reinterpret_boxed_slice_unchecked(self.to_vec().into_boxed_slice()) }.to_vec();
+        }
+
+        let mut out: Vec<To> = Vec::with_capacity(self.len());
+        for i in 0..self.len() {
+            out.push(self[i].convert_to());
         }
         out
     }
@@ -221,7 +297,34 @@ where
         // Create Array2 from the vector with the same dimensions
         Array2::from_shape_vec((rows, cols), out_vec).unwrap()
     }
+
+    fn as_sequence(&self) -> Self::SeqType {
+        let samples: Array2<F> = self.clone();
+
+        // Get dimensions from source array
+        let rows = samples.nrows();
+        let cols = samples.ncols();
+        let total_len = samples.len();
+
+        let mut out_vec = Vec::with_capacity(total_len);
+
+        unsafe { out_vec.set_len(total_len) };
+
+        // Convert each element
+        for i in 0..rows {
+            for j in 0..cols {
+                let index = i * cols + j;
+                out_vec[index] = samples[[i, j]].convert_to();
+            }
+        }
+
+        // Create Array2 from the vector with the same dimensions
+        Array2::from_shape_vec((rows, cols), out_vec).unwrap()
+    }
 }
+
+
+
 
 // ========================
 // Conversion implementations
@@ -237,12 +340,12 @@ impl ConvertTo<i16> for i16 {
     }
 }
 
-impl ConvertTo<i24> for i16 {
+impl ConvertTo<I24> for i16 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        // To convert from i16 to i24, we need to shift left by 8 bits
+    fn convert_to(&self) -> I24 {
+        // To convert from i16 to I24, we need to shift left by 8 bits
         // This preserves the relative amplitude of the signal
-        i24::try_from_i32((*self as i32) << 8).unwrap()
+        I24::try_from_i32((*self as i32) << 8).unwrap()
     }
 }
 
@@ -273,56 +376,56 @@ impl ConvertTo<f64> for i16 {
     }
 }
 
-// i24 //
-impl ConvertTo<i16> for i24 {
+// I24 //
+impl ConvertTo<i16> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> i16 {
-        // To convert from i24 to i16, we need to shift right by 8 bits
+        // To convert from I24 to i16, we need to shift right by 8 bits
         // This preserves the relative amplitude while fitting into 16 bits
         (self.to_i32() >> 8) as i16
     }
 }
 
-impl ConvertTo<i24> for i24 {
+impl ConvertTo<I24> for I24 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
+    fn convert_to(&self) -> I24 {
         *self
     }
 }
 
-impl ConvertTo<i32> for i24 {
+impl ConvertTo<i32> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> i32 {
-        // To convert from i24 to i32, shift left by 8 bits
+        // To convert from I24 to i32, shift left by 8 bits
         self.to_i32() << 8
     }
 }
 
-impl ConvertTo<f32> for i24 {
+impl ConvertTo<f32> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> f32 {
-        // For audio, map the i24 range to -1.0 to 1.0
-        // i24 range is -8388608 to 8388607
+        // For audio, map the I24 range to -1.0 to 1.0
+        // I24 range is -8388608 to 8388607
         let val = self.to_i32();
 
         if val < 0 {
-            (val as f32) / -(i24::MIN.to_i32() as f32)
+            (val as f32) / -(I24::MIN.to_i32() as f32)
         } else {
-            (val as f32) / (i24::MAX.to_i32() as f32)
+            (val as f32) / (I24::MAX.to_i32() as f32)
         }
     }
 }
 
-impl ConvertTo<f64> for i24 {
+impl ConvertTo<f64> for I24 {
     #[inline(always)]
     fn convert_to(&self) -> f64 {
-        // Same principle as i24 to f32
+        // Same principle as I24 to f32
         let val = self.to_i32();
 
         if val < 0 {
-            (val as f64) / -(i24::MIN.to_i32() as f64)
+            (val as f64) / -(I24::MIN.to_i32() as f64)
         } else {
-            (val as f64) / (i24::MAX.to_i32() as f64)
+            (val as f64) / (I24::MAX.to_i32() as f64)
         }
     }
 }
@@ -336,11 +439,11 @@ impl ConvertTo<i16> for i32 {
     }
 }
 
-impl ConvertTo<i24> for i32 {
+impl ConvertTo<I24> for i32 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        // To convert from i32 to i24, shift right by 8 bits
-        i24::try_from_i32(*self >> 8).unwrap()
+    fn convert_to(&self) -> I24 {
+        // To convert from i32 to I24, shift right by 8 bits
+        I24::try_from_i32(*self >> 8).unwrap()
     }
 }
 
@@ -389,18 +492,18 @@ impl ConvertTo<i16> for f32 {
     }
 }
 
-impl ConvertTo<i24> for f32 {
+impl ConvertTo<I24> for f32 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        // Scale and convert to i24
+    fn convert_to(&self) -> I24 {
+        // Scale and convert to I24
 
         let scaled_val = if *self < 0.0 {
-            (*self * -(i24::MIN.to_i32() as f32)).round() as i32
+            (*self * -(I24::MIN.to_i32() as f32)).round() as i32
         } else {
-            (*self * (i24::MAX.to_i32() as f32)).round() as i32
+            (*self * (I24::MAX.to_i32() as f32)).round() as i32
         };
 
-        i24::try_from_i32(scaled_val).unwrap()
+        I24::try_from_i32(scaled_val).unwrap()
     }
 }
 
@@ -449,18 +552,18 @@ impl ConvertTo<i16> for f64 {
     }
 }
 
-impl ConvertTo<i24> for f64 {
+impl ConvertTo<I24> for f64 {
     #[inline(always)]
-    fn convert_to(&self) -> i24 {
-        // Scale and convert to i24
+    fn convert_to(&self) -> I24 {
+        // Scale and convert to I24
 
         let scaled_val = if *self < 0.0 {
-            (*self * -(i24::MIN.to_i32() as f64)).round() as i32
+            (*self * -(I24::MIN.to_i32() as f64)).round() as i32
         } else {
-            (*self * (i24::MAX.to_i32() as f64)).round() as i32
+            (*self * (I24::MAX.to_i32() as f64)).round() as i32
         };
 
-        i24::try_from_i32(scaled_val).unwrap()
+        I24::try_from_i32(scaled_val).unwrap()
     }
 }
 
@@ -496,6 +599,16 @@ where
     T: AudioSample,
 {
     pub(crate) samples: Box<[T]>,
+}
+
+impl<T> Samples<T>
+where
+    T: AudioSample,
+{
+    pub fn with_capacity(capacity: usize) -> Self {
+        let samples = alloc_sample_buffer::<T>(capacity);
+        Samples { samples }
+    }
 }
 
 impl<T> AsRef<[T]> for Samples<T>
@@ -569,7 +682,7 @@ where
 
 impl<T> From<&[u8]> for Samples<T>
 where
-    T: AudioSample 
+    T: AudioSample,
 {
     fn from(bytes: &[u8]) -> Self {
         let casted_samples: &[T] = cast_slice::<u8, T>(bytes);
@@ -579,9 +692,23 @@ where
     }
 }
 
+#[cfg(feature = "ndarray")]
+impl<T> From<Array2<T>> for Samples<T>
+where
+    T: AudioSample,
+{
+    fn from(samples: Array2<T>) -> Self {
+        let (samples, _offset) = samples.into_raw_vec_and_offset();
+        Samples::from(samples.into_boxed_slice())
+    }
+}
+
+
+#[cfg(not(feature = "visualization"))]
 impl<T> Display for Samples<T>
 where
     T: AudioSample + Debug,
+    f64: ConvertTo<T>,
 {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "{:?}", &self.samples)
@@ -609,12 +736,11 @@ impl<From: AudioSample> Samples<From> {
     }
 
     #[cfg(feature = "ndarray")]
-    /// Converts the Samples into an [ndarray::Array2] struct based on the sample rate and number
-    /// of channels.
+    /// Converts the Samples into an [ndarray::Array2] struct based on the number
+    /// of channels. Output array has shape (n_channels, n_frames).
     pub fn into_ndarray(
         self,
         n_channels: u16,
-        _sample_rate: u32,
     ) -> AudioSampleResult<Array2<From>> {
         let n_channels = n_channels as usize;
         let flat_samples = self.samples.into_vec();
@@ -644,6 +770,12 @@ impl<From: AudioSample> Samples<From> {
     #[cfg(feature = "ndarray")]
     pub fn from_ndarray(samples: Array2<From>) -> AudioSampleResult<Self> {
         let (samples, _offset) = samples.into_raw_vec_and_offset();
+        Ok(Samples::from(samples.into_boxed_slice()))
+    }
+
+    #[cfg(feature = "ndarray")]
+    pub fn from_ndarray_ref(samples: &Array2<From>) -> AudioSampleResult<Self> {
+        let (samples, _offset) = samples.clone().into_raw_vec_and_offset();
         Ok(Samples::from(samples.into_boxed_slice()))
     }
 }
@@ -770,8 +902,8 @@ mod conversion_tests {
         let min_i16_to_i32: i32 = min_i16.convert_to();
         assert_eq!(min_i16_to_i32, i32::MIN);
 
-        let min_i16_to_i24: i24 = min_i16.convert_to();
-        let expected_i24_min = i24!(i32::MIN >> 8);
+        let min_i16_to_i24: I24 = min_i16.convert_to();
+        let expected_i24_min = I24!(i32::MIN >> 8);
         assert_eq!(min_i16_to_i24.to_i32(), expected_i24_min.to_i32());
 
         // Test maximum value
@@ -790,7 +922,7 @@ mod conversion_tests {
         let zero_i16_to_i32: i32 = zero_i16.convert_to();
         assert_eq!(zero_i16_to_i32, 0);
 
-        let zero_i16_to_i24: i24 = zero_i16.convert_to();
+        let zero_i16_to_i24: I24 = zero_i16.convert_to();
         assert_eq!(zero_i16_to_i24.to_i32(), 0);
 
         // Test mid-range positive
@@ -878,10 +1010,10 @@ mod conversion_tests {
             min_f32_to_i32
         );
 
-        let min_f32_to_i24: i24 = min_f32.convert_to();
-        let expected_i24 = i24::MIN;
+        let min_f32_to_i24: I24 = min_f32.convert_to();
+        let expected_i24 = I24::MIN;
         let diff = (min_f32_to_i24.to_i32() - expected_i24.to_i32()).abs();
-        assert!(diff <= 1, "i24 values differ by more than 1, {}", diff);
+        assert!(diff <= 1, "I24 values differ by more than 1, {}", diff);
 
         // Test 1.0 (maximum valid value)
         let max_f32: f32 = 1.0;
@@ -923,8 +1055,8 @@ mod conversion_tests {
         );
         assert_eq!(zero_f32_to_i32, 0);
 
-        let zero_f32_to_i24: i24 = zero_f32.convert_to();
-        println!("DEBUG: f32 -> i24 conversion for 0.0");
+        let zero_f32_to_i24: I24 = zero_f32.convert_to();
+        println!("DEBUG: f32 -> I24 conversion for 0.0");
         println!(
             "Input: {}, Output: {} (i32 value), Expected: 0",
             zero_f32,
@@ -1071,34 +1203,34 @@ mod conversion_tests {
         assert_approx_eq!(tiny_value_to_f32 as f64, 0.0, 1e-10);
     }
 
-    // Tests for i24 conversions
+    // Tests for I24 conversions
     #[test]
     fn i24_conversion_tests() {
-        // Create an i24 with a known value
-        let i24_value = i24!(4660 << 8); //  So converting back to i16 gives 4660
+        // Create an I24 with a known value
+        let i24_value = I24!(4660 << 8); //  So converting back to i16 gives 4660
         println!(
-            "DEBUG: Created i24 value from 4660 << 8 = {}",
+            "DEBUG: Created I24 value from 4660 << 8 = {}",
             i24_value.to_i32()
         );
 
-        // Test i24 to i16
+        // Test I24 to i16
         let i24_to_i16: i16 = i24_value.convert_to();
         let expected_i16 = 0x1234_i16;
-        println!("DEBUG: i24 -> i16 conversion");
+        println!("DEBUG: I24 -> i16 conversion");
         println!(
-            "i24 (as i32): {}, i16: {}, Expected: {}",
+            "I24 (as i32): {}, i16: {}, Expected: {}",
             i24_value.to_i32(),
             i24_to_i16,
             expected_i16
         );
         assert_eq!(i24_to_i16, expected_i16);
 
-        // Test i24 to f32
+        // Test I24 to f32
         let i24_to_f32: f32 = i24_value.convert_to();
-        let expected_f32 = (0x123456 as f32) / (i24::MAX.to_i32() as f32);
-        println!("DEBUG: i24 -> f32 conversion");
+        let expected_f32 = (0x123456 as f32) / (I24::MAX.to_i32() as f32);
+        println!("DEBUG: I24 -> f32 conversion");
         println!(
-            "i24 (as i32): {}, f32: {}, Expected: {}",
+            "I24 (as i32): {}, f32: {}, Expected: {}",
             i24_value.to_i32(),
             i24_to_f32,
             expected_f32
@@ -1107,12 +1239,12 @@ mod conversion_tests {
         println!("DEBUG: Difference: {}", (i24_to_f32 - expected_f32).abs());
         assert_approx_eq!(i24_to_f32 as f64, expected_f32 as f64, 1e-4);
 
-        // Test i24 to f64
+        // Test I24 to f64
         let i24_to_f64: f64 = i24_value.convert_to();
-        let expected_f64 = (0x123456 as f64) / (i24::MAX.to_i32() as f64);
-        println!("DEBUG: i24 -> f64 conversion");
+        let expected_f64 = (0x123456 as f64) / (I24::MAX.to_i32() as f64);
+        println!("DEBUG: I24 -> f64 conversion");
         println!(
-            "i24 (as i32): {}, f64: {}, Expected: {}",
+            "I24 (as i32): {}, f64: {}, Expected: {}",
             i24_value.to_i32(),
             i24_to_f64,
             expected_f64
@@ -1187,10 +1319,10 @@ mod conversion_tests {
             assert_approx_eq!(original as f64, round_tripped as f64, 1e-4);
         }
 
-        // i16 -> i24 -> i16
+        // i16 -> I24 -> i16
         for &sample in &[i16::MIN, -16384, 0, 16384, i16::MAX] {
             let original = sample;
-            let intermediate: i24 = original.convert_to();
+            let intermediate: I24 = original.convert_to();
             let round_tripped: i16 = intermediate.convert_to();
 
             // For extreme negative values, allow 1-bit difference
@@ -1203,7 +1335,7 @@ mod conversion_tests {
             } else {
                 assert_eq!(
                     original, round_tripped,
-                    "Failed in i16->i24->i16 with value {}",
+                    "Failed in i16->I24->i16 with value {}",
                     original
                 );
             }
@@ -1447,7 +1579,7 @@ mod conversion_tests {
         fn test_stereo_input() {
             let samples: Box<[i16]> = Box::new([1, 2, 3, 4, 5, 6]); // L R L R L R
             let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(2, 44100).unwrap();
+            let result = buffer.into_ndarray(2).unwrap();
             let expected = arr2(&[
                 [1, 3, 5], // Left
                 [2, 4, 6], // Right
@@ -1459,7 +1591,7 @@ mod conversion_tests {
         fn test_mono_input() {
             let samples: Box<[f32]> = Box::new([0.1, 0.2, 0.3]);
             let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(1, 16000).unwrap();
+            let result = buffer.into_ndarray(1).unwrap();
             let expected = arr2(&[[0.1, 0.2, 0.3]]);
             assert_eq!(result, expected);
         }
@@ -1472,7 +1604,7 @@ mod conversion_tests {
                 12, 22, 32, // frame 2
             ]);
             let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(3, 48000).unwrap();
+            let result = buffer.into_ndarray(3).unwrap();
             let expected = arr2(&[[10, 11, 12], [20, 21, 22], [30, 31, 32]]);
             assert_eq!(result, expected);
         }
@@ -1481,16 +1613,16 @@ mod conversion_tests {
         fn test_incorrect_sample_count() {
             let samples: Box<[i16]> = Box::new([1, 2, 3, 4, 5]); // Not divisible by 2
             let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(2, 44100);
+            let result = buffer.into_ndarray(2);
             assert!(matches!(result, Err(AudioSampleError::ChannelMismatch)));
         }
 
         #[test]
         fn test_longer_input() {
             let samples: Vec<i16> = (0..12).collect(); // [0, 1, 2, ..., 11]
-            // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
+                                                       // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
             let buffer = Samples::from(samples.into_boxed_slice());
-            let result = buffer.into_ndarray(2, 44100).unwrap();
+            let result = buffer.into_ndarray(2).unwrap();
             let expected = arr2(&[[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]);
             assert_eq!(result, expected);
         }

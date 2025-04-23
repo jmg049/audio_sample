@@ -15,9 +15,13 @@ categories = ["encoding", "multimedia"]
 
 [dependencies]
 bytemuck = { version = "1.22.0", features = ["derive"] }
+colored = "3.0.0"
 i24 = { path = "../i24/" }
 ndarray = { version = "0.16.1", optional = true }
+num-traits = "0.2.19"
 thiserror = "2.0.12"
+unicode-width = { version = "0.1.10", optional = true }
+
 
 [dev-dependencies]
 approx_eq = "0.1.8"
@@ -41,3 +45,5 @@ harness = false
 
 [features]
 ndarray = ["dep:ndarray"]
+visualization = ["dep:unicode-width"]
+cli = ["visualization"]
