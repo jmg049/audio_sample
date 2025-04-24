@@ -23,119 +23,135 @@
 #![warn(clippy::missing_panics_doc)] // Docs for functions that might panic
 #![warn(clippy::missing_safety_doc)] // Docs for `unsafe` functions
 #![warn(clippy::missing_const_for_fn)] // Suggests making eligible functions `const`
-//! # Audio Sample Conversion Library
+//! # Audio Sample Processing & Conversion Crate
 //!
-//! This crate provides functionality for working with audio samples and
-//! converting between different audio sample formats. It focuses on correctness,
-//! performance, and ease of use.
+//! A modern, trait-oriented audio processing crate focused on efficient, safe, and composable handling of audio sample sequences.
+//!
+//! This library introduces [AudioSample] as a core trait and builds powerful abstractions around common audio use cases,
+//! enabling seamless format conversions, channel layout transformations, numerical array integration, and more.
 //!
 //! ## Supported Sample Types
 //!
-//! - `i16`: 16-bit signed integer samples - Common in WAV files and CD-quality audio
-//! - `I24`: 24-bit signed integer samples - From the [I24] crate. In-between PCM_16 and PCM_32 in
-//!     terms of quality and space on disk.
-//! - `i32`: 32-bit signed integer samples (high-resolution audio)
-//! - `f32`: 32-bit floating point samples (common in audio processing)
-//! - `f64`: 64-bit floating point samples (high-precision audio processing)
+//! - `i16`: Standard 16-bit signed PCM
+//! - `I24`: 24-bit signed integer audio sample (from the [i24 crate](https://crates.io/crates/i24))
+//! - `i32`: 32-bit signed PCM
+//! - `f32`: 32-bit floating-point audio 
+//! - `f64`: 64-bit floating-point audio 
 //!
-//! ## Features
+//! ## Key Features
 //!
-//! - **Type Safety**: Using Rust's type system to ensure correct conversions
-//! - **High Performance**: Simple code that enables the compiler to produce fast code. The
-//!     [AudioSample] trait simply enables working with some primitives within the context of audio
-//!     processing - floats between -1.0 and 1.0 etc.
+//! - **Zero-cost abstractions**: Efficient trait-based design minimizes allocations and runtime overhead.
+//! - **Safe sample conversions**: Conversions between all supported formats, preserving fidelity.
+//! - **Typed iterators**: Enhance any `Iterator<Item = AudioSample>` with extended functionality via the [`Samples`] trait.
+//! - **Ergonomic collection APIs**: Convert entire buffers (e.g. `Vec<i16>`, `Box<[i32]>`) with the [`ConvertCollection`] trait.
+//! - **Channel layout support**: Convert between interleaved and planar layouts using [`samples::planar_to_interleaved`] and [`samples::interleaved_to_planar`].
+//! - **Numerical computing**: Transform structured audio into [`ndarray::Array2`] matrices for signal processing.
+//!
+//! ## Implementation Notes
+//!
+//! - **Float-to-int**: Clamped and rounded into the full range of the target type.
+//! - **Int-to-float**: Normalized into the range `[-1.0, 1.0]`.
+//! - **Cross-bit-depth**: Preserves perceptual amplitude via scaling.
+//!
+//! ## Reporting Issues
+//!
+//! Found a bug or want a feature? Create an issue at [GitHub](https://github.com/jmg049/audio_sample)
 //!
 //! ## Usage Examples
 //!
 //! ### Basic Sample Conversion
 //!
 //! ```rust
-//! use audio_sample::{AudioSample, ConvertTo};
+//! use audio_sample::{ConvertTo, AudioSample};
 //!
-//! // Convert an i16 sample to floating point
-//! let i16_sample: i16 = i16::MAX / 2; // 50% of max amplitude
-//! let f32_sample: f32 = i16_sample.convert_to();
-//! assert!((f32_sample - 0.5).abs() < 0.0001);
+//! let s: i16 = i16::MAX;
+//! let f: f32 = s.convert_to();
+//! assert!(f <= 1.0);
 //! ```
 //!
-//! ### Converting Buffers of Samples
+//! ### Converting an Audio Buffer
 //!
 //! ```rust
-//! use audio_sample::{ConvertSequence, Samples};
+//! use audio_sample::ConvertCollection;
 //!
-//! // Using ConvertSlice trait for Box<[T]>
-//! let i16_buffer: Box<[i16]> = vec![0, 16384, -16384, 32767].into_boxed_slice();
-//! let f32_buffer: Samples<f32> = Samples::from(i16_buffer.convert_sequence());
+//! let raw: Vec<i16> = vec![0, 16384, -16384, 32767];
+//! let as_f32: Vec<f32> = raw.convert();
 //! ```
-//! ## Implementation Details
 //!
-//! ### Integer Scaling
+//! ### Working with Iterator-Based Samples
 //!
-//! When converting between integer formats of different bit depths:
+//! ```rust
+//! use audio_sample::{Samples, ConvertTo};
 //!
-//! - **Widening conversions** (e.g., i16 to i32): The samples are shifted left to preserve amplitude.
-//! - **Narrowing conversions** (e.g., i32 to i16): The samples are shifted right, which may lose precision.
+//! let raw: Vec<i16> = vec![1, 2, 3];
+//! let sum: f32 = raw.iter().sum::<i16>() as f32;
+//! ```
 //!
-//! ### Float to Integer Conversion
+//! ### Convert to `ndarray` Matrix
 //!
-//! - Floating-point samples are assumed to be in the range -1.0 to 1.0.
-//! - They are scaled to the full range of the target integer type.
-//! - Values are rounded to the nearest integer rather than truncated.
-//! - Values outside the target range are clamped to prevent overflow.
-//!
-//! ### Integer to Float Conversion
-//!
-//! - Integer samples are scaled to the range -1.0 to 1.0.
-//! - The maximum positive integer value maps to 1.0.
-//! - The minimum negative integer value maps to -1.0.
-//!
-//!
-//! ## Bugs / Issues
-//! Report them on the [Github Page](<https://www.github.com/jmg049/audio_sample>) and I will try and get to it as soon as I can :)
-//!
-#[cfg(feature = "ndarray")]
+//! **NOTE**: Requires the `ndarray` feature.
+//! 
+#[cfg_attr(feature = "ndarray", doc = r##"
+// ```rust
+// use audio_sample::{AudioSample, StructuredSamples, ToNdarray, ChannelLayout};
+// use ndarray::Array2;
+//
+// #[derive(Clone)]
+// struct Interleaved<T> { data: Vec<T>, channels: usize }
+//
+// impl<T> Iterator for Interleaved<T>
+// where T: Copy
+// {
+//     type Item = T;
+//     fn next(&mut self) -> Option<T> {
+//         match self.is_empty() {
+//             true => None
+//             false => Some(self.data.remove(0))
+//         }
+//     }
+// }
+// impl ExactSizeIterator for InterleavedSamples {
+//     fn len(&self) -> usize {
+//         self.data.len()
+//     }
+// }
+//
+// impl<T> StructuredSamples for Interleaved<T>
+// where T: AudioSample
+// {
+//     fn layout(&self) -> ChannelLayout { ChannelLayout::Interleaved }
+//     fn channels(&self) -> usize { self.channels }
+// }
+//
+// let data = Interleaved { data: vec![1.0, 10.0, 2.0, 20.0], channels: 2 };
+// let matrix: Array2<f32> = data.to_ndarray().unwrap();
+// ```
+"##)]
+
+
 pub mod error;
 
-#[cfg(feature = "visualization")]
-pub mod visualization;
-
-#[cfg(feature = "ndarray")]
-use ndarray::Array2;
-
-#[cfg(feature = "ndarray")]
 pub use crate::error::{AudioSampleError, AudioSampleResult};
 
+pub mod samples;
+pub use samples::{AsSamples, ConvertCollection, Samples, StructuredSamples};
 
-#[cfg(not(feature = "visualization"))]
-use std::fmt::Display;
+#[cfg(feature = "ndarray")]
+pub use samples::ToNdarray;
 
-use std::alloc::Layout;
-use std::any::TypeId;
-use std::convert::{AsMut, AsRef};
 use std::fmt::Debug;
-use std::ops::{Add, Deref, DerefMut, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul, Sub};
 
-use bytemuck::{cast_slice, AnyBitPattern, NoUninit};
-use num_traits::Zero;
+use bytemuck::{AnyBitPattern, NoUninit};
 pub use i24::i24 as I24;
+use num_traits::ToBytes;
+use num_traits::Zero;
 
-/// Allocates an exact sized heap buffer for samples.
-pub(crate) fn alloc_sample_buffer<T>(len: usize) -> Box<[T]>
-where
-    T: AudioSample + Copy + Debug,
-{
-    if len == 0 {
-        return <Box<[T]>>::default();
-    }
-
-    let layout = match Layout::array::<T>(len) {
-        Ok(layout) => layout,
-        Err(_) => panic!("Failed to allocate buffer of size {}", len),
-    };
-
-    let ptr = unsafe { std::alloc::alloc(layout) as *mut T };
-    let slice_ptr: *mut [T] = core::ptr::slice_from_raw_parts_mut(ptr, len);
-    unsafe { Box::from_raw(slice_ptr) }
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+pub enum ChannelLayout {
+    #[default]
+    Interleaved,
+    NonInterleaved,
 }
 
 /// Marker trait for audio sample types.
@@ -159,6 +175,7 @@ pub trait AudioSample:
     + PartialOrd
     + PartialEq
     + Zero
+    + ToBytes
 {
     fn to_bytes_slice(samples: &[Self]) -> Vec<u8> {
         Vec::from(bytemuck::cast_slice(samples))
@@ -187,144 +204,6 @@ impl AudioSample for f64 {}
 pub trait ConvertTo<T: AudioSample> {
     fn convert_to(&self) -> T;
 }
-
-pub trait ConvertSequence<T: AudioSample> {
-    type SeqType;
-    fn convert_sequence(self) -> Self::SeqType;
-    fn as_sequence(&self) -> Self::SeqType;
-}
-
-impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Samples<From> {
-    type SeqType = Samples<To>;
-    fn convert_sequence(self) -> Self::SeqType {
-        let samples: Box<[From]> = self.samples;
-        let converted_samples: Box<[To]> = samples.convert_sequence();
-        Samples::from(converted_samples)
-    }
-
-    fn as_sequence(&self) -> Self::SeqType {
-        let samples = &self.samples;
-        let converted_samples: Box<[To]> = samples.as_sequence();
-        Samples::from(converted_samples)
-    }
-}
-
-impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Box<[From]> {
-    type SeqType = Box<[To]>;
-    fn convert_sequence(self) -> Self::SeqType {
-        // If the same, early return
-        if TypeId::of::<From>() == TypeId::of::<To>() {
-            return unsafe { reinterpret_boxed_slice_unchecked(self) };
-        }
-
-        let mut out: Box<[To]> = alloc_sample_buffer(self.len());
-        for i in 0..self.len() {
-            out[i] = self[i].convert_to();
-        }
-        out
-    }
-
-    fn as_sequence(&self) -> Self::SeqType {
-        // If the same, early return
-        if TypeId::of::<From>() == TypeId::of::<To>() {
-            return unsafe { reinterpret_boxed_slice_unchecked(self.to_vec().into_boxed_slice()) };
-        }
-
-        let mut out: Box<[To]> = alloc_sample_buffer(self.len());
-        for i in 0..self.len() {
-            out[i] = self[i].convert_to();
-        }
-        out
-    }
-}
-
-impl<From: AudioSample + ConvertTo<To>, To: AudioSample> ConvertSequence<To> for Vec<From> {
-    type SeqType = Vec<To>;
-    fn convert_sequence(self) -> Self::SeqType {
-        // If the same, early return
-        if TypeId::of::<From>() == TypeId::of::<To>() {
-            return unsafe { reinterpret_boxed_slice_unchecked(self.into_boxed_slice()) }.to_vec();
-        }
-
-        let mut out: Vec<To> = Vec::with_capacity(self.len());
-        for i in 0..self.len() {
-            out.push(self[i].convert_to());
-        }
-        out
-    }
-
-    fn as_sequence(&self) -> Self::SeqType {
-        // If the same, early return
-        if TypeId::of::<From>() == TypeId::of::<To>() {
-            return unsafe { reinterpret_boxed_slice_unchecked(self.to_vec().into_boxed_slice()) }.to_vec();
-        }
-
-        let mut out: Vec<To> = Vec::with_capacity(self.len());
-        for i in 0..self.len() {
-            out.push(self[i].convert_to());
-        }
-        out
-    }
-}
-
-#[cfg(feature = "ndarray")]
-impl<To: AudioSample, F: AudioSample> ConvertSequence<To> for Array2<F>
-where
-    F: ConvertTo<To>,
-{
-    type SeqType = Array2<To>;
-
-    fn convert_sequence(self) -> Self::SeqType {
-        let samples: Array2<F> = self;
-
-        // Get dimensions from source array
-        let rows = samples.nrows();
-        let cols = samples.ncols();
-        let total_len = samples.len();
-
-        let mut out_vec = Vec::with_capacity(total_len);
-
-        unsafe { out_vec.set_len(total_len) };
-
-        // Convert each element
-        for i in 0..rows {
-            for j in 0..cols {
-                let index = i * cols + j;
-                out_vec[index] = samples[[i, j]].convert_to();
-            }
-        }
-
-        // Create Array2 from the vector with the same dimensions
-        Array2::from_shape_vec((rows, cols), out_vec).unwrap()
-    }
-
-    fn as_sequence(&self) -> Self::SeqType {
-        let samples: Array2<F> = self.clone();
-
-        // Get dimensions from source array
-        let rows = samples.nrows();
-        let cols = samples.ncols();
-        let total_len = samples.len();
-
-        let mut out_vec = Vec::with_capacity(total_len);
-
-        unsafe { out_vec.set_len(total_len) };
-
-        // Convert each element
-        for i in 0..rows {
-            for j in 0..cols {
-                let index = i * cols + j;
-                out_vec[index] = samples[[i, j]].convert_to();
-            }
-        }
-
-        // Create Array2 from the vector with the same dimensions
-        Array2::from_shape_vec((rows, cols), out_vec).unwrap()
-    }
-}
-
-
-
 
 // ========================
 // Conversion implementations
@@ -593,220 +472,34 @@ impl ConvertTo<f64> for f64 {
     }
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Samples<T>
-where
-    T: AudioSample,
-{
-    pub(crate) samples: Box<[T]>,
-}
-
-impl<T> Samples<T>
-where
-    T: AudioSample,
-{
-    pub fn with_capacity(capacity: usize) -> Self {
-        let samples = alloc_sample_buffer::<T>(capacity);
-        Samples { samples }
-    }
-}
-
-impl<T> AsRef<[T]> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn as_ref(&self) -> &[T] {
-        &self.samples
-    }
-}
-
-impl<T> AsMut<[T]> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn as_mut(&mut self) -> &mut [T] {
-        &mut self.samples
-    }
-}
-
-impl<T> Deref for Samples<T>
-where
-    T: AudioSample,
-{
-    type Target = [T];
-
-    fn deref(&self) -> &Self::Target {
-        &self.samples
-    }
-}
-
-impl<T> DerefMut for Samples<T>
-where
-    T: AudioSample,
-{
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.samples
-    }
-}
-
-impl<T> From<Vec<T>> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn from(samples: Vec<T>) -> Self {
-        Samples {
-            samples: samples.into_boxed_slice(),
-        }
-    }
-}
-
-impl<T> From<&[T]> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn from(samples: &[T]) -> Self {
-        Samples {
-            samples: Box::from(samples),
-        }
-    }
-}
-
-impl<T> From<Box<[T]>> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn from(samples: Box<[T]>) -> Self {
-        Samples { samples }
-    }
-}
-
-impl<T> From<&[u8]> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn from(bytes: &[u8]) -> Self {
-        let casted_samples: &[T] = cast_slice::<u8, T>(bytes);
-        Samples {
-            samples: Box::from(casted_samples),
-        }
-    }
-}
-
-#[cfg(feature = "ndarray")]
-impl<T> From<Array2<T>> for Samples<T>
-where
-    T: AudioSample,
-{
-    fn from(samples: Array2<T>) -> Self {
-        let (samples, _offset) = samples.into_raw_vec_and_offset();
-        Samples::from(samples.into_boxed_slice())
-    }
-}
-
-
-#[cfg(not(feature = "visualization"))]
-impl<T> Display for Samples<T>
-where
-    T: AudioSample + Debug,
-    f64: ConvertTo<T>,
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{:?}", &self.samples)
-    }
-}
-
-impl<From: AudioSample> Samples<From> {
-    /// Constructs a new Samples struct from a boxed slice of audio samples.
-    pub const fn new(samples: Box<[From]>) -> Self {
-        Self { samples }
-    }
-
-    #[inline(always)]
-    pub fn convert<To: AudioSample>(self) -> Samples<To>
-    where
-        From: ConvertTo<To>,
-        Box<[From]>: ConvertSequence<To, SeqType = Box<[To]>>,
-    {
-        Samples::from(self.samples.convert_sequence())
-    }
-
-    /// Converts the boxed slice of samples to the corresponding bytes.
-    pub fn as_bytes(&self) -> Vec<u8> {
-        From::to_bytes_slice(self)
-    }
-
-    #[cfg(feature = "ndarray")]
-    /// Converts the Samples into an [ndarray::Array2] struct based on the number
-    /// of channels. Output array has shape (n_channels, n_frames).
-    pub fn into_ndarray(
-        self,
-        n_channels: u16,
-    ) -> AudioSampleResult<Array2<From>> {
-        let n_channels = n_channels as usize;
-        let flat_samples = self.samples.into_vec();
-        let total_samples = flat_samples.len();
-
-        if total_samples % n_channels != 0 {
-            return Err(AudioSampleError::ChannelMismatch);
-        }
-
-        let n_frames = total_samples / n_channels;
-        let mut reordered = Vec::with_capacity(total_samples);
-        // SAFETY: We will fill all elements below
-        unsafe { reordered.set_len(total_samples) };
-
-        for i in 0..total_samples {
-            let channel = i % n_channels;
-            let frame = i / n_channels;
-            let src_index = i;
-            let dst_index = channel * n_frames + frame;
-            reordered[dst_index] = flat_samples[src_index];
-        }
-
-        // SAFETY: All elements initialized above
-        Ok(Array2::from_shape_vec((n_channels, n_frames), reordered)?)
-    }
-
-    #[cfg(feature = "ndarray")]
-    pub fn from_ndarray(samples: Array2<From>) -> AudioSampleResult<Self> {
-        let (samples, _offset) = samples.into_raw_vec_and_offset();
-        Ok(Samples::from(samples.into_boxed_slice()))
-    }
-
-    #[cfg(feature = "ndarray")]
-    pub fn from_ndarray_ref(samples: &Array2<From>) -> AudioSampleResult<Self> {
-        let (samples, _offset) = samples.clone().into_raw_vec_and_offset();
-        Ok(Samples::from(samples.into_boxed_slice()))
-    }
-}
-
-pub(crate) unsafe fn reinterpret_boxed_slice_unchecked<F, T>(input: Box<[F]>) -> Box<[T]> {
-    // Assert size equivalence only in debug builds (optional)
-    debug_assert_eq!(
-        size_of::<F>(),
-        size_of::<T>(),
-        "F and T must have the same size"
-    );
-
-    let len = input.len();
-    let raw = Box::into_raw(input) as *mut T;
-
-    // SAFETY:
-    // - Caller ensures F and T are layout-compatible.
-    // - We preserve the length and allocation, just change the type.
-    unsafe { Box::from_raw(std::slice::from_raw_parts_mut(raw, len)) }
-}
-
 #[cfg(test)]
 mod conversion_tests {
     use super::*;
+    use std::alloc::Layout;
+
+    use crate::samples::{ConvertCollection, Samples};
     use approx_eq::assert_approx_eq;
     use std::fs::File;
     use std::io::BufRead;
     use std::path::Path;
     use std::str::FromStr;
+    /// Helper function to allocate a fixed sized, heap allocated buffer of type T.
+    pub(crate) fn alloc_sample_buffer<T: AudioSample>(len: usize) -> Box<[T]> {
+        if len == 0 {
+            return <Box<[T]>>::default();
+        }
 
-    // Helper functions (your existing code)
+        let layout = match Layout::array::<T>(len) {
+            Ok(layout) => layout,
+            Err(_) => panic!("Failed to allocate buffer of size {}", len),
+        };
+
+        let ptr = unsafe { std::alloc::alloc(layout) as *mut T };
+        let slice_ptr: *mut [T] = core::ptr::slice_from_raw_parts_mut(ptr, len);
+        unsafe { Box::from_raw(slice_ptr) }
+    }
+
+    // Helper functions
     #[cfg(test)]
     fn read_lines<P>(filename: P) -> std::io::Result<std::io::Lines<std::io::BufReader<File>>>
     where
@@ -863,7 +556,7 @@ mod conversion_tests {
             read_text_to_vec(Path::new("./test_resources/one_channel_f32.txt")).unwrap();
 
         let f32_samples: &[f32] = &f32_samples;
-        let converted_i16_samples: Box<[f32]> = i16_samples.convert_sequence();
+        let converted_i16_samples: Box<[f32]> = i16_samples.convert();
 
         for (expected_sample, actual_sample) in converted_i16_samples.iter().zip(f32_samples) {
             assert_approx_eq!(*expected_sample as f64, *actual_sample as f64, 1e-4);
@@ -1347,11 +1040,9 @@ mod conversion_tests {
     fn samples_conversions() {
         // Create some i16 samples
         let i16_data: Box<[i16]> = vec![-32768, -16384, 0, 16384, 32767].into_boxed_slice();
-        let samples = Samples::from(i16_data);
 
         // Convert to f32
-        let f32_samples: Samples<f32> = samples.convert();
-
+        let f32_samples: Box<[f32]> = i16_data.convert();
         // Print debug info for all conversions
         println!("DEBUG: i16 -> f32 conversions:");
         println!(
@@ -1404,7 +1095,7 @@ mod conversion_tests {
         assert_approx_eq!(f32_samples[4] as f64, 1.0, 1e-4);
 
         // Convert back to i16
-        let round_trip: Samples<i16> = f32_samples.convert();
+        let round_trip: Box<[i16]> = f32_samples.convert();
 
         // Print debug info for round trip
         println!("DEBUG: f32 -> i16 round trip conversions:");
@@ -1457,7 +1148,7 @@ mod conversion_tests {
         );
 
         // Test as_bytes
-        let bytes = round_trip.as_bytes();
+        let bytes = round_trip.into_iter().as_bytes();
         assert_eq!(bytes.len(), 10); // 5 i16 values * 2 bytes each
     }
 
@@ -1466,16 +1157,14 @@ mod conversion_tests {
     fn empty_samples() {
         // Create empty samples
         let empty_i16: Vec<i16> = Vec::new();
-        let samples = Samples::from(empty_i16);
 
         // Convert to f32
-        let f32_samples: Samples<f32> = samples.convert();
-
+        let f32_samples: Vec<f32> = empty_i16.convert();
         // Check that it's still empty
         assert_eq!(f32_samples.len(), 0);
 
         // Test as_bytes on empty samples
-        let bytes = f32_samples.as_bytes();
+        let bytes = f32_samples.into_iter().as_bytes();
         assert_eq!(bytes.len(), 0);
     }
 
@@ -1505,8 +1194,7 @@ mod conversion_tests {
         let i16_samples: Box<[i16]> = vec![-32768, 0, 32767].into_boxed_slice();
 
         // Convert to f32
-        let f32_samples: Box<[f32]> = i16_samples.clone().convert_sequence();
-
+        let f32_samples: Box<[f32]> = i16_samples.convert();
         println!("f32-samples {:?}", f32_samples);
 
         // Print debug info
@@ -1545,8 +1233,7 @@ mod conversion_tests {
 
         // Convert to i32
         let i16_samples: Box<[i16]> = vec![-32768, 0, 32767].into_boxed_slice();
-        let i32_samples: Box<[i32]> = i16_samples.clone().convert_sequence();
-
+        let i32_samples: Box<[i32]> = i16_samples.convert();
         // Print debug info
         println!("DEBUG: i16 -> i32 sequence conversion:");
         println!(
@@ -1570,61 +1257,5 @@ mod conversion_tests {
         assert_eq!(i32_samples[2], 0x7FFF0000);
     }
 
-    #[cfg(feature = "ndarray")]
-    mod ndarray_tests {
-        use super::*;
-        use ndarray::arr2;
-
-        #[test]
-        fn test_stereo_input() {
-            let samples: Box<[i16]> = Box::new([1, 2, 3, 4, 5, 6]); // L R L R L R
-            let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(2).unwrap();
-            let expected = arr2(&[
-                [1, 3, 5], // Left
-                [2, 4, 6], // Right
-            ]);
-            assert_eq!(result, expected);
-        }
-
-        #[test]
-        fn test_mono_input() {
-            let samples: Box<[f32]> = Box::new([0.1, 0.2, 0.3]);
-            let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(1).unwrap();
-            let expected = arr2(&[[0.1, 0.2, 0.3]]);
-            assert_eq!(result, expected);
-        }
-
-        #[test]
-        fn test_three_channel_input() {
-            let samples: Box<[i16]> = Box::new([
-                10, 20, 30, // frame 0: C1 C2 C3
-                11, 21, 31, // frame 1
-                12, 22, 32, // frame 2
-            ]);
-            let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(3).unwrap();
-            let expected = arr2(&[[10, 11, 12], [20, 21, 22], [30, 31, 32]]);
-            assert_eq!(result, expected);
-        }
-
-        #[test]
-        fn test_incorrect_sample_count() {
-            let samples: Box<[i16]> = Box::new([1, 2, 3, 4, 5]); // Not divisible by 2
-            let buffer = Samples::from(samples);
-            let result = buffer.into_ndarray(2);
-            assert!(matches!(result, Err(AudioSampleError::ChannelMismatch)));
-        }
-
-        #[test]
-        fn test_longer_input() {
-            let samples: Vec<i16> = (0..12).collect(); // [0, 1, 2, ..., 11]
-                                                       // Interleaved 2-channel: [0,1] [2,3] [4,5] [6,7] [8,9] [10,11]
-            let buffer = Samples::from(samples.into_boxed_slice());
-            let result = buffer.into_ndarray(2).unwrap();
-            let expected = arr2(&[[0, 2, 4, 6, 8, 10], [1, 3, 5, 7, 9, 11]]);
-            assert_eq!(result, expected);
-        }
-    }
+   
 }
